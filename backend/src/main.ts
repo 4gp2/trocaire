@@ -1,20 +1,17 @@
+import * as http from 'http';
 import { config } from 'dotenv';
-import * as express from 'express';
-import { Express } from 'express-serve-static-core';
-import { hello } from './routes';
 
-const addRoutes = (app: Express) => {
-  app.get('/', hello);
-};
+import { initServer } from './server/server';
+import { initSocket } from './socket/socket';
 
 const bootstrap = () => {
   config();
 
-  const app = express();
-  addRoutes(app);
+  const server = http.createServer(initServer());
+  initSocket(server);
 
-  app.listen(process.env.PORT, () =>
-    console.log(`Express listening on port ${process.env.PORT}`));
+  server.listen(process.env.PORT, () =>
+    console.log(`Server listening on port ${process.env.PORT}`));
 };
 
 bootstrap();
