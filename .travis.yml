@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - 'node'
+before_install:
+  - yarn global add node-gyp
+  - export PATH="$(yarn global bin):$PATH"
+script:
+  - yarn run build
+notifications:
+  email:
+    recipients:
+      - nguyenhi@tcd.ie
+      - dscolard@tcd.ie
+      - aitacara@tcd.ie
+      - albaghdz@tcd.ie
+      - cullenm9@tcd.ie
+    on_success: never
+    on_failure: always
+    on_start: never
+    on_cancel: never
+    on_error: never
+    
