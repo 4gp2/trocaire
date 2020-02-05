@@ -13,6 +13,17 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="rounded_edittext_style">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/rounded_edittext_box</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="button_style">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/button_rounded</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
