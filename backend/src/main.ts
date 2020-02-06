@@ -4,7 +4,7 @@ import { config } from 'dotenv';
 import { initServer } from './server/server';
 import { initSocket } from './socket/socket';
 
-const bootstrap = () => {
+const bootstrap = async () => {
   config();
 
   const server = http.createServer(initServer());
