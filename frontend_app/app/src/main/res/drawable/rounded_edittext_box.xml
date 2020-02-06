@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <item>
+        <shape>
+            <corners android:radius="7dp"></corners>
+            <solid android:color="#ffffff"></solid>
+
+        </shape>
+        <shape>
+            <corners android:radius="7dp"></corners>
+            <solid android:color="#ffffff"></solid>
+        </shape>
+    </item>
+</selector>
