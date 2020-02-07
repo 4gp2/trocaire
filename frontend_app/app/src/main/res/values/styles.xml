@@ -19,6 +19,12 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <style name="rounded_button_style">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/button_rounded</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
     <style name="button_style">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/button_rounded</item>

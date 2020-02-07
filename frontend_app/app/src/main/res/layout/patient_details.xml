@@ -1,6 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:background="#0B85C8" >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Record
+        Symptoms"
+        android:textSize="50sp"
+        android:textColor="#ffffff"
+        />
+
+    <CheckBox
+        android:id="@+id/chkSymptom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chk_symptom_1"
+        android:textSize="20sp"
+        android:padding="15dp"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="40dp" />
+
+    <CheckBox
+        android:id="@+id/chkSymptom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chk_symptom_2"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:padding="15dp"
+        android:layout_marginLeft="40dp" />
+
+    <CheckBox
+        android:id="@+id/chkSymptom3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chk_symptom_3"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:padding="15dp"
+        android:layout_marginLeft="40dp" />
+
+    <CheckBox
+        android:id="@+id/chkSymptom4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chk_symptom_4"
+        android:textSize="20sp"
+        android:padding="15dp"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="40dp" />
+
+    <CheckBox
+        android:id="@+id/chkSymptom5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chk_symptom_5"
+        android:textSize="20sp"
+        android:padding="15dp"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="40dp" />
+
+    <CheckBox
+        android:id="@+id/chkSymptom6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chk_symptom_6"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:padding="15dp"
+        android:layout_marginLeft="40dp" />
+
+    <Button
+        android:id="@+id/btnSubmitSymptoms"
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/btn_submit_symptom"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:padding="15dp"
+        android:layout_marginTop="120dp"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
 
 </LinearLayout>

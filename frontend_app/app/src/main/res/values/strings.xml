@@ -1,4 +1,15 @@
 <resources>
+
     <string name="app_name">Trocaire DOM</string>
     <string name="action_settings">Settings</string>
+
+    <string name="chk_symptom_1">Symptom 1</string>
+    <string name="chk_symptom_2">Symptom 2</string>
+    <string name="chk_symptom_3">Symptom 3</string>
+    <string name="chk_symptom_4">Symptom 4</string>
+    <string name="chk_symptom_5">Symptom 5</string>
+    <string name="chk_symptom_6">Symptom 6</string>
+
+    <string name="btn_submit_symptom">Submit</string>
+
 </resources>
