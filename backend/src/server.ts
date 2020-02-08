@@ -9,9 +9,8 @@ import { Express, Request, Response } from 'express-serve-static-core';
 import { UserModel, User, storeToken } from './database';
 import { verifyPassword, generateAppAuthToken } from './auth';
 
-passport.serializeUser((user: User, done): void => {
-  done(null, { _id: user.uid });
-});
+passport.serializeUser((user: User, done): void =>
+  done(null, { _id: user.uid }));
 
 passport.deserializeUser(async (user: User, done): Promise<void> => {
   try {
