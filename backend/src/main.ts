@@ -1,14 +1,16 @@
 import * as http from 'http';
 import { config } from 'dotenv';
 
-import { initServer } from './server/server';
-import { initSocket } from './socket/socket';
+import { initServer } from './server';
+import { initSocket } from './socket';
+import { initPaseto } from './auth';
 
-const bootstrap = async () => {
+const bootstrap = async (): Promise<void> => {
   config();
 
   const server = http.createServer(initServer());
   initSocket(server);
+  initPaseto();
 
   server.listen(process.env.PORT, () =>
     console.log(`Server listening on port ${process.env.PORT}`));
