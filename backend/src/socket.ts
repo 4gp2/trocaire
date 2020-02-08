@@ -1,4 +1,4 @@
-import { listen, Server, Socket } from 'socket.io';
+import { listen, Server } from 'socket.io';
 import { EventEmitter } from 'events';
 import * as http from 'http';
 
