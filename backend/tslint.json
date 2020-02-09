@@ -40,7 +40,7 @@
       true,
       "always"
     ],
-    "no-console": true,
+    "no-console": false,
     "max-classes-per-file": false
   },
   "rulesDirectory": []
