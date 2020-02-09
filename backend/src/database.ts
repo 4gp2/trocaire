@@ -1,4 +1,4 @@
-import { connect } from 'mongoose';
+import { connect, Schema, model } from 'mongoose';
 import { getModelForClass, prop } from '@typegoose/typegoose';
 
 export const initDatabase = (): void => {
@@ -53,3 +53,13 @@ export const fetchToken = async (uid: string): Promise<string | null> => {
     return null;
   }
 };
+
+export const patientSchema = new Schema({
+  name: { type: String, required: true },
+  age: { type: Number, required: true },
+  village: { type: String, required: true },
+  symptoms: { type: Array, required: true } 
+});
+
+const Patient = model('Patient', patientSchema);
+export default Patient;
