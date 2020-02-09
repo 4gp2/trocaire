@@ -9,7 +9,7 @@ export const initPaseto = async (): Promise<void> =>
 export const hashPassword = async (passwd: string): Promise<string | null> => {
   try {
     return await argon2.hash(passwd, { type: argon2.argon2id });
-  } catch (err) {
+  } catch (e) {
     return null;
   }
 };
@@ -27,5 +27,11 @@ export const generateAppAuthToken = async (id: string): Promise<string> =>
   await sk.protocol().encrypt(id, sk);
 
 export const verifyAppAuthToken =
-  async (id: string, token: string): Promise<boolean> =>
-    id === await sk.protocol().decrypt(token, sk);
+  async (id: string, token: string): Promise<boolean> => {
+    try {
+      return id === await sk.protocol().decrypt(token, sk);
+    } catch (e) {
+      return false;
+    }
+  };
+
