@@ -8,12 +8,12 @@ const emitter = new EventEmitter();
 export const initSocket = (server: http.Server): void => {
   io = listen(server);
 
-  io.on('connection', sock => {
+  io.on('connection', (sock): void => {
     sock.on('message', msg => console.log(`message: ${msg}`));
     sock.on('other', msg => console.log(`other: ${msg}`));
 
     // For server to client broadcasts only.
-    emitter.on('broadcast', data => {
+    emitter.on('broadcast', (data): void => {
       sock.broadcast.emit(data);
       console.log(`Broadcasted: ${data}`);
     });

@@ -12,7 +12,7 @@ const bootstrap = async (): Promise<void> => {
   initSocket(server);
   initPaseto();
 
-  server.listen(process.env.PORT, () =>
+  server.listen(process.env.PORT, (): void =>
     console.log(`Server listening on port ${process.env.PORT}`));
 };
 
