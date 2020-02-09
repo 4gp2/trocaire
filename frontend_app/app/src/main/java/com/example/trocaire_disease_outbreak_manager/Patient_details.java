@@ -1,6 +1,7 @@
 package com.example.trocaire_disease_outbreak_manager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +36,9 @@ public class Patient_details extends Activity implements View.OnClickListener {
         result.append("Symptom1 check : ").append(chkSymptom1.isChecked());
         result.append("\nSymptom2 check : ").append(chkSymptom2.isChecked());
         result.append("\nSymptom3 check :").append(chkSymptom3.isChecked());
+
+        Intent con = new Intent(Patient_details.this, Thermometer.class);
+        Patient_details.this.startActivity(con);
 
     }
 

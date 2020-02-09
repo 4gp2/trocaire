@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Record
-        Symptoms"
+         Symptoms"
         android:textSize="50sp"
         android:textColor="#ffffff"
         />
@@ -86,14 +86,14 @@
         style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:text="@string/btn_submit_symptom"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
         android:padding="15dp"
-        android:layout_marginTop="120dp"
-        android:layout_gravity="center_vertical|center_horizontal" />
+        android:text="@string/btn_submit_symptom"
+        android:textColor="#ffffff"
+        android:textSize="25sp" />
 
 
 </LinearLayout>

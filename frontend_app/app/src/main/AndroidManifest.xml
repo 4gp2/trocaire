@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Patient_details" />
+        <activity android:name=".Thermometer" />
     </application>
+
 
 </manifest>
