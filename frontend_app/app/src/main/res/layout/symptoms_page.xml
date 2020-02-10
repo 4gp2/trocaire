@@ -11,16 +11,6 @@
         android:orientation="vertical"
         android:background="#0B85C8">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/symptoms"
-            android:padding="30dp"
-            android:textColor="#000000"
-            android:textSize="50sp" />
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -37,8 +27,7 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/nausea"
-                android:contentDescription="@string/todo"/>
+                app:srcCompat="@drawable/nausea"/>
         </LinearLayout>
 
         <LinearLayout
@@ -53,14 +42,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chk_diahorrea"
                 android:textSize="20sp"
-                android:padding="15dp"
-                />
+                android:padding="15dp" />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/diahorrea"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/diahorrea"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -74,13 +62,12 @@
                 android:text="@string/chk_heart_rate"
                 android:textSize="20sp"
                 android:padding="15dp"/>
-
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/heartRate"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/heart_rate"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -94,13 +81,12 @@
                 android:text="@string/chk_dehydration"
                 android:textSize="20sp"
                 android:padding="15dp"/>
-
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/dehydration"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/dehydration"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -117,9 +103,9 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/musclePain"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/muscle_pain"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -136,9 +122,9 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/dryCough"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/dry_cough"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -155,9 +141,9 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/soreThroat"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/sore_throat"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -174,16 +160,15 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/headache"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/headache"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-
             <CheckBox
                 android:id="@+id/chkRash"
                 android:layout_width="wrap_content"
@@ -191,13 +176,12 @@
                 android:text="@string/chk_rash"
                 android:textSize="20sp"
                 android:padding="15dp" />
-
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/rash"
-                android:contentDescription="@string/todo" />
+                app:srcCompat="@drawable/rash"/>
         </LinearLayout>
+
         <Button
             android:id="@+id/btnSubmitSymptoms"
             style="@style/button_style"
@@ -210,6 +194,8 @@
             android:layout_marginEnd="20dp"
             android:padding="15dp"
             android:text="@string/btn_submit_symptom"
+            android:textColor="#ffffff"
             android:textSize="25sp" />
     </LinearLayout>
+
 </ScrollView>

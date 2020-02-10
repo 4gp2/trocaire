@@ -20,6 +20,7 @@ public class Thermometer extends AppCompatActivity {
     private String DEGREES_CELSIUS = (char) 0x00B0 + "C ";
     private TextView tView;
     private double temperature = 37.5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
