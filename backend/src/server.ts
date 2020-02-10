@@ -6,17 +6,18 @@ import * as session from 'express-session';
 import { Strategy } from 'passport-local';
 import { Express, Request, Response } from 'express-serve-static-core';
 
-import { UserModel, User, storeToken } from './database';
+import { User } from './database/types';
+import { fetchUser, storeToken } from './database/database';
 import { verifyPassword, generateAppAuthToken } from './auth';
 
 passport.serializeUser((user: User, done): void =>
-  done(null, { _id: user.uid }));
+  done(null, { _id: user._id }));
 
 passport.deserializeUser(async (user: User, done): Promise<void> => {
   try {
-    const u: User = await UserModel.findById(user.uid).exec();
+    const u = await fetchUser(user._id);
     if (u) {
-      done(null, u.uid);
+      done(null, u._id);
     }
     done(null, false);
   } catch (e) {
@@ -29,7 +30,7 @@ passport.use('login', new Strategy({
   passwordField: 'password',
 }, async (id, pass, done): Promise<void> => {
   try {
-    const u = await UserModel.findById(id).exec();
+    const u = await fetchUser(id);
     if (!u) {
       return done(null, false);
     }
@@ -49,14 +50,14 @@ const hello = (_req: Request, res: Response): void => {
 const loginGet = (_req: Request, res: Response): void => res.render('login');
 
 const workerAuthToken = async (req: Request, res: Response): Promise<void> => {
-  const user = await UserModel.findById(req.body.id).exec();
-  if (!user) {
+  const u = await fetchUser(req.body.id);
+  if (!u) {
     res.sendStatus(401);
     return;
   }
 
-  const token = await generateAppAuthToken(req.body.id);
-  storeToken(req.body.id, token);
+  const token = await generateAppAuthToken(u._id);
+  storeToken(u._id, token);
   res.send(token);
 };
 
