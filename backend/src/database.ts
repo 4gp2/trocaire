@@ -44,11 +44,11 @@ export const storeToken = async (uid: string, token: string): Promise<void> => {
 
 export const fetchToken = async (uid: string): Promise<string | null> => {
   try {
-    const model = await AuthTokenModel.findOne({ uid });
-    if (!model) {
+    const m = await AuthTokenModel.findOne({ uid });
+    if (!m) {
       return null;
     }
-    return model.token;
+    return m.token;
   } catch (e) {
     return null;
   }
@@ -58,7 +58,7 @@ export const patientSchema = new Schema({
   name: { type: String, required: true },
   age: { type: Number, required: true },
   village: { type: String, required: true },
-  symptoms: { type: Array, required: true } 
+  symptoms: { type: Array, required: true },
 });
 
 const Patient = model('Patient', patientSchema);
