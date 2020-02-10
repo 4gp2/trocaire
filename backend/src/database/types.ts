@@ -10,3 +10,12 @@ export class AuthToken {
   _rev?: string;
   token!: string;
 }
+
+export class Patient {
+  _id!: string;
+  firstName!: string;
+  lastName!: string;
+  age!: number;
+  village!: string;
+  symptoms!: string[];
+}

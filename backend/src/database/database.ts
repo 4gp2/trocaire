@@ -1,9 +1,10 @@
 import * as libnano from 'nano';
-import { User, AuthToken } from './types';
+import { User, AuthToken, Patient } from './types';
 
 let nano: libnano.ServerScope;
 let usersDB: libnano.DocumentScope<User>;
 let tokensDB: libnano.DocumentScope<AuthToken>;
+let patientsDB: libnano.DocumentScope<Patient>;
 
 export const initDatabase = async (): Promise<void> => {
   nano = libnano({
@@ -14,6 +15,7 @@ export const initDatabase = async (): Promise<void> => {
 
   usersDB = nano.use('users');
   tokensDB = nano.use('tokens');
+  patientsDB = nano.use('patients');
 };
 
 export const storeToken = async (uid: string, token: string): Promise<void> => {
@@ -41,12 +43,4 @@ export const fetchUser = async (uid: string): Promise<User | null> => {
   }
 };
 
-// export const patientSchema = new Schema({
-//   name: { type: String, required: true },
-//   age: { type: Number, required: true },
-//   village: { type: String, required: true },
-//   symptoms: { type: Array, required: true },
-// });
 
-// const Patient = model('Patient', patientSchema);
-// export default Patient;
