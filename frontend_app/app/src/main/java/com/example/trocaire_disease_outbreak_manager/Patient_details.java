@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 
 public class Patient_details extends Activity implements View.OnClickListener {
 
-    private CheckBox chkSymptom1, chkSymptom2, chkSymptom3;
+    private CheckBox chkNausea, chkDiahorrea, chkHeartRate, chkMusclePain, chkDehydration;
     private Button btnDisplay;
 
     @Override
@@ -27,15 +27,19 @@ public class Patient_details extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        chkSymptom1 = (CheckBox) findViewById(R.id.chkSymptom1);
-        chkSymptom2 = (CheckBox) findViewById(R.id.chkSymptom2);
-        chkSymptom3 = (CheckBox) findViewById(R.id.chkSymptom3);
+        chkNausea = (CheckBox) findViewById(R.id.chkNausea);
+        chkDiahorrea = (CheckBox) findViewById(R.id.chkDiahorrea);
+        chkHeartRate = (CheckBox) findViewById(R.id.chkHeartRate);
+        chkMusclePain = (CheckBox) findViewById(R.id.chkMusclePain);
+        chkDehydration = (CheckBox) findViewById(R.id.chkDehydration);
+
+
         btnDisplay = (Button) findViewById(R.id.btnSubmitSymptoms);
 
         StringBuffer result = new StringBuffer();
-        result.append("Symptom1 check : ").append(chkSymptom1.isChecked());
-        result.append("\nSymptom2 check : ").append(chkSymptom2.isChecked());
-        result.append("\nSymptom3 check :").append(chkSymptom3.isChecked());
+        result.append("Nausea check : ").append(chkNausea.isChecked());
+        result.append("\nDiahorrea check : ").append(chkDiahorrea.isChecked());
+        result.append("\nHeart rate check :").append(chkHeartRate.isChecked());
 
         Intent con = new Intent(Patient_details.this, Thermometer.class);
         Patient_details.this.startActivity(con);
