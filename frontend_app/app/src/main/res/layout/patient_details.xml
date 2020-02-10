@@ -1,211 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#0B85C8">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0B85C8"
+    tools:context=".Patient_details">
+
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
         android:gravity="center"
-        android:text="Symptoms"
-        android:padding="30dp"
-        android:textColor="#000000"
+        android:text="Patient Details"
+        android:textColor="#ffffff"
         android:textSize="50sp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/et_full_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <EditText
+        android:id="@+id/et_full_name"
         style="@style/rounded_edittext_style"
-        android:padding="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Full Name"
+        android:inputType="textEmailAddress"
+        android:padding="15dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.485" />
 
-        <CheckBox
-            android:id="@+id/chkNausea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="@string/chk_nausea"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/nausea" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <EditText
+        android:id="@+id/et_age"
         style="@style/rounded_edittext_style"
-        android:padding="10dp">
-        <CheckBox
-            android:id="@+id/chkDiahorrea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_diahorrea"
-            android:textSize="20sp"
-            android:padding="15dp"
-             />
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Age"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_full_name"
+        app:layout_constraintVertical_bias="0.098" />
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/diahorrea" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+
+    <EditText
+        android:id="@+id/et_village"
         style="@style/rounded_edittext_style"
-        android:padding="10dp">
-
-        <CheckBox
-            android:id="@+id/chkHeartRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_heart_rate"
-            android:textSize="20sp"
-            android:padding="15dp"/>
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/heartRate" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/rounded_edittext_style"
-        android:padding="10dp">
-
-        <CheckBox
-            android:id="@+id/chkMusclePain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_muscle_pain"
-            android:textSize="20sp"
-            android:padding="15dp" />
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/musclePain" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/rounded_edittext_style"
-        android:padding="10dp">
-
-        <CheckBox
-            android:id="@+id/chkCough"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_cough"
-            android:textSize="20sp"
-            android:padding="15dp"/>
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/dryCough" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/rounded_edittext_style"
-        android:padding="10dp">
-
-        <CheckBox
-            android:id="@+id/chkSoreThroat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_sore_throat"
-            android:textSize="20sp"
-            android:padding="15dp" />
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/soreThroat" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/rounded_edittext_style"
-        android:padding="10dp">
-
-        <CheckBox
-            android:id="@+id/chkHeadache"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_headache"
-            android:textSize="20sp"
-            android:padding="15dp" />
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/headache" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/rounded_edittext_style"
-        android:padding="10dp">
-
-        <CheckBox
-            android:id="@+id/chkRash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chk_rash"
-            android:textSize="20sp"
-            android:padding="15dp" />
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/rash" />
-    </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Village"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_age"
+        app:layout_constraintVertical_bias="0.098" />
 
 
     <Button
-        android:id="@+id/btnSubmitSymptoms"
+        android:id="@+id/btn_submit_patient_details"
         style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
-        android:padding="15dp"
-        android:text="@string/btn_submit_symptom"
-        android:textSize="25sp" />
+        android:textSize="20dp"
+        android:text="Submit"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_village" />
 
-</LinearLayout>
 
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

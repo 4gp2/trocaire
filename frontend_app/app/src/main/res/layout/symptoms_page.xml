@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#0B85C8">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/symptoms"
+            android:padding="30dp"
+            android:textColor="#000000"
+            android:textSize="50sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkNausea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/chk_nausea"
+                android:textSize="20sp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/nausea"
+                android:contentDescription="@string/todo"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkDiahorrea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_diahorrea"
+                android:textSize="20sp"
+                android:padding="15dp"
+                />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/diahorrea"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkHeartRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_heart_rate"
+                android:textSize="20sp"
+                android:padding="15dp"/>
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/heartRate"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkDehydration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_dehydration"
+                android:textSize="20sp"
+                android:padding="15dp"/>
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/dehydration"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkMusclePain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_muscle_pain"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/musclePain"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkCough"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_cough"
+                android:textSize="20sp"
+                android:padding="15dp"/>
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/dryCough"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkSoreThroat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_sore_throat"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/soreThroat"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkHeadache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_headache"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/headache"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+
+            <CheckBox
+                android:id="@+id/chkRash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_rash"
+                android:textSize="20sp"
+                android:padding="15dp" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/rash"
+                android:contentDescription="@string/todo" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btnSubmitSymptoms"
+            style="@style/button_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="15dp"
+            android:text="@string/btn_submit_symptom"
+            android:textSize="25sp" />
+    </LinearLayout>
+</ScrollView>
