@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Outbreak Manager</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/material-design-iconic-font@2.2.0/dist/css/material-design-iconic-font.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hamburgers@1.1.3/dist/hamburgers.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animsition@4.0.2/dist/css/animsition.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker@3.0.5/daterangepicker.css" />
+  <link rel="stylesheet" type="text/css" href="css/login/util.css" />
+  <link rel="stylesheet" type="text/css" href="css/login/main.css" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+        <form class="login100-form validate-form">
+          <span class="login100-form-title p-b-26">Outbreak Manager</span>
+          <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+            <input class="input100" type="text" id="username" />
+            <span class="focus-input100" data-placeholder="ID"></span>
+          </div>
+          <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <span class="btn-show-pass">
+              <i class="zmdi zmdi-eye"></i>
+            </span>
+            <input class="input100" type="password" id="password" />
+            <span class="focus-input100" data-placeholder="Password"></span>
+          </div>
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <button class="login100-form-btn" id="login-button">Sign in</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animsition@4.0.2/dist/js/animsition.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daterangepicker@3.0.5/daterangepicker.min.js"></script>
+  <script src="js/login/main.js"></script>
+  <!-- ----------------------------------------------------------- -->
+  <!-- ----------------------------------------------------------- -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCizCQ2QIyUZ6ONcHwmyGmHPyB6jwQji2c",
+      authDomain: "trocaire-4gp2.firebaseapp.com",
+      databaseURL: "https://trocaire-4gp2.firebaseio.com",
+      projectId: "trocaire-4gp2",
+      storageBucket: "trocaire-4gp2.appspot.com",
+      messagingSenderId: "772364666256",
+      appId: "1:772364666256:web:87b0169305869cd4195f15"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script>
+    for (let i of document.getElementsByClassName('input100')) {
+      i.value = '';
+    }
+
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+    const loginButton = document.getElementById('login-button');
+    loginButton.addEventListener('click', e => {
+      e.preventDefault();
+      const id = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      loginButton.textContent = "Signing in..."
+      firebase.auth()
+        .signInWithEmailAndPassword(`${id}@health.trocaire.org`, pass)
+        .catch(error => {
+          console.log(error);
+          loginButton.textContent = "Failed to sign in"
+        });
+    });
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        const token = await user.getIdToken();
+        await axios.post('/session', { token });
+        window.location.href = window.location.origin;
+      }
+    })
+  </script>
+</body>
+
+</html>
