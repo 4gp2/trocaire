@@ -8,7 +8,6 @@
 - [yarn](https://yarnpkg.com/)
 
 1. Run `npm install -g yarn`.
-2. Run `yarn global add node-gyp`.
 
 ### Running
 
