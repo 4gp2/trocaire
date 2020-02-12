@@ -89,7 +89,7 @@
       const pass = document.getElementById('password').value;
       loginButton.textContent = "Signing in..."
       firebase.auth()
-        .signInWithEmailAndPassword(`${id}@health.trocaire.org`, pass)
+        .signInWithEmailAndPassword(`${id}@{{emailExtension}}`, pass)
         .catch(error => {
           console.log(error);
           loginButton.textContent = "Failed to sign in"

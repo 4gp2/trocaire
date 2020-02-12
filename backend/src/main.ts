@@ -1,7 +1,7 @@
 import * as http from 'http';
 import { config } from 'dotenv';
 
-import { initServer } from './server';
+import { initServer } from './server/server';
 import { initSocket } from './socket';
 import { initFirebase } from './firebase/firebase';
 

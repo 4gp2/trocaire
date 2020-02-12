@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "firebase-admin": "^8.9.2",
+    "generate-password": "^1.5.1",
     "morgan": "^1.9.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.1",

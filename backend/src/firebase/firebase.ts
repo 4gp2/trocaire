@@ -1,11 +1,12 @@
 import { readFileSync } from 'fs';
+import { generate } from 'generate-password';
 import {
   auth,
   firestore,
   initializeApp,
   credential,
 } from 'firebase-admin';
-
+import { NewUserDetails, NextID } from './types';
 
 export const initFirebase = (): void => {
   const service = JSON.parse(readFileSync('trocaire-firebase.json', 'utf-8'));
@@ -15,7 +16,37 @@ export const initFirebase = (): void => {
   });
 };
 
-export const addUser =
+export const addNewUser =
+  async (isAdmin: boolean): Promise<NewUserDetails | null> => {
+    const ref = firestore().doc('_count/ids');
+    const doc = await ref.get();
+    const initPass = generate({
+      length: parseInt(process.env.INITIAL_PASSWORD_LENGTH, 10),
+      numbers: true,
+    });
+    let useID = 0;
+
+    if (doc.exists) {
+      const data = doc.data() as NextID;
+      useID = data.next;
+    } else {
+      await ref.set({ next: 0 });
+    }
+
+    if (await addUser(useID.toString(), initPass, isAdmin)) {
+      await ref.set({ next: useID + 1 });
+      return {
+        uid: useID.toString(),
+        email: `${useID}@${process.env.EMAIL_EXTENSION}`,
+        initialPassword: '',
+        isAdmin,
+      };
+    }
+
+    return null;
+  };
+
+const addUser =
   async (uid: string, password: string, isAdmin: boolean): Promise<boolean> => {
     try {
       await auth().createUser({
