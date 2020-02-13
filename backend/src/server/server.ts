@@ -10,13 +10,15 @@ import {
   NextFunction,
 } from 'express-serve-static-core';
 
-import { UserClaims } from '../firebase/types';
+import { UserClaims, DiagnosisUpload } from '../firebase/types';
 import { NewUserResponse } from './types';
 import {
   createNewCookie,
   verifyCookie,
   getUser,
   addNewUser,
+  getUserFromToken,
+  storePatientData,
 } from '../firebase/firebase';
 
 const hello = (_req: Request, res: Response): void => {
@@ -53,6 +55,21 @@ const newSessionCookie = async (req: Request, res: Response): Promise<void> => {
   res.redirect('/');
 };
 
+const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
+  const user = await getUserFromToken(req.body.token);
+  if (!user) {
+    res.sendStatus(401);
+  }
+
+  try {
+    const data = JSON.parse(req.body.data) as DiagnosisUpload;
+    data.patients.forEach(async (p) => await storePatientData(p));
+    res.sendStatus(201);
+  } catch (e) {
+    res.sendStatus(400);
+  }
+};
+
 const isAdminLoggedIn =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (!req.cookies.session) {
@@ -83,6 +100,7 @@ const initRoutes = (app: Express): void => {
   app.get('/newuser', isAdminLoggedIn, createNewUser);
 
   app.post('/session', newSessionCookie);
+  app.post('/upload', uploadDiagnosis);
 };
 
 export const initServer = (): Express => {

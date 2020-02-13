@@ -1,8 +1,8 @@
 export class NewUserDetails {
-  uid: string;
-  email: string;
-  initialPassword: string;
-  isAdmin: boolean;
+  uid: Required<string>;
+  email: Required<string>;
+  initialPassword: Required<string>;
+  isAdmin: Required<boolean>;
 }
 
 export class AuthToken {
@@ -11,30 +11,39 @@ export class AuthToken {
 }
 
 export class UserClaims {
-  isAdmin: boolean;
+  isAdmin: Pick<NewUserDetails, 'isAdmin'>;
 }
 
 export class NextID {
   next: number;
 }
 
-export interface Diagnosis {
+export interface DiagnosisUpload {
   patients: Patient[];
 }
 
-export interface Patient {
-  details: Details;
-  symptoms: Symptoms;
+export interface StoredPatient {
+  firstName: Required<string>;
+  lastName: Required<string>;
+  dob: Required<Date>;
+  village: Required<string>;
+  sex: Required<string>;
+  diagnoses: Required<StoredDiagnosis[]>;
 }
 
-export interface Details {
-  name: string;
-  dob: string; // YYYY-MM-DD
+export type StoredDiagnosis =
+  Pick<Patient, 'latitude' | 'longitude' | 'date' | 'symptoms'>;
+
+export interface Patient {
+  firstName: string;
+  lastName: string;
+  dob: Date;
   village: string;
   sex: string;
   latitude: number;
   longitude: number;
   date: Date;
+  symptoms: Symptoms;
 }
 
 export interface Symptoms {

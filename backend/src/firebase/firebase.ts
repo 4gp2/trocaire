@@ -1,12 +1,8 @@
 import { readFileSync } from 'fs';
 import { generate } from 'generate-password';
-import {
-  auth,
-  firestore,
-  initializeApp,
-  credential,
-} from 'firebase-admin';
-import { NewUserDetails, NextID } from './types';
+import { auth, firestore, initializeApp, credential } from 'firebase-admin';
+
+import { NewUserDetails, NextID, Patient, StoredPatient, StoredDiagnosis } from './types';
 
 export const initFirebase = (): void => {
   const service = JSON.parse(readFileSync('trocaire-firebase.json', 'utf-8'));
@@ -17,7 +13,7 @@ export const initFirebase = (): void => {
 };
 
 export const addNewUser =
-  async (isAdmin: boolean): Promise<NewUserDetails | null> => {
+  async (isAdmin: boolean): Promise<Readonly<NewUserDetails> | null> => {
     const ref = firestore().doc('_count/ids');
     const doc = await ref.get();
     const initPass = generate({
@@ -34,7 +30,7 @@ export const addNewUser =
     }
 
     if (await addUser(useID.toString(), initPass, isAdmin)) {
-      await ref.set({ next: useID + 1 });
+      await ref.update({ next: firestore.FieldValue.increment(1) });
       return {
         uid: useID.toString(),
         email: `${useID}@${process.env.EMAIL_EXTENSION}`,
@@ -65,7 +61,7 @@ const addUser =
   };
 
 export const getUserFromToken =
-  async (token: string): Promise<auth.UserRecord | null> => {
+  async (token: string): Promise<Readonly<auth.UserRecord> | null> => {
     try {
       const uid = (await auth().verifyIdToken(token)).uid;
       return await auth().getUser(uid);
@@ -74,13 +70,14 @@ export const getUserFromToken =
     }
   };
 
-export const getUser = async (uid: string): Promise<auth.UserRecord | null> => {
-  try {
-    return await auth().getUser(uid);
-  } catch (e) {
-    return null;
-  }
-};
+export const getUser =
+  async (uid: string): Promise<Readonly<auth.UserRecord> | null> => {
+    try {
+      return await auth().getUser(uid);
+    } catch (e) {
+      return null;
+    }
+  };
 
 export const createNewCookie =
   async (token: string, expiresIn: number): Promise<string | null> => {
@@ -92,10 +89,39 @@ export const createNewCookie =
   };
 
 export const verifyCookie =
-  async (cookie: string): Promise<auth.DecodedIdToken | null> => {
+  async (cookie: string): Promise<Readonly<auth.DecodedIdToken> | null> => {
     try {
       return await auth().verifySessionCookie(cookie, true);
     } catch (e) {
       return null;
     }
   };
+
+export const storePatientData = async (p: Patient): Promise<void> => {
+  const ref = firestore().doc(`patients/${p.lastName},${p.firstName},${p.dob}`);
+  const exists = (await ref.get()).exists;
+  if (exists) {
+    await ref.set({
+      firstName: p.firstName,
+      lastName: p.lastName,
+      dob: p.dob,
+      village: p.village,
+      sex: p.sex,
+      diagnoses: [{
+        latitude: p.latitude,
+        longitude: p.longitude,
+        date: p.date,
+        symptoms: p.symptoms,
+      }],
+    } as StoredPatient);
+    return;
+  }
+  await ref.update({
+    diagnoses: firestore.FieldValue.arrayUnion({
+      latitude: p.latitude,
+      longitude: p.longitude,
+      date: p.date,
+      symptoms: p.symptoms,
+    } as StoredDiagnosis),
+  });
+};
