@@ -1,28 +1,31 @@
 package com.example.trocaire_disease_outbreak_manager;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 
 
-public class Sign_in extends Activity implements View.OnClickListener, LocationListener {
+public class Sign_in extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     private LocationManager locationManager;
     private Location locationCurrent;
@@ -34,6 +37,13 @@ public class Sign_in extends Activity implements View.OnClickListener, LocationL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_page);
+
+        ActionBar bar = getSupportActionBar();
+        assert bar != null;
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+        bar.setTitle(Html.fromHtml("<font color='#0B85C8'>Sign in</font>"));
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         Button submit = findViewById(R.id.btn_login);
         submit.setOnClickListener(this);
@@ -140,6 +150,12 @@ public class Sign_in extends Activity implements View.OnClickListener, LocationL
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

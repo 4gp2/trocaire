@@ -14,14 +14,14 @@
         android:text="Save Records"
         android:textColor="#0B85C8"
         android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonsave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imageButtonsave"
         android:layout_width="183dp"
         android:layout_height="149dp"
         android:scaleType="fitCenter"
