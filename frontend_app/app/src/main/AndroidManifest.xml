@@ -30,7 +30,6 @@
         <activity android:name=".Thermometer" />
         <activity android:name=".Symptoms_input" />
         <activity android:name=".Rash_locator_front" />
+        <activity android:name=".Rash_locator_back" />
     </application>
-
-
 </manifest>
