@@ -99,7 +99,7 @@
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         const token = await user.getIdToken();
-        await axios.post('/session', { token });
+        await axios.post('/api/session', { token });
         window.location.href = window.location.origin;
       }
     })

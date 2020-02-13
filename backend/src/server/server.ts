@@ -97,10 +97,10 @@ const isAdminLoggedIn =
 const initRoutes = (app: Express): void => {
   app.get('/', isAdminLoggedIn, hello);
   app.get('/login', login);
-  app.get('/newuser', isAdminLoggedIn, createNewUser);
+  app.get('/api/newuser', isAdminLoggedIn, createNewUser);
 
-  app.post('/session', newSessionCookie);
-  app.post('/upload', uploadDiagnosis);
+  app.post('/api/session', newSessionCookie);
+  app.post('/api/upload', uploadDiagnosis);
 };
 
 export const initServer = (): Express => {
