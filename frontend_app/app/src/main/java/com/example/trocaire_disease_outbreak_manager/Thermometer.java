@@ -1,5 +1,6 @@
 package com.example.trocaire_disease_outbreak_manager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -82,6 +83,11 @@ public class Thermometer extends AppCompatActivity {
                     String temperature_string = Double.toString(text_temp);
                     Toast.makeText(getApplication(), temperature_string,
                             Toast.LENGTH_LONG).show();
+
+                    Intent con = new Intent(getApplicationContext(), Rash_locator_front.class);
+                    con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(con);
+
                 }else{
                     tView.setError("Temperature between 32" +
                             DEGREES_CELSIUS +  "and 42" + DEGREES_CELSIUS);
