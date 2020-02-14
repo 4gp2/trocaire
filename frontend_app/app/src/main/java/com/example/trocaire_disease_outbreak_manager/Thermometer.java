@@ -84,7 +84,7 @@ public class Thermometer extends AppCompatActivity {
                     Toast.makeText(getApplication(), temperature_string,
                             Toast.LENGTH_LONG).show();
 
-                    Intent con = new Intent(getApplicationContext(), Rash_locator_front.class);
+                    Intent con = new Intent(getApplicationContext(), Rash_type.class);
                     con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(con);
 

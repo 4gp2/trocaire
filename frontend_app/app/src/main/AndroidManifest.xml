@@ -32,5 +32,12 @@
         <activity android:name=".Symptoms_input" />
         <activity android:name=".Rash_locator_front" />
         <activity android:name=".Rash_locator_back" />
+        <activity android:name=".View_patient_details" />
+        <activity android:name=".Rash_type" />
+        <activity android:name=".Pain_level" />
+        <activity android:name=".Pain_location" />
+        <activity android:name=".Other_information" />
+        <activity android:name=".Review_patient_details" />
+        <activity android:name=".Update_patient_details" />
     </application>
 </manifest>

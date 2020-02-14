@@ -55,10 +55,14 @@ public class Rash_locator_back extends AppCompatActivity implements View.OnClick
         CheckBox left_foot = findViewById(R.id.checkBox14);
 
 
-        // Add to Json object here for all the Rash locations
+        // TODO Add to Json object here for all the Rash locations
 
         Toast.makeText(getApplication(), Boolean.toString(head.isChecked()),
                 Toast.LENGTH_LONG).show();
+
+        Intent con = new Intent(getApplicationContext(), Pain_level.class);
+        con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplicationContext().startActivity(con);
     }
 
     @Override

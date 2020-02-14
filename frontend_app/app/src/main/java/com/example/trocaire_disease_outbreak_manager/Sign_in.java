@@ -126,7 +126,7 @@ public class Sign_in extends AppCompatActivity implements View.OnClickListener, 
             password.setBackgroundResource(R.drawable.rounded_edittext_box);
         }
         if (!username_string.isEmpty() && !password_string.isEmpty()) {
-            Intent con = new Intent(Sign_in.this, Fragment_main.class);
+            Intent con = new Intent(Sign_in.this, View_patient_details.class);
             Sign_in.this.startActivity(con);
         }
 

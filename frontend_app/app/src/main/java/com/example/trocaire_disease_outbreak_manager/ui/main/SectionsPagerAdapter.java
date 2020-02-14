@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.trocaire_disease_outbreak_manager.Fragment_new_patient;
 import com.example.trocaire_disease_outbreak_manager.Fragment_save_patient_details;
+import com.example.trocaire_disease_outbreak_manager.Fragment_update_patient_details;
 import com.example.trocaire_disease_outbreak_manager.R;
 
 /**
@@ -19,7 +20,7 @@ import com.example.trocaire_disease_outbreak_manager.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_3, R.string.tab_text_2};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -36,6 +37,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new Fragment_new_patient();
                 break;
             case 1:
+                fragment = new Fragment_update_patient_details();
+                break;
+            case 2:
                 fragment = new Fragment_save_patient_details();
                 break;
         }
@@ -55,6 +59,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 3;
     }
 }

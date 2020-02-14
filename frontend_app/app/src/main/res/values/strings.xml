@@ -3,7 +3,7 @@
     <string name="app_name">Trocaire DOM</string>
     <string name="action_settings">Settings</string>
 
-<!--    Symptoms    -->
+    <!--    Symptoms    -->
     <string name="chk_nausea">Nausea/Vomiting</string>
     <string name="chk_diahorrea">Diahorrea</string>
     <string name="chk_heart_rate">High heart rate</string>
@@ -15,11 +15,12 @@
     <string name="chk_rash">Rash</string>
 
 
-
     <string name="btn_submit_symptom">Submit</string>
     <string name="title_activity_fragment_main">Fragment_main</string>
     <string name="tab_text_1">ADD</string>
     <string name="tab_text_2">SAVE</string>
+    <string name="tab_text_3">UPDATE</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="symptoms">Symptoms</string>
