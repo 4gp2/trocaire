@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:background="#0B85C8">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -23,16 +23,19 @@
                 android:layout_height="wrap_content"
                 android:padding="15dp"
                 android:text="@string/chk_nausea"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/nausea"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
@@ -40,16 +43,19 @@
                 android:id="@+id/chkDiahorrea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:text="@string/chk_diahorrea"
                 android:textSize="20sp"
+                android:layout_marginLeft="20dp"
                 android:padding="15dp" />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/diahorrea"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -61,14 +67,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chk_heart_rate"
                 android:textSize="20sp"
+                android:layout_marginLeft="20dp"
                 android:padding="15dp"/>
             <ImageView
                 android:layout_width="70dp"
+                android:layout_gravity="right"
                 android:layout_height="70dp"
                 app:srcCompat="@drawable/heart_rate"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -80,14 +88,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chk_dehydration"
                 android:textSize="20sp"
+                android:layout_marginLeft="20dp"
                 android:padding="15dp"/>
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/dehydration"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -99,14 +109,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chk_muscle_pain"
                 android:textSize="20sp"
+                android:layout_marginLeft="20dp"
                 android:padding="15dp" />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/muscle_pain"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -117,15 +129,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chk_cough"
+                android:layout_marginLeft="20dp"
                 android:textSize="20sp"
                 android:padding="15dp"/>
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/dry_cough"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -137,14 +151,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/chk_sore_throat"
                 android:textSize="20sp"
+                android:layout_marginLeft="20dp"
                 android:padding="15dp" />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/sore_throat"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -155,15 +171,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chk_headache"
+                android:layout_marginLeft="20dp"
                 android:textSize="20sp"
                 android:padding="15dp" />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/headache"/>
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -174,13 +192,100 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chk_rash"
+                android:layout_marginLeft="20dp"
                 android:textSize="20sp"
                 android:padding="15dp" />
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="right"
                 app:srcCompat="@drawable/rash"/>
-        </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkSweating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_sweating"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/sweating"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkBloodyStools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_bloody_stools"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/bloodyStool"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkMouthSpots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_white_spots"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/whiteSpots"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <CheckBox
+                android:id="@+id/chkStiffLimbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_stiff_limbs"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:padding="15dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/limbs"/>
+        </FrameLayout>
+
 
         <Button
             android:id="@+id/btnSubmitSymptoms"

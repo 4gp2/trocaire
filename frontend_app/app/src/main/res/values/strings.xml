@@ -13,6 +13,10 @@
     <string name="chk_sore_throat">Sore Throat</string>
     <string name="chk_headache">Headache</string>
     <string name="chk_rash">Rash</string>
+    <string name="chk_sweating">Profuse Sweating</string>
+    <string name="chk_white_spots">White spots in mouth</string>
+    <string name="chk_bloody_stools">Bloody Stools</string>
+    <string name="chk_stiff_limbs">Stiff/Tender Limbs</string>
 
 
     <string name="btn_submit_symptom">Submit</string>
