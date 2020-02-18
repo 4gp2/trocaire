@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,12 +28,16 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
 
         Button next = findViewById(R.id.buttonsenddetails);
         next.setOnClickListener(this);
+
+        String token = getIntent().getStringExtra("token");
+        if (token != null) {
+            Log.d("patient", token);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(this, "Submit Request Here!",
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Submit Request Here!", Toast.LENGTH_LONG).show();
     }
 
     @Override

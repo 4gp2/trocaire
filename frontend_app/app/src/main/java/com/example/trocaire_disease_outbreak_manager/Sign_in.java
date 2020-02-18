@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 public class Sign_in extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -68,18 +69,27 @@ public class Sign_in extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (!userStr.isEmpty() && !passStr.isEmpty()) {
-            Log.d("auth", fullUsername(userStr));
-            mAuth
-                .signInWithEmailAndPassword(fullUsername(userStr), passStr)
+            mAuth.signInWithEmailAndPassword(fullUsername(userStr), passStr)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            navigateToPatientDetails();
+                            assert mAuth.getCurrentUser() != null;
+
+                            mAuth.getCurrentUser().getIdToken(false)
+                                .addOnCompleteListener(Sign_in.this, new OnCompleteListener<GetTokenResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<GetTokenResult> tokenTask) {
+                                        if (tokenTask.isSuccessful()) {
+                                            assert tokenTask.getResult() != null;
+                                            navigateToPatientDetails(tokenTask.getResult().getToken());
+                                        } else {
+                                            warnAndfailureToast("getIdToken:failure", tokenTask.getException());
+                                        }
+                                    }
+                                });
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("auth", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(Sign_in.this, R.string.signin_failed, Toast.LENGTH_SHORT).show();
+                            warnAndfailureToast("signInWithEmail:failure", task.getException());
                         }
                     }
                 });
@@ -93,13 +103,19 @@ public class Sign_in extends AppCompatActivity implements View.OnClickListener {
         return true;
     }
 
-    private void navigateToPatientDetails() {
+    private void navigateToPatientDetails(String token) {
         Intent con = new Intent(Sign_in.this, View_patient_details.class);
+        con.putExtra("token", token);
         Sign_in.this.startActivity(con);
     }
 
     private String fullUsername(String id) {
         return String.format("%s@%s", id, getResources().getString(R.string.auth_email_extension));
+    }
+
+    private void warnAndfailureToast(String msg, Exception e) {
+        Log.w("auth", msg, e);
+        Toast.makeText(Sign_in.this, R.string.signin_failed, Toast.LENGTH_SHORT).show();
     }
 }
 
