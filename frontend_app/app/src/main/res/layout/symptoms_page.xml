@@ -241,7 +241,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="right"
-                app:srcCompat="@drawable/bloodyStool"/>
+                app:srcCompat="@drawable/bloody_stool"/>
         </FrameLayout>
 
         <FrameLayout
@@ -262,7 +262,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="right"
-                app:srcCompat="@drawable/whiteSpots"/>
+                app:srcCompat="@drawable/white_spots"/>
         </FrameLayout>
 
         <FrameLayout
