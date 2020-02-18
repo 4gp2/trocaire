@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "772364666256",
+    "firebase_url": "https://trocaire-4gp2.firebaseio.com",
+    "project_id": "trocaire-4gp2",
+    "storage_bucket": "trocaire-4gp2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772364666256:android:9be70a220c67beac195f15",
+        "android_client_info": {
+          "package_name": "com.example.trocaire_disease_outbreak_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772364666256-upcg7c2s7vq0s2p5i3u4vcol6tqe2vjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgXe0nWwySlF5z43DSMWhq8pF9M0Oaf90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772364666256-upcg7c2s7vq0s2p5i3u4vcol6tqe2vjl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

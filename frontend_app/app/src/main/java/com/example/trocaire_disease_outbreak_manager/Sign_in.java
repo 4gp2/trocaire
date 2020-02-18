@@ -1,29 +1,36 @@
 package com.example.trocaire_disease_outbreak_manager;
 
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Sign_in extends AppCompatActivity implements View.OnClickListener {
-
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.sign_in_page);
 
         ActionBar bar = getSupportActionBar();
@@ -43,24 +50,39 @@ public class Sign_in extends AppCompatActivity implements View.OnClickListener {
         EditText username = findViewById(R.id.et_username);
         EditText password = findViewById(R.id.et_password);
 
-        String username_string = username.getText().toString();
-        String password_string = password.getText().toString();
+        String userStr = username.getText().toString();
+        String passStr = password.getText().toString();
 
-        if (username_string.isEmpty()) {
+        if (userStr.isEmpty()) {
             username.setError("Enter Valid User ID");
             username.setBackgroundResource(R.drawable.rounded_edittext_error);
         } else {
             username.setBackgroundResource(R.drawable.rounded_edittext_box);
         }
-        if (password_string.isEmpty()) {
+
+        if (passStr.isEmpty()) {
             password.setError("Enter Valid Password");
             password.setBackgroundResource(R.drawable.rounded_edittext_error);
         } else {
             password.setBackgroundResource(R.drawable.rounded_edittext_box);
         }
-        if (!username_string.isEmpty() && !password_string.isEmpty()) {
-            Intent con = new Intent(Sign_in.this, View_patient_details.class);
-            Sign_in.this.startActivity(con);
+
+        if (!userStr.isEmpty() && !passStr.isEmpty()) {
+            Log.d("auth", fullUsername(userStr));
+            mAuth
+                .signInWithEmailAndPassword(fullUsername(userStr), passStr)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            navigateToPatientDetails();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("auth", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(Sign_in.this, R.string.signin_failed, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         }
     }
 
@@ -69,6 +91,15 @@ public class Sign_in extends AppCompatActivity implements View.OnClickListener {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void navigateToPatientDetails() {
+        Intent con = new Intent(Sign_in.this, View_patient_details.class);
+        Sign_in.this.startActivity(con);
+    }
+
+    private String fullUsername(String id) {
+        return String.format("%s@%s", id, getResources().getString(R.string.auth_email_extension));
     }
 }
 

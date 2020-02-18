@@ -29,5 +29,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="symptoms">Symptoms</string>
 
-
+    <string name="auth_email_extension">health.trocaire.org</string>
+    <string name="signin_failed">Sign-in failed, check your details</string>
 </resources>
