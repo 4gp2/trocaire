@@ -2,12 +2,18 @@ import { readFileSync } from 'fs';
 import { generate } from 'generate-password';
 import { auth, firestore, initializeApp, credential } from 'firebase-admin';
 
-import { NewUserDetails, NextID, Patient, StoredPatient, StoredDiagnosis } from './types';
+import {
+  NewUserDetails,
+  NextID,
+  Patient,
+  StoredPatient,
+  StoredDiagnosis,
+} from './types';
 
 export const initFirebase = (): void => {
-  const service = JSON.parse(readFileSync('trocaire-firebase.json', 'utf-8'));
+  const s = JSON.parse(readFileSync(process.env.SERVICE_ACCOUNT_FILE, 'utf-8'));
   initializeApp({
-    credential: credential.cert(service),
+    credential: credential.cert(s),
     databaseURL: process.env.DB_URL,
   });
 };
