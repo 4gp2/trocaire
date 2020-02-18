@@ -17,7 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Symptoms_input extends AppCompatActivity implements View.OnClickListener {
 
-    private CheckBox chkNausea, chkDiahorrea, chkHeartRate, chkMusclePain, chkDehydration;
+    private CheckBox chkNausea, chkDiahorrea, chkHeartRate, chkMusclePain, chkDehydration,
+            chkCough, chkSoreThroat, chkHeadache, chkRash, chkSweating, chkBloodyStools,
+            chkMouthSpots, chkStiffLimbs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,14 @@ public class Symptoms_input extends AppCompatActivity implements View.OnClickLis
         chkHeartRate = (CheckBox) findViewById(R.id.chkHeartRate);
         chkMusclePain = (CheckBox) findViewById(R.id.chkMusclePain);
         chkDehydration = (CheckBox) findViewById(R.id.chkDehydration);
+        chkCough = (CheckBox) findViewById(R.id.chkCough);
+        chkSoreThroat = (CheckBox) findViewById(R.id.chkSoreThroat);
+        chkHeadache = (CheckBox) findViewById(R.id.chkHeadache);
+        chkRash = (CheckBox) findViewById(R.id.chkRash);
+        chkSweating = (CheckBox) findViewById(R.id.chkSweating);
+        chkBloodyStools = (CheckBox) findViewById(R.id.chkBloodyStools);
+        chkMouthSpots = (CheckBox) findViewById(R.id.chkMouthSpots);
+        chkStiffLimbs = (CheckBox) findViewById(R.id.chkStiffLimbs);
 
 
 //        StringBuffer result = new StringBuffer();
