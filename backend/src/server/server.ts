@@ -21,8 +21,8 @@ import {
   storePatientData,
 } from '../firebase/firebase';
 
-const hello = (_req: Request, res: Response): void => {
-  res.render('home', { layout: false });
+const dashboard = (_req: Request, res: Response): void => {
+  res.render('admin_main', { layout: false });
 };
 
 const login = (_req: Request, res: Response): void =>
@@ -95,7 +95,7 @@ const isAdminLoggedIn =
   };
 
 const initRoutes = (app: Express): void => {
-  app.get('/', isAdminLoggedIn, hello);
+  app.get('/', isAdminLoggedIn, dashboard);
   app.get('/login', login);
   app.get('/api/newuser', isAdminLoggedIn, createNewUser);
 
