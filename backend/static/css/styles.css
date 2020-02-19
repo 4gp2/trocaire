@@ -1,0 +1,15 @@
+img {
+    height: 100px;
+    width: 270px;
+    padding-top: 15px;
+    padding-left: 15px;
+    position: absolute;
+}
+
+a {
+    font-size: 30px;
+}
+
+nav {
+    padding-top: 60px;
+}
