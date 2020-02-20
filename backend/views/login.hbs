@@ -54,15 +54,9 @@
   <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/daterangepicker@3.0.5/daterangepicker.min.js"></script>
   <script src="js/login/main.js"></script>
-  <!-- ----------------------------------------------------------- -->
-  <!-- ----------------------------------------------------------- -->
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
   <script>
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCizCQ2QIyUZ6ONcHwmyGmHPyB6jwQji2c",
       authDomain: "trocaire-4gp2.firebaseapp.com",
@@ -72,15 +66,12 @@
       messagingSenderId: "772364666256",
       appId: "1:772364666256:web:87b0169305869cd4195f15"
     };
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-  </script>
-  <script>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
     for (let i of document.getElementsByClassName('input100')) {
       i.value = '';
     }
-
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
     const loginButton = document.getElementById('login-button');
     loginButton.addEventListener('click', e => {
@@ -102,7 +93,7 @@
         await axios.post('/api/session', { token });
         window.location.href = window.location.origin;
       }
-    })
+    });
   </script>
 </body>
 
