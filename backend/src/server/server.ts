@@ -21,13 +21,11 @@ import {
   storePatientData,
 } from '../firebase/firebase';
 
-const dashboard = (_req: Request, res: Response): void => {
+const dashboard = (_req: Request, res: Response): void =>
   res.render('admin_main', { layout: false });
-};
 
-const datavis = (_req: Request, res: Response): void => {
+const datavis = (_req: Request, res: Response): void =>
   res.render('dash', { layout: false });
-};
 
 const login = (_req: Request, res: Response): void =>
   res.render('login', {
@@ -35,8 +33,8 @@ const login = (_req: Request, res: Response): void =>
     emailExtension: process.env.EMAIL_EXTENSION,
   });
 
-  const login2 = (_req: Request, res: Response): void =>
-    res.render('login2', { layout: false });
+const login2 = (_req: Request, res: Response): void =>
+  res.render('login2', { layout: false });
 
 const createNewUser = async (req: Request, res: Response): Promise<void> => {
   const details = await addNewUser(req.query.admin === 'true');
