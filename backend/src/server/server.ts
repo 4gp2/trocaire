@@ -21,15 +21,20 @@ import {
   storePatientData,
 } from '../firebase/firebase';
 
-const dashboard = (_req: Request, res: Response): void => {
+const dashboard = (_req: Request, res: Response): void =>
   res.render('admin_main', { layout: false });
-};
+
+const datavis = (_req: Request, res: Response): void =>
+  res.render('dash', { layout: false });
 
 const login = (_req: Request, res: Response): void =>
   res.render('login', {
     layout: false,
     emailExtension: process.env.EMAIL_EXTENSION,
   });
+
+const login2 = (_req: Request, res: Response): void =>
+  res.render('login2', { layout: false });
 
 const createNewUser = async (req: Request, res: Response): Promise<void> => {
   const details = await addNewUser(req.query.admin === 'true');
@@ -96,7 +101,9 @@ const isAdminLoggedIn =
 
 const initRoutes = (app: Express): void => {
   app.get('/', isAdminLoggedIn, dashboard);
+  app.get('/dash', datavis);
   app.get('/login', login);
+  app.get('/login2', login2);
   app.get('/api/newuser', isAdminLoggedIn, createNewUser);
 
   app.post('/api/session', newSessionCookie);
