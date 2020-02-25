@@ -1,9 +1,21 @@
-img {
+html {
+    overflow-y: hidden;
+}
+
+#trocimg {
     height: 100px;
     width: 270px;
     padding-top: 15px;
     padding-left: 15px;
     position: absolute;
+}
+
+#srchimg {
+    width: 15vh;
+    height: 15vh;
+    position: absolute;
+    top: 50%;
+    margin-top:-125px;
 }
 
 a {
@@ -12,4 +24,37 @@ a {
 
 nav {
     padding-top: 60px;
+}
+
+form {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+input {
+    margin-bottom: 30px;
+}
+
+.row {
+    min-height: 100vh;
+}
+
+.col-3 {
+    padding-inline: 25px;
+}
+
+.card {
+    padding-right: 0%;
+}
+
+.card-body {
+    overflow-y: scroll;    
+}
+
+#plist {
+    height: 50vh;
+}
+
+#pdetails {
+    height: 0vh;
 }
