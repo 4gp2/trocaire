@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,11 @@ public class Other_information extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        EditText other_information = findViewById(R.id.editTextOtherInfo);
+        String other_info = other_information.getText().toString();
+
+        // TODO Append other info to json object here!
+
         Intent con = new Intent(Other_information.this, Review_patient_details.class);
         Other_information.this.startActivity(con);
     }
