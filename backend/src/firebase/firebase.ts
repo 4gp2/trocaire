@@ -103,6 +103,13 @@ export const verifyCookie =
     }
   };
 
+export const revokeCookie = async (cookie: string): Promise<void> => {
+  const token = await verifyCookie(cookie);
+  if (token) {
+    await auth().revokeRefreshTokens(token.uid);
+  }
+};
+
 export const storePatientData = async (p: Patient): Promise<void> => {
   const ref = firestore().doc(`patients/${p.lastName},${p.firstName},${p.dob}`);
   const exists = (await ref.get()).exists;
