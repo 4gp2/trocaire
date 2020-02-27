@@ -19,6 +19,7 @@ import {
   addNewUser,
   getUserFromToken,
   storePatientData,
+  revokeCookie,
 } from '../firebase/firebase';
 
 const dashboard = (_req: Request, res: Response): void =>
@@ -45,7 +46,7 @@ const createNewUser = async (req: Request, res: Response): Promise<void> => {
   res.json({ error: false, details } as NewUserResponse);
 };
 
-const newSessionCookie = async (req: Request, res: Response): Promise<void> => {
+const newSession = async (req: Request, res: Response): Promise<void> => {
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
   const session = await createNewCookie(req.body.token, expiresIn);
   if (!session) {
@@ -58,6 +59,12 @@ const newSessionCookie = async (req: Request, res: Response): Promise<void> => {
     secure: false,
   });
   res.redirect('/');
+};
+
+const clearSession = async (req: Request, res: Response): Promise<void> => {
+  res.clearCookie('session');
+  await revokeCookie(req.cookies.session);
+  res.redirect('/login');
 };
 
 const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
@@ -105,8 +112,9 @@ const initRoutes = (app: Express): void => {
   app.get('/login', login);
   app.get('/login2', login2);
   app.get('/api/newuser', isAdminLoggedIn, createNewUser);
+  app.get('/logout', clearSession);
 
-  app.post('/api/session', newSessionCookie);
+  app.post('/api/session', newSession);
   app.post('/api/upload', uploadDiagnosis);
 };
 
