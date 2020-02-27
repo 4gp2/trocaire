@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <!-- custom stylesheet -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
   <title>Admin</title>
@@ -13,14 +15,20 @@
 
 <body>
   <div class="main container-fluid">
+    <a href="#" data-toggle="tooltip" title="Sign Out"><i class="fa fa-sign-out-alt fa-align-left"></i></a>
     <img src="images/trocaire_logo.png" id="trocimg">
     <nav class="nav nav-tabs justify-content-end">
       <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#dashboard">Dashboard</a>
       <a class="nav-item nav-link active" role="tab" data-toggle="tab" href="#patients">Patients</a>
-      <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#alert">Alerts</a>
+      <!--<a class="nav-item nav-link" role="tab" data-toggle="tab" href="#alert">Alerts</a>-->
     </nav>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane" id="dashboard"></div>
+      <div role="tabpanel" class="tab-pane" id="dashboard">
+        <!--
+          The content of the <body> tag of the dashboard to be placed here
+        -->
+      </div>
+
       <div role="tabpanel" class="tab-pane active" id="patients">
         <div class="row bg-light">
           <div class="col-3 bg-dark">
@@ -39,7 +47,7 @@
                   <input type="number" class="form-control form-control-lg" min="1" max="12" placeholder="Month">
                 </div>
                 <div class="col">
-                  <input type="number" class="form-control form-control-lg" placeholder="Year">
+                  <input type="number" class="form-control form-control-lg" placeholder="Year" id="year">
                 </div>
               </div>
               <center><button type="submit" class="btn btn-primary btn-lg">Search</button></center>
@@ -56,7 +64,8 @@
           </div>
         </div>
       </div>
-      <div role="tabpanel" class="tab-pane" id="alert"></div>
+
+      <!--<div role="tabpanel" class="tab-pane" id="alert"></div>-->
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -68,6 +77,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+  <script>
+    document.getElementById("year").setAttribute('max', (new Date()).getFullYear().toString());
+  </script>
 </body>
 
 </html>
