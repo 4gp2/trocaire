@@ -25,7 +25,7 @@ public class Pain_location extends AppCompatActivity implements View.OnClickList
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        Button next = findViewById(R.id.buttonpainlocation);
+        Button next = findViewById(R.id.btn_submitBackPain);
         next.setOnClickListener(this);
     }
 
@@ -35,9 +35,5 @@ public class Pain_location extends AppCompatActivity implements View.OnClickList
         Pain_location.this.startActivity(con);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
+
 }

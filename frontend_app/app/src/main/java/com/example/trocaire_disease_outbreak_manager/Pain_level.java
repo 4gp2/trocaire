@@ -25,13 +25,13 @@ public class Pain_level extends AppCompatActivity implements View.OnClickListene
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        Button next = findViewById(R.id.buttonpainlevel);
+        Button next = findViewById(R.id.btn_submitFrontPain);
         next.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        Intent con = new Intent(Pain_level.this, Pain_location.class);
+        Intent con = new Intent(Pain_level.this, Other_information.class);
         Pain_level.this.startActivity(con);
     }
 

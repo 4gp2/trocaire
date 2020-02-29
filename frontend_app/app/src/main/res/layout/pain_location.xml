@@ -1,14 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0B85C8">
 
-    <Button
-        android:id="@+id/buttonpainlocation"
-        style="@style/button_style"
-        android:textColor="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit" />
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0B85C8"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0B85C8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="700dp"
+            android:paddingTop="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_painBack"
+                android:layout_width="match_parent"
+                android:layout_height='match_parent'
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/body_white" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_leftHand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintVertical_bias="0.53"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_rightHand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.92"
+                app:layout_constraintVertical_bias="0.53"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_leftForearm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.17"
+                app:layout_constraintVertical_bias="0.39"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_rightForearm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.83"
+                app:layout_constraintVertical_bias="0.39"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_leftUpperArm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintVertical_bias="0.24"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_rightUpperArm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintVertical_bias="0.24"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_Head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_bias="0.00"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_Neck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_bias="0.1"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_upperBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_bias="0.24"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_leftLowerBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.35"
+                app:layout_constraintVertical_bias="0.45"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_rightLowerBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintVertical_bias="0.45"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_buttocks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_bias="0.54"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_rightThigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.62"
+                app:layout_constraintVertical_bias="0.64"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+            <CheckBox
+                android:id="@+id/chk_painBack_leftThigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.36"
+                app:layout_constraintVertical_bias="0.64"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_leftCalf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.36"
+                app:layout_constraintVertical_bias="0.85"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+
+            <CheckBox
+                android:id="@+id/chk_painBack_rightCalf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.64"
+                app:layout_constraintVertical_bias="0.85"
+                tools:layout_editor_absoluteX="168dp"
+                tools:layout_editor_absoluteY="248dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            style="@style/rounded_edittext_style"
+            android:paddingTop="10dp"
+            >
+
+            <LinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/mild"/>
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/moderate"/>
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/severe"/>
+
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_gravity="left"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/very_severe"/>
+
+
+            </LinearLayout>
+            <SeekBar
+                android:id="@+id/backPainLevelSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:max="100"
+                android:progress="10"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_submitBackPain"
+            style="@style/button_style"
+            android:textColor="#ffffff"
+            android:layout_width="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_height="wrap_content"
+            android:text="next" />
+
+    </LinearLayout>
+
+</ScrollView>
+
