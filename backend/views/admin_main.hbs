@@ -15,7 +15,9 @@
 
 <body>
   <div class="main container-fluid">
-    <a href="#" data-toggle="tooltip" title="Sign Out"><i class="fa fa-sign-out-alt fa-align-left"></i></a>
+    <a href="#" data-toggle="tooltip" title="Sign Out">
+      <i class="fa fa-sign-out-alt fa-align-left" id="logout"></i>
+    </a>
     <img src="images/trocaire_logo.png" id="trocimg">
     <nav class="nav nav-tabs justify-content-end">
       <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#dashboard">Dashboard</a>
@@ -75,9 +77,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
-  <script>
-    document.getElementById("year").setAttribute('max', (new Date()).getFullYear().toString());
-  </script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="js/dashboard/main.js"></script>
 </body>
 
 </html>

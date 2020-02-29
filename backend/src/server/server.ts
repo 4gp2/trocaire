@@ -59,8 +59,8 @@ const newSession = async (req: Request, res: Response): Promise<void> => {
 };
 
 const clearSession = async (req: Request, res: Response): Promise<void> => {
-  res.clearCookie('session');
   await revokeCookie(req.cookies.session);
+  res.clearCookie('session');
   res.redirect('/login');
 };
 

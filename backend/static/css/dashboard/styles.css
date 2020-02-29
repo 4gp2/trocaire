@@ -5,15 +5,12 @@ html {
 .fa-sign-out-alt {
   position: absolute;
   left: 95%;
-  padding: 0.1em;
-  color: white;
-  background-color: black;
+  padding: 0.5em;
 }
 
 #trocimg {
-  height: 100px;
-  width: 270px;
-  margin-top: 1.8em;
+  width: 300px;
+  margin-top: 2em;
   padding-left: 15px;
   position: absolute;
 }
