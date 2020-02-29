@@ -34,9 +34,6 @@ const login = (_req: Request, res: Response): void =>
     emailExtension: process.env.EMAIL_EXTENSION,
   });
 
-const login2 = (_req: Request, res: Response): void =>
-  res.render('login2', { layout: false });
-
 const createNewUser = async (req: Request, res: Response): Promise<void> => {
   const details = await addNewUser(req.query.admin === 'true');
   if (!details) {
@@ -110,7 +107,6 @@ const initRoutes = (app: Express): void => {
   app.get('/', isAdminLoggedIn, dashboard);
   app.get('/dash', datavis);
   app.get('/login', login);
-  app.get('/login2', login2);
   app.get('/api/newuser', isAdminLoggedIn, createNewUser);
   app.get('/logout', clearSession);
 
