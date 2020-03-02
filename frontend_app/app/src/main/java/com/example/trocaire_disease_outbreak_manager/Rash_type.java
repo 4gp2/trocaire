@@ -12,12 +12,24 @@ import android.widget.CheckBox;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Rash_type extends AppCompatActivity implements View.OnClickListener {
+
+    private JSONObject data, symptoms;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rash_type);
+
+        try {
+            data = new JSONObject(getIntent().getStringExtra("data"));
+            symptoms = new JSONObject(getIntent().getStringExtra("symptoms"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ActionBar bar = getSupportActionBar();
         assert bar != null;
@@ -47,7 +59,30 @@ public class Rash_type extends AppCompatActivity implements View.OnClickListener
         Boolean small_spots_isChecked = small_spots.isChecked();
         Boolean small_scaley_isChecked = small_scaley.isChecked();
 
+        String rash = "";
+        if (clustered_isChecked){
+            rash = "Clustered";
+        }else if(large_patches_isChecked){
+            rash = "Large Patches";
+        }else if(mixture_isChecked){
+            rash = "Mixture";
+        }else if(single_scaley_isChecked){
+            rash =  "Single Scaly";
+        }else if(small_spots_isChecked){
+            rash = "Small Spots";
+        }else if(small_scaley_isChecked){
+            rash = "Small Scaly";
+        }
+
+        try {
+            symptoms.put("rashType", rash);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         Intent con = new Intent(Rash_type.this, Rash_locator_front.class);
+        con.putExtra("data", data.toString());
+        con.putExtra("symptoms", symptoms.toString());
         Rash_type.this.startActivity(con);
     }
 

@@ -17,6 +17,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +40,6 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-
         Button submit = findViewById(R.id.btn_submit_patient_details);
         submit.setOnClickListener(this);
     }
@@ -45,7 +47,6 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
     //Run when button is clicked
     @Override
     public void onClick(View view) {
-
 
         EditText  village = findViewById(R.id.et_village);
         EditText fullName = findViewById(R.id.et_full_name);
@@ -83,7 +84,6 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
             village.setBackgroundResource(R.drawable.rounded_edittext_box);
         }
 
-
         if (fullName_string.isEmpty()) {
             fullName.setError("Enter Valid Name");
             fullName.setBackgroundResource(R.drawable.rounded_edittext_error);
@@ -98,14 +98,31 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
 
         else if (!fullName_string.isEmpty() && !village_string.isEmpty()) {
 
+            JSONObject data = new JSONObject();
+
 
             int selectedId = radioSexGroup.getCheckedRadioButtonId();
             RadioButton radioSexButton = findViewById(selectedId);
-            // TODO pass into JSON object here
+
+            String first_name = fullName_string.substring(0, fullName_string.indexOf(' '));
+            String last_name = fullName_string.substring(fullName_string.indexOf(' ') + 1);
+
+            try {
+                data.put("firstName", first_name);
+                data.put("lastName", last_name);
+                assert date != null;
+                data.put("dob", date.toString());
+                data.put("village", village_string);
+                data.put("sex", radioSexButton.getText());
+                data.put("date", Calendar.getInstance().getTime());
+            }
+            catch (JSONException e) {
+                    e.printStackTrace();
+            }
             Intent con = new Intent(view.getContext(), Symptoms_input.class);
+            con.putExtra("data", data.toString());
             view.getContext().startActivity(con);
         }
-
     }
 
 
