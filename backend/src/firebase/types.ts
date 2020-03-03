@@ -31,6 +31,9 @@ export interface StoredPatient {
   diagnoses: Required<StoredDiagnosis[]>;
 }
 
+export type PatientIdentifier =
+  Pick<StoredPatient, 'firstName' | 'lastName' | 'dob'>;
+
 export type StoredDiagnosis =
   Pick<Patient, 'latitude' | 'longitude' | 'date' | 'symptoms'>;
 

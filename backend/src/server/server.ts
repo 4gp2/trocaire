@@ -11,7 +11,7 @@ import {
 } from 'express-serve-static-core';
 
 import { UserClaims, DiagnosisUpload } from '../firebase/types';
-import { NewUserResponse } from './types';
+import { NewUserResponse, GetPatientResponse } from './types';
 import {
   createNewCookie,
   verifyCookie,
@@ -20,6 +20,7 @@ import {
   getUserFromToken,
   storePatientData,
   revokeCookie,
+  getPatientRecord,
 } from '../firebase/firebase';
 
 const dashboard = (_req: Request, res: Response): void =>
@@ -79,6 +80,39 @@ const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const fetchPatient = async (req: Request, res: Response): Promise<void> => {
+  const record = await getPatientRecord({
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    dob: new Date(
+      parseInt(req.body.year, 10),
+      parseInt(req.body.month, 10) - 1,
+      parseInt(req.body.day, 10),
+    ),
+  });
+
+  if (record) {
+    res.json({ error: false, patient: record } as GetPatientResponse);
+  }
+  res.json({ error: true } as GetPatientResponse);
+};
+
+const isAdminIDTokenValid =
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const user = await getUserFromToken(req.body.token);
+    if (!user) {
+      res.sendStatus(401);
+      return;
+    }
+
+    const claims = user.customClaims as UserClaims;
+    if (claims && claims.isAdmin) {
+      return next();
+    }
+
+    res.sendStatus(401);
+  };
+
 const isAdminLoggedIn =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (!req.cookies.session) {
@@ -107,11 +141,12 @@ const initRoutes = (app: Express): void => {
   app.get('/', isAdminLoggedIn, dashboard);
   app.get('/dash', datavis);
   app.get('/login', login);
-  app.get('/api/newuser', isAdminLoggedIn, createNewUser);
   app.get('/logout', clearSession);
 
   app.post('/api/session', newSession);
   app.post('/api/upload', uploadDiagnosis);
+  app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
+  app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
 };
 
 export const initServer = (): Express => {

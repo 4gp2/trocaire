@@ -8,6 +8,7 @@ import {
   Patient,
   StoredPatient,
   StoredDiagnosis,
+  PatientIdentifier,
 } from './types';
 
 export const initFirebase = (): void => {
@@ -114,6 +115,15 @@ export const storePatientData = async (p: Patient): Promise<void> => {
   const ref = firestore().doc(`patients/${p.lastName},${p.firstName},${p.dob}`);
   const exists = (await ref.get()).exists;
   if (exists) {
+    await ref.update({
+      diagnoses: firestore.FieldValue.arrayUnion({
+        latitude: p.latitude,
+        longitude: p.longitude,
+        date: p.date,
+        symptoms: p.symptoms,
+      } as StoredDiagnosis),
+    });
+  } else {
     await ref.set({
       firstName: p.firstName,
       lastName: p.lastName,
@@ -127,14 +137,20 @@ export const storePatientData = async (p: Patient): Promise<void> => {
         symptoms: p.symptoms,
       }],
     } as StoredPatient);
-    return;
   }
-  await ref.update({
-    diagnoses: firestore.FieldValue.arrayUnion({
-      latitude: p.latitude,
-      longitude: p.longitude,
-      date: p.date,
-      symptoms: p.symptoms,
-    } as StoredDiagnosis),
-  });
 };
+
+export const getPatientRecord =
+  async (iden: PatientIdentifier): Promise<StoredPatient | null> => {
+    const doc = await firestore().doc([
+      'patients/',
+      `${iden.lastName}`,
+      `${iden.firstName}`,
+      `${iden.dob.toISOString().slice(0, 10)}`,
+    ].join('')).get();
+
+    if (doc.exists) {
+      return doc.data() as StoredPatient;
+    }
+    return null;
+  };
