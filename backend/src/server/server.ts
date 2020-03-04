@@ -84,11 +84,7 @@ const fetchPatient = async (req: Request, res: Response): Promise<void> => {
   const record = await getPatientRecord({
     lastName: req.body.lastName,
     firstName: req.body.firstName,
-    dob: new Date(
-      parseInt(req.body.year, 10),
-      parseInt(req.body.month, 10) - 1,
-      parseInt(req.body.day, 10),
-    ),
+    dob: new Date(`${req.body.year}-${req.body.month}-${req.body.day}`),
   });
 
   if (record) {
@@ -113,7 +109,7 @@ const isAdminIDTokenValid =
     res.sendStatus(401);
   };
 
-const isAdminLoggedIn =
+const isAdminCookieLoggedIn =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (!req.cookies.session) {
       return res.redirect('/login');
@@ -138,7 +134,7 @@ const isAdminLoggedIn =
   };
 
 const initRoutes = (app: Express): void => {
-  app.get('/', isAdminLoggedIn, dashboard);
+  app.get('/', isAdminCookieLoggedIn, dashboard);
   app.get('/dash', datavis);
   app.get('/login', login);
   app.get('/logout', clearSession);
