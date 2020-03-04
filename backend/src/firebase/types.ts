@@ -1,8 +1,8 @@
 export class NewUserDetails {
-  uid: Required<string>;
-  email: Required<string>;
-  initialPassword: Required<string>;
-  isAdmin: Required<boolean>;
+  uid: string;
+  email: string;
+  initialPassword: string;
+  isAdmin: boolean;
 }
 
 export class AuthToken {
@@ -23,12 +23,12 @@ export interface DiagnosisUpload {
 }
 
 export interface StoredPatient {
-  firstName: Required<string>;
-  lastName: Required<string>;
-  dob: Required<Date>;
-  village: Required<string>;
-  sex: Required<string>;
-  diagnoses: Required<StoredDiagnosis[]>;
+  firstName: string;
+  lastName: string;
+  dob: Date;
+  village: string;
+  sex: string;
+  diagnoses: StoredDiagnosis[];
 }
 
 export type PatientIdentifier =
