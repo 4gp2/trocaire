@@ -1,7 +1,4 @@
-const patient_list_container = document.getElementById('plist');
-const patient_template = document.querySelector('template').content.cloneNode(true);
-const patient_details_container = document.getElementById('pdetails');
-var database_response = null;
+let dbRes;
 
 const initFirebase = () => {
   firebase.initializeApp({
@@ -27,44 +24,64 @@ const bootstrapElements = () => {
     await axios.get('/logout');
     window.location.href = window.location.origin;
   });
+
+  const patientListContainer = document.getElementById('plist');
+  const patientTemplate = document
+    .querySelector('template')
+    .content.cloneNode(true);
+  const patientDetailsContainer = document.getElementById('pdetails');
+
+  document.getElementById('searchB').addEventListener('click', async e => {
+    e.preventDefault();
+    patientListContainer.innerHTML = '';
+    const lastName = document.getElementById('lName').value;
+    const firstName = document.getElementById('fName').value;
+    const year = document.getElementById('year').value.toString();
+    const month = document.getElementById('month').value.toString();
+    const day = document.getElementById('day').value.toString();
+
+    if (!lastName || !firstName || !year || !month || !day) {
+      return;
+    }
+
+    const token = await firebase.auth().currentUser.getIdToken(true);
+    dbRes = await axios.post('/api/patient', {
+      token,
+      lastName,
+      firstName,
+      year,
+      month,
+      day,
+    });
+
+    if (dbRes.data.error) {
+      patientListContainer.appendChild(
+        patientTemplate.getElementById('noPatientFound'),
+      );
+      console.log('no search found');
+    } else {
+      const nameFound = patientTemplate.getElementById('pNameFound');
+      nameFound.textContent = `${dbRes.data.firstName} ${dbRes.data.lastName}`;
+      patientListContainer.appendChild(nameFound);
+    }
+    document.getElementById('plist-container').hidden = false;
+  });
+
+  patientTemplate
+    .getElementById('pNameFound')
+    .addEventListener('click', async e => {
+      e.preventDefault();
+      patientDetailsContainer.appendChild(document.createElement('form'));
+      dbRes.data.forEach(element => {
+        const contentRow = patientTemplate.getElementById('pContentRow');
+        contentRow.querySelector('label').textContent = element.key;
+        contentRow.querySelector('input').setAttribute('value', element.value);
+        patientDetailsContainer
+          .querySelector('form')
+          .appendChild(patientTemplate.getElementById('pContentRow'));
+      });
+    });
 };
-
-document.getElementById('searchB').addEventListener('click', async e => {
-  e.preventDefault();
-  patient_list_container.innerHTML = "";
-
-  const token = await firebase.auth().currentUser.getIdToken(true);
-  database_response = await axios.post('/api/patient', {
-    token,
-    lastName: document.getElementById('lName').value,
-    firstName: document.getElementById('fName').value,
-    year: document.getElementById('year').value.toString(),
-    month: document.getElementById('month').value.toString(),
-    day: document.getElementById('day').value.toString(),
-  });
-
-  if(database_response.data.error) {
-    patient_list_container.appendChild(patient_template.getElementById('noPatientFound'));
-    console.log("no search found");
-    return;
-  }
-
-  patient_template.getElementById('pNameFound').textContent = database_response.data.firstName + " " + database_response.data.lastName;
-  patient_list_container.appendChild(patient_template.getElementById('pNameFound'));
-});
-
-patient_template.getElementById('pNameFound').addEventListener('click', async e => {
-  e.preventDefault();
-  patient_details_container.appendChild(document.createElement('form'));
-  database_response.data.forEach(element => {
-    patient_template.getElementById('pContentRow').querySelector('label').textContent = element.key;
-    patient_template.getElementById('pContentRow').querySelector('input').setAttribute('value', element.value);
-    patient_details_container.querySelector('form').appendChild(patient_template.getElementById('pContentRow'));
-  });
-});
-
-// console.log(axios.get("https://jsonplaceholder.typicode.com/users"));
-
 
 initFirebase();
 bootstrapElements();
