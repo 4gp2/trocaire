@@ -11,14 +11,42 @@
   <!-- custom stylesheet -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/dashboard/styles.css">
   <title>Admin</title>
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const logout = async () => {
+      await firebase.auth().signOut();
+      await axios.get('/logout');
+      window.location.href = window.location.origin;
+    };
+
+    firebase.initializeApp({
+      apiKey: 'AIzaSyCizCQ2QIyUZ6ONcHwmyGmHPyB6jwQji2c',
+      authDomain: 'trocaire-4gp2.firebaseapp.com',
+      databaseURL: 'https://trocaire-4gp2.firebaseio.com',
+      projectId: 'trocaire-4gp2',
+      storageBucket: 'trocaire-4gp2.appspot.com',
+      messagingSenderId: '772364666256',
+      appId: '1:772364666256:web:87b0169305869cd4195f15',
+    });
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById('main-container').hidden = false;
+      } else {
+        logout();
+      }
+    });
+  </script>
 </head>
 
 <body>
-  <div class="main container-fluid">
+  <div class="main container-fluid" id="main-container" hidden>
     <img src="images/trocaire_logo.png" id="trocimg">
     <nav class="nav nav-tabs justify-content-end">
-      <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#dashboard">Dashboard</a>
-      <a class="nav-item nav-link active" role="tab" data-toggle="tab" href="#patients">Patients</a>
+      <a class="nav-item nav-link active" role="tab" data-toggle="tab" href="#dashboard">Dashboard</a>
+      <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#patients">Patients</a>
       <a class="nav-item nav-link" href="" id="logout">Logout</a>
       <!--<a class="nav-item nav-link" role="tab" data-toggle="tab" href="#alert">Alerts</a>-->
     </nav>
@@ -86,9 +114,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="js/dashboard/main.js"></script>
 </body>
 

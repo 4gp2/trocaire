@@ -45,7 +45,7 @@ const createNewUser = async (req: Request, res: Response): Promise<void> => {
 };
 
 const newSession = async (req: Request, res: Response): Promise<void> => {
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  const expiresIn = 60 * 60 * 24 * 7 * 1000;
   const session = await createNewCookie(req.body.token, expiresIn);
   if (!session) {
     res.sendStatus(401);
