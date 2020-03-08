@@ -67,3 +67,7 @@ input {
   height: 16px;
   vertical-align: inherit;
 }
+
+#password-alert {
+  width: 700px;
+}
