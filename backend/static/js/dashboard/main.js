@@ -1,5 +1,32 @@
 let dbRes;
 
+const disableCreateAccountButton = disable => {
+  document.getElementById('create-admin').disabled = disable;
+  document.getElementById('create-worker').disabled = disable;
+};
+
+const createNewUser = async admin => {
+  const token = await firebase.auth().currentUser.getIdToken(true);
+  const res = await axios.post('/api/newuser', { admin, token });
+  if (res.error) {
+    return;
+  }
+  if (res.data.error) {
+    return;
+  }
+
+  document.getElementById('acc-type').textContent = res.data.details.isAdmin
+    ? 'Admin'
+    : 'Health worker';
+  document.getElementById('acc-uid').textContent = res.data.details.uid;
+  document.getElementById('acc-password').textContent =
+    res.data.details.initialPassword;
+
+  document.getElementById('user-details').hidden = false;
+  document.getElementById('password-alert-area').hidden = false;
+  disableCreateAccountButton(true);
+};
+
 const bootstrapElements = () => {
   document
     .getElementById('year')
@@ -66,6 +93,17 @@ const bootstrapElements = () => {
           .appendChild(patientTemplate.getElementById('pContentRow'));
       });
     });
+
+  document.getElementById('password-ack').addEventListener('click', _e => {
+    disableCreateAccountButton(false);
+    document.getElementById('password-alert-area').hidden = true;
+  });
+  document
+    .getElementById('create-admin')
+    .addEventListener('click', async _e => await createNewUser(true));
+  document
+    .getElementById('create-worker')
+    .addEventListener('click', async _e => await createNewUser(false));
 };
 
 const bootstrapGraphs = () => {

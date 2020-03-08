@@ -36,7 +36,7 @@ const login = (_req: Request, res: Response): void =>
   });
 
 const createNewUser = async (req: Request, res: Response): Promise<void> => {
-  const details = await addNewUser(req.query.admin === 'true');
+  const details = await addNewUser(req.body.admin);
   if (!details) {
     res.json({ error: true } as NewUserResponse);
     return;
@@ -66,13 +66,14 @@ const clearSession = async (req: Request, res: Response): Promise<void> => {
 };
 
 const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
-  const user = await getUserFromToken(req.body.token);
-  if (!user) {
-    res.sendStatus(401);
-  }
-
   try {
     const data = JSON.parse(req.body.data) as DiagnosisUpload;
+    const user = await getUserFromToken(data.token);
+    if (!user) {
+      res.sendStatus(401);
+      return;
+    }
+
     data.patients.forEach(async (p) => await storePatientData(p));
     res.sendStatus(201);
   } catch (e) {

@@ -26,15 +26,16 @@ export const addNewUser =
     const doc = await ref.get();
     const initPass = generate({
       length: parseInt(process.env.INITIAL_PASSWORD_LENGTH, 10),
+      uppercase: false,
       numbers: true,
     });
-    let useID = 0;
+    let useID = 1;
 
     if (doc.exists) {
       const data = doc.data() as NextID;
       useID = data.next;
     } else {
-      await ref.set({ next: 0 });
+      await ref.set({ next: 1 });
     }
 
     const idString = useID.toString();

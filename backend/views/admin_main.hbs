@@ -52,6 +52,7 @@
     <nav class="nav nav-tabs justify-content-end">
       <a class="nav-item nav-link active" role="tab" data-toggle="tab" href="#dashboard">Dashboard</a>
       <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#patients">Patients</a>
+      <a class="nav-item nav-link" role="tab" data-toggle="tab" href="#users">Users</a>
       <a class="nav-item nav-link" href="" id="logout">Logout</a>
       <!--<a class="nav-item nav-link" role="tab" data-toggle="tab" href="#alert">Alerts</a>-->
     </nav>
@@ -237,6 +238,31 @@
             <div class="card-body bg-light" id="pdetails">
               <center><img src="images/search_icon.png" id="srchimg"></center>
             </div>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="users">
+        <div class="pt-3">
+          <button type="button" class="btn btn-dark" id="create-admin">Create new admin account</button>
+          <button type="button" class="btn btn-primary" id="create-worker">Create new health worker account</button>
+        </div>
+        <hr>
+        <div id="user-details" hidden>
+          <div class="pt-3">
+            <h3>New account created</h3>
+            <br>
+            <strong>Type:</strong>
+            <p id="acc-type"></p>
+            <strong>User ID:</strong>
+            <pre id="acc-uid"></pre>
+            <strong>Password:</strong>
+            <pre id="acc-password"></pre>
+          </div>
+          <hr>
+          <div id="password-alert-area">
+            <div class="alert alert-danger" id="password-alert" role="alert">Please store the password safely as this
+              information will never be displayed again.<br>Click the button below to acknowledge.</div>
+            <button type="button" class="btn btn-success" id="password-ack">Done</button>
           </div>
         </div>
       </div>
