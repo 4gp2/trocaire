@@ -39,5 +39,6 @@
         <activity android:name=".Other_information" />
         <activity android:name=".Review_patient_details" />
         <activity android:name=".Update_patient_details" />
+        <activity android:name=".Language_settings" />
     </application>
 </manifest>

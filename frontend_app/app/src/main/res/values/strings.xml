@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">Trocaire DOM</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Language Settings</string>
 
     <!--    Symptoms    -->
     <string name="chk_nausea">Nausea/Vomiting</string>
