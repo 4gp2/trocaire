@@ -146,7 +146,67 @@ const bootstrapGraphs = () => {
       },
     },
   });
+
+
+  new Chart(document.getElementById('chart3'), {
+    type: 'radar',
+    data: {
+      labels: [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ],
+      datasets: [
+        {
+          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+          lineTension: 0,
+          backgroundColor: 'transparent',
+          borderColor: '#007bff',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+    },
+  });
+
+};
+
+const bootstrapMap = () => {
+
+  // initialize Leaflet
+      var map = L.map('map').setView({lon: 0, lat: 0}, 2);
+
+      // add the OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+      }).addTo(map);
+      //
+      // // show the scale bar on the lower left corner
+      L.control.scale().addTo(map);
+
+      // // show a marker on the map
+      L.marker({lon: 0, lat: 0}).bindPopup('The center of the world').addTo(map);
 };
 
 bootstrapElements();
 bootstrapGraphs();
+bootstrapMap();

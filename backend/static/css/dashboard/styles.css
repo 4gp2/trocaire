@@ -17,6 +17,14 @@ html {
   margin-top: -125px;
 }
 
+#map {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 600px;  
+  width: 100%;
+}
+
 a {
   font-size: 20px;
 }
