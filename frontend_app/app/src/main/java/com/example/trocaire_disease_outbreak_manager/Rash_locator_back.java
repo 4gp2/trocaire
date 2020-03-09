@@ -1,6 +1,5 @@
 package com.example.trocaire_disease_outbreak_manager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,17 +8,28 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 public class Rash_locator_back extends AppCompatActivity implements View.OnClickListener {
+
+    private JSONObject data, symptoms;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rash_locator_front);
+
+        try {
+            data = new JSONObject(getIntent().getStringExtra("data"));
+            symptoms = new JSONObject(getIntent().getStringExtra("symptoms"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ActionBar bar = getSupportActionBar();
         assert bar != null;
@@ -30,7 +40,6 @@ public class Rash_locator_back extends AppCompatActivity implements View.OnClick
 
         Button next = findViewById(R.id.button_next);
         next.setOnClickListener(this);
-
     }
 
 
@@ -51,17 +60,36 @@ public class Rash_locator_back extends AppCompatActivity implements View.OnClick
         CheckBox genitals = findViewById(R.id.checkBox12);
         CheckBox left_knee= findViewById(R.id.checkBox13);
         CheckBox right_knee = findViewById(R.id.checkBox14);
-        CheckBox right_foot = findViewById(R.id.checkBox14);
-        CheckBox left_foot = findViewById(R.id.checkBox14);
+        CheckBox right_foot = findViewById(R.id.checkBox15);
+        CheckBox left_foot = findViewById(R.id.checkBox16);
 
-
-        // TODO Add to Json object here for all the Rash locations
-
-        Toast.makeText(getApplication(), Boolean.toString(head.isChecked()),
-                Toast.LENGTH_LONG).show();
+        JSONObject location = new JSONObject();
+        try {
+            location.put("head", head.isChecked());
+            location.put("neck", neck.isChecked());
+            location.put("leftShoulder", left_shoulder.isChecked());
+            location.put("rightShoulder", right_shoulder.isChecked());
+            location.put("leftArm", left_elbow.isChecked());
+            location.put("rightArm", right_elbow.isChecked());
+            location.put("leftHand", left_hand.isChecked());
+            location.put("rightHand", right_hand.isChecked());
+            location.put("centerChest", center_chest.isChecked());
+            location.put("leftHip", left_hip.isChecked());
+            location.put("rightHip", right_hip.isChecked());
+            location.put("genitals", genitals.isChecked());
+            location.put("leftKnee", left_knee.isChecked());
+            location.put("rightKnee", right_knee.isChecked());
+            location.put("leftFoot", left_foot.isChecked());
+            location.put("rightFoot", right_foot.isChecked());
+            symptoms.put("rashLocationBack", location);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Intent con = new Intent(getApplicationContext(), Pain_level.class);
         con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        con.putExtra("data", data.toString());
+        con.putExtra("symptoms", symptoms.toString());
         getApplicationContext().startActivity(con);
     }
 

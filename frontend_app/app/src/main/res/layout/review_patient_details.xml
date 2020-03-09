@@ -14,12 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ScrollView
+        android:padding="5dp"
         android:id="@+id/sv_review"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/buttonreviewdetails"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 

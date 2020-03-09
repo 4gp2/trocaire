@@ -11,7 +11,7 @@ import {
 } from 'express-serve-static-core';
 
 import { UserClaims, DiagnosisUpload } from '../firebase/types';
-import { NewUserResponse } from './types';
+import { NewUserResponse, GetPatientResponse } from './types';
 import {
   createNewCookie,
   verifyCookie,
@@ -20,6 +20,7 @@ import {
   getUserFromToken,
   storePatientData,
   revokeCookie,
+  getPatientRecord,
 } from '../firebase/firebase';
 
 const dashboard = (_req: Request, res: Response): void =>
@@ -35,7 +36,7 @@ const login = (_req: Request, res: Response): void =>
   });
 
 const createNewUser = async (req: Request, res: Response): Promise<void> => {
-  const details = await addNewUser(req.query.admin === 'true');
+  const details = await addNewUser(req.body.admin);
   if (!details) {
     res.json({ error: true } as NewUserResponse);
     return;
@@ -44,7 +45,7 @@ const createNewUser = async (req: Request, res: Response): Promise<void> => {
 };
 
 const newSession = async (req: Request, res: Response): Promise<void> => {
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  const expiresIn = 60 * 60 * 24 * 7 * 1000;
   const session = await createNewCookie(req.body.token, expiresIn);
   if (!session) {
     res.sendStatus(401);
@@ -65,13 +66,14 @@ const clearSession = async (req: Request, res: Response): Promise<void> => {
 };
 
 const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
-  const user = await getUserFromToken(req.body.token);
-  if (!user) {
-    res.sendStatus(401);
-  }
-
   try {
     const data = JSON.parse(req.body.data) as DiagnosisUpload;
+    const user = await getUserFromToken(data.token);
+    if (!user) {
+      res.sendStatus(401);
+      return;
+    }
+
     data.patients.forEach(async (p) => await storePatientData(p));
     res.sendStatus(201);
   } catch (e) {
@@ -79,7 +81,36 @@ const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const isAdminLoggedIn =
+const fetchPatient = async (req: Request, res: Response): Promise<void> => {
+  const record = await getPatientRecord({
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    dob: new Date(`${req.body.year}-${req.body.month}-${req.body.day}`),
+  });
+
+  if (record) {
+    res.json({ error: false, patient: record } as GetPatientResponse);
+  }
+  res.json({ error: true } as GetPatientResponse);
+};
+
+const isAdminIDTokenValid =
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const user = await getUserFromToken(req.body.token);
+    if (!user) {
+      res.sendStatus(401);
+      return;
+    }
+
+    const claims = user.customClaims as UserClaims;
+    if (claims && claims.isAdmin) {
+      return next();
+    }
+
+    res.sendStatus(401);
+  };
+
+const isAdminCookieLoggedIn =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (!req.cookies.session) {
       return res.redirect('/login');
@@ -104,14 +135,15 @@ const isAdminLoggedIn =
   };
 
 const initRoutes = (app: Express): void => {
-  app.get('/', isAdminLoggedIn, dashboard);
+  app.get('/', isAdminCookieLoggedIn, dashboard);
   app.get('/dash', datavis);
   app.get('/login', login);
-  app.get('/api/newuser', isAdminLoggedIn, createNewUser);
   app.get('/logout', clearSession);
 
   app.post('/api/session', newSession);
   app.post('/api/upload', uploadDiagnosis);
+  app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
+  app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
 };
 
 export const initServer = (): Express => {

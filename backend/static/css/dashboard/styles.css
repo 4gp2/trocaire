@@ -2,15 +2,9 @@ html {
   overflow-y: hidden;
 }
 
-.fa-sign-out-alt {
-  position: absolute;
-  left: 95%;
-  padding: 0.5em;
-}
-
 #trocimg {
-  width: 300px;
-  margin-top: 2em;
+  width: 240px;
+  margin-top: 1.5em;
   padding-left: 15px;
   position: absolute;
 }
@@ -23,21 +17,29 @@ html {
   margin-top: -125px;
 }
 
+#map {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 600px;  
+  width: 100%;
+}
+
 a {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 nav {
-  padding-top: 6em;
+  padding-top: 4em;
 }
 
 form {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 input {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .row {
@@ -62,4 +64,18 @@ input {
 
 #pdetails {
   height: 0vh;
+}
+
+#searchB {
+  width: 200px;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: inherit;
+}
+
+#password-alert {
+  width: 700px;
 }

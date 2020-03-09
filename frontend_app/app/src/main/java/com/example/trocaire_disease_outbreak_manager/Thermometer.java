@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,11 +23,19 @@ public class Thermometer extends AppCompatActivity {
     private String DEGREES_CELSIUS = (char) 0x00B0 + "C ";
     private TextView tView;
     private double temperature = 37.5;
+    private JSONObject data, symptoms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thermometer);
+
+        try {
+            data = new JSONObject(getIntent().getStringExtra("data"));
+            symptoms = new JSONObject(getIntent().getStringExtra("symptoms"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ActionBar bar = getSupportActionBar();
         assert bar != null;
@@ -81,11 +91,16 @@ public class Thermometer extends AppCompatActivity {
                 if (text_temp <= 42 && text_temp >=32){
                     tView.setBackgroundResource(R.drawable.rounded_edittext_box);
                     String temperature_string = Double.toString(text_temp);
-                    Toast.makeText(getApplication(), temperature_string,
-                            Toast.LENGTH_LONG).show();
+                    try {
+                        symptoms.put("temperature", temperature_string);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                     Intent con = new Intent(getApplicationContext(), Rash_type.class);
                     con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    con.putExtra("data", data.toString());
+                    con.putExtra("symptoms", symptoms.toString());
                     getApplicationContext().startActivity(con);
 
                 }else{

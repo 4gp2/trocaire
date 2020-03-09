@@ -1,8 +1,8 @@
 export class NewUserDetails {
-  uid: Required<string>;
-  email: Required<string>;
-  initialPassword: Required<string>;
-  isAdmin: Required<boolean>;
+  uid: string;
+  email: string;
+  initialPassword: string;
+  isAdmin: boolean;
 }
 
 export class AuthToken {
@@ -19,17 +19,21 @@ export class NextID {
 }
 
 export interface DiagnosisUpload {
+  token: string;
   patients: Patient[];
 }
 
 export interface StoredPatient {
-  firstName: Required<string>;
-  lastName: Required<string>;
-  dob: Required<Date>;
-  village: Required<string>;
-  sex: Required<string>;
-  diagnoses: Required<StoredDiagnosis[]>;
+  firstName: string;
+  lastName: string;
+  dob: Date;
+  village: string;
+  sex: string;
+  diagnoses: StoredDiagnosis[];
 }
+
+export type PatientIdentifier =
+  Pick<StoredPatient, 'firstName' | 'lastName' | 'dob'>;
 
 export type StoredDiagnosis =
   Pick<Patient, 'latitude' | 'longitude' | 'date' | 'symptoms'>;
@@ -55,14 +59,44 @@ export interface Symptoms {
   dryCough: boolean;
   soreThroat: boolean;
   headache: boolean;
-  rash: boolean;
-  redEyes: boolean;
+  sweating: boolean;
+  bloodyStool: boolean;
+  mouthSpots: boolean;
+  stiffLimbs: boolean;
   temperature: number;
-  painType: string;
+  pain: Pain;
+  rash: Rash;
+}
+
+export interface Pain {
   painDiscomfortLevel: number;
-  painLocation: { [key: string]: boolean };
+  painLocation: SymptomLocation;
+}
+
+export interface Rash {
+  hasRash: boolean;
   rashType: string;
-  itchyRash: boolean;
-  rashLocationFront: { [key: string]: boolean };
-  rashLocationBack: { [key: string]: boolean };
+  rashLocationFront: SymptomLocation;
+  rashLocationBack: SymptomLocation;
+}
+
+export interface SymptomLocation {
+  head: boolean;
+  neck: boolean;
+  leftShoulder: boolean;
+  rightShoulder: boolean;
+  leftArm: boolean;
+  rightArm: boolean;
+  leftHand: boolean;
+  rightHand: boolean;
+  centerChest: boolean;
+  leftSide: boolean;
+  rightSide: boolean;
+  genitals: boolean;
+  leftHip: boolean;
+  rightHip: boolean;
+  leftKnee: boolean;
+  rightKnee: boolean;
+  leftFoot: boolean;
+  rightFoot: boolean;
 }

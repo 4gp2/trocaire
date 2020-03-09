@@ -12,12 +12,24 @@ import android.widget.EditText;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Other_information extends AppCompatActivity implements View.OnClickListener {
+
+    private JSONObject data, symptoms;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.other_information);
+
+        try {
+            data = new JSONObject(getIntent().getStringExtra("data"));
+            symptoms = new JSONObject(getIntent().getStringExtra("symptoms"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ActionBar bar = getSupportActionBar();
         assert bar != null;
@@ -35,9 +47,15 @@ public class Other_information extends AppCompatActivity implements View.OnClick
         EditText other_information = findViewById(R.id.editTextOtherInfo);
         String other_info = other_information.getText().toString();
 
-        // TODO Append other info to json object here!
+        try {
+            symptoms.put("otherInfo", other_info);
+            data.put("symptoms", symptoms);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Intent con = new Intent(Other_information.this, Review_patient_details.class);
+        con.putExtra("data", data.toString());
         Other_information.this.startActivity(con);
     }
 
