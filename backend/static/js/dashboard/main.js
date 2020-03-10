@@ -108,23 +108,22 @@ const bootstrapElements = () => {
 
 const bootstrapGraphs = () => {
   new Chart(document.getElementById('chart1'), {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
+        '<18',
+        '18-30',
+        '30-50',
+        '50-65',
+        '65+',
+
       ],
       datasets: [
         {
-          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+          data: [100, 340, 645, 432, 320],
           lineTension: 0,
-          backgroundColor: 'transparent',
-          borderColor: '#007bff',
+          backgroundColor:  ["red", "blue", "green","orange", "black"],
+          borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
         },
@@ -150,20 +149,17 @@ const bootstrapGraphs = () => {
     type: 'bar',
     data: {
       labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
+        'Village A',
+        'Village B',
+        'Village C',
+        'Village D',
       ],
       datasets: [
         {
-          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+          data: [15339, 21345, 18483, 24003],
           lineTension: 0,
-          backgroundColor: 'transparent',
-          borderColor: '#007bff',
+          backgroundColor:["red", "blue", "green","orange", "black"],
+          borderColor:  'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
         },
@@ -187,23 +183,18 @@ const bootstrapGraphs = () => {
 
 
   new Chart(document.getElementById('chart3'), {
-    type: 'radar',
+    type: 'pie',
     data: {
       labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
+        'Male',
+        'Female',
       ],
       datasets: [
         {
-          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+          data: [38, 62],
           lineTension: 0,
-          backgroundColor: 'transparent',
-          borderColor: '#007bff',
+          backgroundColor: [ "blue", "orange"],
+          borderColor: 'Transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
         },
@@ -243,6 +234,8 @@ const bootstrapMap = () => {
 
       // // show a marker on the map
       L.marker({lon: 0, lat: 0}).bindPopup('The center of the world').addTo(map);
+
+      map.invalidateSize();
 };
 
 bootstrapElements();
