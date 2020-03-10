@@ -61,7 +61,7 @@ public class Pain_level extends AppCompatActivity implements View.OnClickListene
         CheckBox right_hip = findViewById(R.id.chk_painFront_rightStomach);
         CheckBox left_hip = findViewById(R.id.chk_painFront_leftStomach);
         CheckBox genitals = findViewById(R.id.chk_painFront_genitals);
-        CheckBox left_knee= findViewById(R.id.chk_painFront_left);
+        CheckBox left_knee= findViewById(R.id.chk_painFront_leftThigh);
         CheckBox right_knee = findViewById(R.id.chk_painFront_rightThigh);
         CheckBox right_foot = findViewById(R.id.chk_painFront_rightShin);
         CheckBox left_foot = findViewById(R.id.chk_painFront_leftShin);
