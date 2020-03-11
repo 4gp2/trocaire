@@ -81,7 +81,11 @@ public class Rash_locator_front extends AppCompatActivity implements View.OnClic
             location.put("rightKnee", right_knee.isChecked());
             location.put("leftFoot", left_foot.isChecked());
             location.put("rightFoot", right_foot.isChecked());
-            symptoms.put("rashLocationFront", location);
+
+            JSONObject rash_data = symptoms.getJSONObject("rash");
+            rash_data.put("rashLocationFront", location);
+            symptoms.put("rash", rash_data);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

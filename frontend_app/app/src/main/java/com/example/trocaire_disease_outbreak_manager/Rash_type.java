@@ -52,12 +52,12 @@ public class Rash_type extends AppCompatActivity implements View.OnClickListener
         CheckBox small_spots =  findViewById(R.id.chkSmallSpots);
         CheckBox small_scaley = findViewById(R.id.SmallScaley);
 
-        Boolean clustered_isChecked = clustered.isChecked();
-        Boolean large_patches_isChecked = large_patches.isChecked();
-        Boolean mixture_isChecked = mixture.isChecked();
-        Boolean single_scaley_isChecked = single_scaley.isChecked();
-        Boolean small_spots_isChecked = small_spots.isChecked();
-        Boolean small_scaley_isChecked = small_scaley.isChecked();
+        boolean clustered_isChecked = clustered.isChecked();
+        boolean large_patches_isChecked = large_patches.isChecked();
+        boolean mixture_isChecked = mixture.isChecked();
+        boolean single_scaley_isChecked = single_scaley.isChecked();
+        boolean small_spots_isChecked = small_spots.isChecked();
+        boolean small_scaley_isChecked = small_scaley.isChecked();
 
         String rash = "";
         if (clustered_isChecked){
@@ -75,7 +75,9 @@ public class Rash_type extends AppCompatActivity implements View.OnClickListener
         }
 
         try {
-            symptoms.put("rashType", rash);
+            JSONObject rash_data = symptoms.getJSONObject("rash");
+            rash_data.put("rashType", rash);
+            symptoms.put("rash", rash_data);
         } catch (JSONException e) {
             e.printStackTrace();
         }

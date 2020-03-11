@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -71,6 +72,8 @@ public class Review_patient_details extends AppCompatActivity implements View.On
 
     public void view_data(JSONObject data) throws JSONException {
 
+        Log.d("MAGGA", "view_data: " + data.toString());
+
         LinearLayout lv = findViewById(R.id.lv_review);
 
         String id = "<b>Personal Details:</b><br>"
@@ -95,24 +98,23 @@ public class Review_patient_details extends AppCompatActivity implements View.On
                 + "<br>Dry Cough: " + symptoms.getBoolean("dryCough")
                 + "<br>Sore Throat: " + symptoms.getBoolean("soreThroat")
                 + "<br>Headache: " + symptoms.getBoolean("headache")
-                + "<br>Rash: " + symptoms.getBoolean("rash")
                 + "<br>Sweating: " + symptoms.getBoolean("sweating")
                 + "<br>Bloody Stool: " + symptoms.getBoolean("bloodyStool")
                 + "<br>Mouth Spots: " + symptoms.getBoolean("mouthSpots")
                 + "<br>Stiff Limbs: " + symptoms.getBoolean("stiffLimbs")
                 + "<br>Temperature: " + symptoms.getDouble("temperature")
-                + "<br>PainLevel: " + symptoms.getDouble("painDiscomfortLevel")
                 + "<br>";
         c = createCardViewProgrammatically(id);
         lv.addView(c);
 
-        boolean rash = symptoms.getBoolean("rash");
+        JSONObject rash_obj = symptoms.getJSONObject("rash");
+        boolean rash = rash_obj.getBoolean("hasRash");
 
         if (rash){
-            String rash_type = symptoms.getString("rashType");
-            JSONObject rash_data = symptoms.getJSONObject("rashLocationFront");
+            String rash_type = rash_obj.getString("rashType");
+            JSONObject rash_data = rash_obj.getJSONObject("rashLocationFront");
             String rash_front_locations = get_selected_items(rash_data);
-            rash_data = symptoms.getJSONObject("rashLocationBack");
+            rash_data = rash_obj.getJSONObject("rashLocationBack");
             String rash_back_locations = get_selected_items(rash_data);
             id = "<b>Rash Indicator:</b>"
                     + "<br>Rash Type: " + rash_type
@@ -122,10 +124,11 @@ public class Review_patient_details extends AppCompatActivity implements View.On
             lv.addView(c);
         }
 
-        double pain_level = symptoms.getDouble("painDiscomfortLevel");
+        JSONObject pain_obj = symptoms.getJSONObject("pain");
+        double pain_level = pain_obj.getDouble("painDiscomfortLevel");
 
         if (pain_level > 0){
-            JSONObject pain_data = symptoms.getJSONObject("painLocation");
+            JSONObject pain_data = pain_obj.getJSONObject("painLocation");
 
             id = get_selected_items(pain_data);
             id = "<b>Pain:<br></b> <br>"

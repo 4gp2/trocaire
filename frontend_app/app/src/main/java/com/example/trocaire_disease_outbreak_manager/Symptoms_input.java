@@ -66,6 +66,7 @@ public class Symptoms_input extends AppCompatActivity implements View.OnClickLis
         chkStiffLimbs = findViewById(R.id.chkStiffLimbs);
 
         JSONObject symptoms = new JSONObject();
+        JSONObject rash = new JSONObject();
 
         try {
             symptoms.put("nausea",  chkNausea.isChecked());
@@ -76,7 +77,8 @@ public class Symptoms_input extends AppCompatActivity implements View.OnClickLis
             symptoms.put("dryCough", chkCough.isChecked());
             symptoms.put("soreThroat", chkSoreThroat.isChecked());
             symptoms.put("headache", chkHeadache.isChecked());
-            symptoms.put("rash", chkRash.isChecked());
+            rash.put("hasRash", chkRash.isChecked());
+            symptoms.put("rash", rash);
             symptoms.put("sweating", chkSweating.isChecked());
             symptoms.put("bloodyStool", chkBloodyStools.isChecked());
             symptoms.put("mouthSpots", chkMouthSpots.isChecked());

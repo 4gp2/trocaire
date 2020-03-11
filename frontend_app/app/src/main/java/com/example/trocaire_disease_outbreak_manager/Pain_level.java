@@ -67,6 +67,7 @@ public class Pain_level extends AppCompatActivity implements View.OnClickListene
         CheckBox left_foot = findViewById(R.id.chk_painFront_leftShin);
 
         JSONObject location = new JSONObject();
+        JSONObject pain = new JSONObject();
         try {
             location.put("head", head.isChecked());
             location.put("neck", neck.isChecked());
@@ -84,8 +85,12 @@ public class Pain_level extends AppCompatActivity implements View.OnClickListene
             location.put("rightKnee", right_knee.isChecked());
             location.put("leftFoot", left_foot.isChecked());
             location.put("rightFoot", right_foot.isChecked());
-            symptoms.put("painLocation", location);
-            symptoms.put("painDiscomfortLevel", percentage);
+
+
+            pain.put("painLocation", location);
+            pain.put("painDiscomfortLevel", percentage);
+            symptoms.put("pain", pain);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
