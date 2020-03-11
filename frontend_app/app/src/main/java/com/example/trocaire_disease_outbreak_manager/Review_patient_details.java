@@ -25,14 +25,23 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class Review_patient_details extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     double latitude, longitude;
-    private JSONObject data, symptoms;
+    private JSONObject data;
+    private static final String FILE_NAME = "patients.json";
 
 
     @Override
@@ -67,6 +76,45 @@ public class Review_patient_details extends AppCompatActivity implements View.On
 
         Button next = findViewById(R.id.buttonreviewdetails);
         next.setOnClickListener(this);
+    }
+
+    private void store_data(JSONObject data) throws JSONException, IOException {
+
+        File file = new File (this.getFilesDir(), FILE_NAME);
+
+        if (!file.exists()){
+            Log.d("MUGG1", "store_data: new file!");
+            file.createNewFile();
+            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write("{'patients':[]}");
+            bufferedWriter.flush();
+        }
+
+        StringBuilder output = new StringBuilder();
+        FileReader fileReader = new FileReader(file.getAbsoluteFile());
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        while((line = bufferedReader.readLine()) != null){
+            output.append(line).append("\n");
+        }
+
+        String file_data = output.toString();
+        bufferedReader.close();
+
+        JSONObject obj = new JSONObject(file_data);
+        JSONArray patients = obj.getJSONArray("patients");
+        patients.put(data);
+
+        JSONObject ret = new JSONObject();
+        ret.put("patients", patients);
+
+        FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+        bufferedWriter.write(ret.toString());
+        bufferedWriter.close();
     }
 
 
@@ -209,6 +257,15 @@ public class Review_patient_details extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
+
+        try {
+            store_data(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Intent con = new Intent(Review_patient_details.this, Fragment_main.class);
         Review_patient_details.this.startActivity(con);
     }
@@ -253,6 +310,7 @@ public class Review_patient_details extends AppCompatActivity implements View.On
         }
         return bestLocation;
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
