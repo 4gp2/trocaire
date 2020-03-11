@@ -59,7 +59,7 @@ public class Rash_type extends AppCompatActivity implements View.OnClickListener
         boolean small_spots_isChecked = small_spots.isChecked();
         boolean small_scaley_isChecked = small_scaley.isChecked();
 
-        String rash = "";
+        String rash = "None";
         if (clustered_isChecked){
             rash = "Clustered";
         }else if(large_patches_isChecked){

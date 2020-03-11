@@ -83,7 +83,6 @@ public class Review_patient_details extends AppCompatActivity implements View.On
         File file = new File (this.getFilesDir(), FILE_NAME);
 
         if (!file.exists()){
-            Log.d("MUGG1", "store_data: new file!");
             file.createNewFile();
             FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

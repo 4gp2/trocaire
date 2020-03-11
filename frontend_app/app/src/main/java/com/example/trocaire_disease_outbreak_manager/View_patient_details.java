@@ -15,7 +15,21 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class View_patient_details extends AppCompatActivity implements View.OnClickListener{
+
+    private static final String FILE_NAME = "patients.json";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,38 +43,109 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        LinearLayout lv = findViewById(R.id.lv);
-
-        for(int i = 0; i < 20; i++)
-        {
-            // ---- Template filler ----------
-            String name = Integer.toString(i);
-            String village = Integer.toString(i);
-            String age = Integer.toString(i);
-            String sex = Integer.toString(i);
-            //-----------------------------------
-            CardView c = createCardViewProgrammatically(name, age, village, sex);
-            c.setOnClickListener(this);
-            lv.addView(c);
-        }
-
-
-        Button next = findViewById(R.id.buttonsenddetails);
-        next.setOnClickListener(this);
-
-        String token = getIntent().getStringExtra("token");
+        final String token = getIntent().getStringExtra("token");
         if (token != null) {
             Log.d("patient", token);
         }
+
+        JSONObject patient_data = null;
+        try {
+            patient_data = view_patient_data();
+            patient_data.put("token", token);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JSONObject data = patient_data;
+        Button next = findViewById(R.id.buttonsenddetails);
+        next.setOnClickListener(this);
+
         next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    Log.d("patient_data to be sent", data.toString());
+//                   TODO add request to firebase here
                     Toast.makeText(getApplication(), "Submit Request Here!",
                             Toast.LENGTH_LONG).show();
-
                 }
             });
     }
 
+
+    private JSONObject view_patient_data() throws IOException {
+
+        LinearLayout lv = findViewById(R.id.lv);
+        String json_String = get_json_string();
+        JSONArray patients = null;
+        JSONObject patient_obj = null;
+
+        try {
+            patient_obj = new JSONObject(json_String);
+            patients = patient_obj.getJSONArray("patients");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        JSONObject patient;
+        String name = null;
+        String dob = null;
+        String village = null;
+        String sex = null;
+        assert patients != null;
+        for(int i = 0; i < patients.length(); i++)
+        {
+            try {
+                patient = patients.getJSONObject(i);
+                name = patient.getString("firstName");
+                village = patient.getString("village");
+                dob = patient.getString("dob");
+                sex = patient.getString("sex");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            CardView c = createCardViewProgrammatically(name, dob, village, sex);
+            c.setOnClickListener(this);
+            lv.addView(c);
+        }
+        return patient_obj;
+    }
+
+
+    private void clear_json_file(File file) throws IOException {
+
+        FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write("{'patients':[]}");
+        bufferedWriter.flush();
+    }
+
+
+    private String get_json_string() throws IOException {
+
+        File file = new File (this.getFilesDir(), FILE_NAME);
+        if (file.exists()){
+            StringBuilder output = new StringBuilder();
+            FileReader fileReader;
+            try {
+                fileReader = new FileReader(file.getAbsoluteFile());
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line;
+                while((line = bufferedReader.readLine()) != null){
+                    output.append(line).append("\n");
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clear_json_file(file);
+            return output.toString();
+        }
+        return "";
+    }
 
 
     public CardView createCardViewProgrammatically(String name, String age, String village,
