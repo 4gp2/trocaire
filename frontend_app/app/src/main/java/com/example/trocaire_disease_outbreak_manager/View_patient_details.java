@@ -1,5 +1,6 @@
 package com.example.trocaire_disease_outbreak_manager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,11 +22,15 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 public class View_patient_details extends AppCompatActivity implements View.OnClickListener{
 
@@ -64,12 +69,45 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
 
         next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Log.d("patient_data to be sent", data.toString());
-//                   TODO add request to firebase here
-                    Toast.makeText(getApplication(), "Submit Request Here!",
+                    send_data(data.toString());
+                    Toast.makeText(getApplication(), "Submitted!",
                             Toast.LENGTH_LONG).show();
+                    Intent con = new Intent(getApplicationContext(), Fragment_main.class);
+                    getApplicationContext().startActivity(con);
                 }
-            });
+        });
+    }
+
+
+    private void send_data(final String data) {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("https://4gp2.hieu.dev/api/upload");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept","application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(data);
+                    os.flush();
+                    os.close();
+
+                    Log.i("STATUS12", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG12" , conn.getResponseMessage());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
 
@@ -86,8 +124,6 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
 
         JSONObject patient;
         String name = null;
