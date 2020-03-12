@@ -10,7 +10,7 @@ import {
   NextFunction,
 } from 'express-serve-static-core';
 
-import { UserClaims, DiagnosisUpload } from '../firebase/types';
+import { UserClaims, DiagnosisUpload, Patient } from '../firebase/types';
 import { NewUserResponse, GetPatientResponse } from './types';
 import {
   createNewCookie,
@@ -67,7 +67,11 @@ const clearSession = async (req: Request, res: Response): Promise<void> => {
 
 const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data = JSON.parse(req.body.data) as DiagnosisUpload;
+    const data = req.body as DiagnosisUpload;
+    data.patients.forEach(p => {
+      p.dob = new Date(p.dob);
+    });
+
     const user = await getUserFromToken(data.token);
     if (!user) {
       res.sendStatus(401);

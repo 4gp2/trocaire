@@ -66,6 +66,7 @@ export interface Symptoms {
   temperature: number;
   pain: Pain;
   rash: Rash;
+  otherInfo: string;
 }
 
 export interface Pain {
