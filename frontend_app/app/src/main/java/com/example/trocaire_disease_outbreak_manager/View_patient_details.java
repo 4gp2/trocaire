@@ -78,7 +78,6 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         });
     }
 
-
     private void send_data(final String data) {
 
         Thread thread = new Thread(new Runnable() {

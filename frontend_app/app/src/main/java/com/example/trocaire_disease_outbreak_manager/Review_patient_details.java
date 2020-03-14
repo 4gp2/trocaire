@@ -1,6 +1,7 @@
 package com.example.trocaire_disease_outbreak_manager;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +36,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 
 public class Review_patient_details extends AppCompatActivity implements View.OnClickListener, LocationListener {
@@ -42,7 +46,6 @@ public class Review_patient_details extends AppCompatActivity implements View.On
     double latitude, longitude;
     private JSONObject data;
     private static final String FILE_NAME = "patients.json";
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,7 @@ public class Review_patient_details extends AppCompatActivity implements View.On
         next.setOnClickListener(this);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void store_data(JSONObject data) throws JSONException, IOException {
 
         File file = new File (this.getFilesDir(), FILE_NAME);
@@ -104,6 +108,18 @@ public class Review_patient_details extends AppCompatActivity implements View.On
 
         JSONObject obj = new JSONObject(file_data);
         JSONArray patients = obj.getJSONArray("patients");
+
+        // If patient already exists then replace
+        for (int i = 0; i < patients.length(); i++) {
+            JSONObject current = (JSONObject) patients.get(i);
+            if (current.get("firstName").equals(data.get("firstName")) && current.get("lastName").equals(data.get("lastName")) && current.get("dob").equals(data.get("dob"))) {
+
+                //replace patient
+                patients.remove(i);
+
+            }
+        }
+
         patients.put(data);
 
         JSONObject ret = new JSONObject();

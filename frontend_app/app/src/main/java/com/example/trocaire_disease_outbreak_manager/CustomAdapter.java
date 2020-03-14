@@ -19,13 +19,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     ArrayList<String> firstNames;
     ArrayList<String> lastNames;
     ArrayList<String> villages;
+    ArrayList<String> DOBs;
+    ArrayList<String> gender;
+
     Context context;
 
-    public CustomAdapter(Context context, ArrayList<String> firstNames, ArrayList<String> lastNames, ArrayList<String> villages) {
+    public CustomAdapter(Context context, ArrayList<String> firstNames, ArrayList<String> lastNames, ArrayList<String> villages, ArrayList<String> DOBs, ArrayList<String> gender) {
         this.context = context;
         this.firstNames = firstNames;
         this.lastNames = lastNames;
         this.villages = villages;
+        this.DOBs = DOBs;
+        this.gender = gender;
     }
 
     @Override
@@ -49,9 +54,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 // display a toast with person name on item click
                 Toast.makeText(context, firstNames.get(position), Toast.LENGTH_SHORT).show();
 
-
-
-                Intent con = new Intent(context, Symptoms_input.class);
+                Intent con = new Intent(context, Patient_details.class);
+                con.putExtra("first", firstNames.get(position));
+                con.putExtra("last", lastNames.get(position));
+                con.putExtra("village", villages.get(position));
+                con.putExtra("DOB", DOBs.get(position));
+                con.putExtra("gender", gender.get(position));
                 view.getContext().startActivity(con);
             }
         });
