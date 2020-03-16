@@ -11,6 +11,7 @@ import {
   StoredDiagnosis,
   PatientIdentifier,
 } from './types';
+import { matchDiseases } from '../diagnosis/diagnosis';
 
 export const initFirebase = (): void => {
   const s = JSON.parse(readFileSync(process.env.SERVICE_ACCOUNT_FILE, 'utf-8'));
@@ -110,6 +111,9 @@ export const revokeCookie = async (cookie: string): Promise<void> => {
 export const storePatientData = async (p: Required<Patient>): Promise<void> => {
   const ref = firestore().doc(patientDocPath(p.lastName, p.firstName, p.dob));
   const exists = (await ref.get()).exists;
+  const diseases = matchDiseases(p.symptoms)
+    .filter((v, _i, d) => v.numSymptoms >= d[0].numSymptoms)
+    .map(v => v.disease);
   if (exists) {
     await ref.update({
       diagnoses: firestore.FieldValue.arrayUnion({
@@ -117,6 +121,7 @@ export const storePatientData = async (p: Required<Patient>): Promise<void> => {
         longitude: p.longitude,
         date: p.date,
         symptoms: p.symptoms,
+        possibleDiseases: diseases,
       } as StoredDiagnosis),
     });
   } else {
@@ -131,6 +136,7 @@ export const storePatientData = async (p: Required<Patient>): Promise<void> => {
         longitude: p.longitude,
         date: p.date,
         symptoms: p.symptoms,
+        possibleDiseases: diseases,
       }],
     } as StoredPatient);
   }

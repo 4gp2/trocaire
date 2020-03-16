@@ -1,3 +1,5 @@
+import { Disease } from '../diagnosis/types';
+
 export class NewUserDetails {
   uid: string;
   email: string;
@@ -36,7 +38,8 @@ export type PatientIdentifier =
   Pick<StoredPatient, 'firstName' | 'lastName' | 'dob'>;
 
 export type StoredDiagnosis =
-  Pick<Patient, 'latitude' | 'longitude' | 'date' | 'symptoms'>;
+  Pick<Patient, 'latitude' | 'longitude' | 'date' | 'symptoms'>
+  & { possibleDiseases: string[] };
 
 export interface Patient {
   firstName: string;
