@@ -12,7 +12,7 @@ const bootstrap = async (): Promise<void> => {
   initSocket(server);
   initFirebase();
 
-  server.listen(process.env.PORT, (): void =>
+  server.listen(process.env.PORT, () =>
     console.log(`Server listening on port ${process.env.PORT}`));
 };
 

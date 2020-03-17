@@ -8,10 +8,14 @@ import {
   Request,
   Response,
   NextFunction,
-} from 'express-serve-static-core';
+} from 'express';
 
-import { UserClaims, DiagnosisUpload, Patient } from '../firebase/types';
-import { NewUserResponse, GetPatientResponse } from './types';
+import {
+  NewUserResponse,
+  GetPatientResponse,
+  RecordsTimePeriodResponse,
+} from './types';
+import { UserClaims, DiagnosisUpload } from '../firebase/types';
 import {
   createNewCookie,
   verifyCookie,
@@ -21,6 +25,7 @@ import {
   storePatientData,
   revokeCookie,
   getPatientRecord,
+  getRecordsAtTimePeriod,
 } from '../firebase/firebase';
 
 const dashboard = (_req: Request, res: Response): void =>
@@ -78,7 +83,7 @@ const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    data.patients.forEach(async (p) => await storePatientData(p));
+    data.patients.forEach(async p => await storePatientData(p));
     res.sendStatus(201);
   } catch (e) {
     res.sendStatus(400);
@@ -97,6 +102,14 @@ const fetchPatient = async (req: Request, res: Response): Promise<void> => {
   }
   res.json({ error: true } as GetPatientResponse);
 };
+
+const fetchRecordsTimePeriod =
+  async (req: Request, res: Response): Promise<void> => {
+    res.send({
+      error: false,
+      numRecords: await getRecordsAtTimePeriod(req.body.start, req.body.end),
+    } as RecordsTimePeriodResponse);
+  };
 
 const isAdminIDTokenValid =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -146,8 +159,9 @@ const initRoutes = (app: Express): void => {
 
   app.post('/api/session', newSession);
   app.post('/api/upload', uploadDiagnosis);
-  app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
+  app.post('/api/records', isAdminIDTokenValid, fetchRecordsTimePeriod);
   app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
+  app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
 };
 
 export const initServer = (): Express => {
