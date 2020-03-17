@@ -106,6 +106,65 @@ const bootstrapElements = () => {
     .addEventListener('click', async _e => await createNewUser(false));
 };
 
+//Data api
+////Dropdown JS
+var dateReq;
+var diseaseReq;
+var villageReq;
+
+$('.dropdown-menu a').click(function(){
+  $(this).parents(".dropdown").find('.btn').html($(this).text());
+  var dashPage = $(this).parents(".dropdown").attr('id').match(/[A-Z][a-z]+/g)[0];
+
+  dateReq = $("#"+dashPage+"DateDropdown").find('.btn').text();
+  diseaseReq = $("#"+dashPage+"DiseaseDropdown").find('.btn').text();
+  if(dashPage === "Breakdown"){
+    villageReq = $("#"+dashPage+"VillageDropdown").find('.btn').text();
+    GraohRequest(dashPage, dateReq, diseaseReq, villageReq)
+  }
+  else {
+    GraohRequest(dashPage, dateReq, diseaseReq, null)
+  }
+
+  // Data requests for graphs
+
+
+});
+
+function GraohRequest(page, date, disease, village) {
+    console.log(page);
+    console.log(date);
+    console.log(disease);
+    async e => {
+    const dataReqRes = await axios.post('/api/data', {
+      disease,
+      date,
+      village,
+    });
+    // Draw graphs
+    if(page ==="Overview"){
+
+    }
+    else if (page === "Breakdown") {
+
+    }
+    else if (page === "Map") {
+
+    }
+      console.log("Finished Request");
+  }
+  console.log("Finished Function");
+
+}
+
+
+//data request api
+// const dataReqRes = await axios.post('/api/data', {
+//   disease,
+//   camp,
+//   timePeriod,
+// });
+
 const bootstrapGraphs = () => {
   new Chart(document.getElementById('chart1'), {
     type: 'bar',

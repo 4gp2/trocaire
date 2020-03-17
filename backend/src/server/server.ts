@@ -111,6 +111,8 @@ const fetchRecordsTimePeriod =
     } as RecordsTimePeriodResponse);
   };
 
+// Add fetch to get disease data
+
 const isAdminIDTokenValid =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const user = await getUserFromToken(req.body.token);
@@ -162,6 +164,7 @@ const initRoutes = (app: Express): void => {
   app.post('/api/records', isAdminIDTokenValid, fetchRecordsTimePeriod);
   app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
   app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
+  app.post('/api/data', isAdminIDTokenValid, fetchGraphData);
 };
 
 export const initServer = (): Express => {

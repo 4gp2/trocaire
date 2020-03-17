@@ -94,24 +94,26 @@
                     <button class="btn btn-sm btn-outline-secondary">Share</button>
                     <button class="btn btn-sm btn-outline-secondary">Export</button>
                   </div> -->
-                      <div class="dropdown">
+                      <div class="dropdown" id="OverviewDiseaseDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CHOLERA
-                        </button>
+                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CHOLERA</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">CHOLERA</a>
                           <a class="dropdown-item" href="#">POLIO</a>
                           <a class="dropdown-item" href="#">MEASLES</a>
                           <a class="dropdown-item" href="#">MALARIA</a>
+                          <a class="dropdown-item" href="#">ALL</a>
                         </div>
                       </div>
-                      <div class="dropdown">
+                      <div class="dropdown"  id="OverviewDateDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> THIS WEEK
-                        </button>
+                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS WEEK</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">THIS WEEK</a>
                           <a class="dropdown-item" href="#">THIS MONTH</a>
                           <a class="dropdown-item" href="#">THIS YEAR</a>
                           <a class="dropdown-item" href="#">ALL TIME</a>
+                          <a class="dropdown-item" href="#">ALL</a>
                         </div>
                       </div>
                       <!-- <button class="btn btn-lg btn-outline-secondary dropdown-toggle">
@@ -140,27 +142,29 @@
                   <button class="btn btn-sm btn-outline-secondary">Share</button>
                   <button class="btn btn-sm btn-outline-secondary">Export</button>
                 </div> -->
-                    <div class="dropdown">
+                    <div class="dropdown" id="BreakdownDateDropdown">
                       <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Village A
-                      </button>
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Village A</button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Village A</a>
                         <a class="dropdown-item" href="#">Village B</a>
                         <a class="dropdown-item" href="#">Village C</a>
                         <a class="dropdown-item" href="#">Village D</a>
+                        <a class="dropdown-item" href="#">ALL</a>
                       </div>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown" id="BreakdownDiseaseDropdown">
                       <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CHOLERA
-                      </button>
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CHOLERA</button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">CHOLERA</a>
                         <a class="dropdown-item" href="#">POLIO</a>
                         <a class="dropdown-item" href="#">MEASLES</a>
                         <a class="dropdown-item" href="#">MALARIA</a>
+                        <a class="dropdown-item" href="#">ALL</a>
                       </div>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown" id="BreakdownDateDropdown">
                       <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
                         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> THIS WEEK
                       </button>
@@ -194,7 +198,7 @@
                 </div>
                 <div id="my_dataviz"></div>
             </div>
-                <div role="tabpanel" class="tab-pane " id="mapview">
+                <div role="tabpanel" class="tab-pane " id="Mapview">
                   <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">Map View</h1>
@@ -203,26 +207,27 @@
                     <button class="btn btn-sm btn-outline-secondary">Share</button>
                     <button class="btn btn-sm btn-outline-secondary">Export</button>
                   </div> -->
-                      <div class="dropdown">
-                        <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CHOLERA
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">POLIO</a>
-                          <a class="dropdown-item" href="#">MEASLES</a>
-                          <a class="dropdown-item" href="#">MALARIA</a>
-                        </div>
-                      </div>
-                      <div class="dropdown">
-                        <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> THIS WEEK
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">THIS MONTH</a>
-                          <a class="dropdown-item" href="#">THIS YEAR</a>
-                          <a class="dropdown-item" href="#">ALL TIME</a>
-                        </div>
-                      </div>
+                  <div class="dropdown" id="MapDiseaseDropdown">
+                    <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
+                      id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CHOLERA</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">CHOLERA</a>
+                      <a class="dropdown-item" href="#">POLIO</a>
+                      <a class="dropdown-item" href="#">MEASLES</a>
+                      <a class="dropdown-item" href="#">MALARIA</a>
+                      <a class="dropdown-item" href="#">ALL</a>
+                    </div>
+                  </div>
+                  <div class="dropdown"  id="MapDateDropdown">
+                    <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
+                      id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS WEEK</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">THIS WEEK</a>
+                      <a class="dropdown-item" href="#">THIS MONTH</a>
+                      <a class="dropdown-item" href="#">THIS YEAR</a>
+                      <a class="dropdown-item" href="#">ALL TIME</a>
+                    </div>
+                  </div>
                       <!-- <button class="btn btn-lg btn-outline-secondary dropdown-toggle">
                     <span data-feather="Droplet"></span>
                     CHOLERA
@@ -235,7 +240,7 @@
 
                           <div class="my-4" id="map"></div>
 
-                      
+
                     </div>
                   </div>
                 </div>
