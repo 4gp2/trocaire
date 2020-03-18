@@ -164,7 +164,7 @@ const initRoutes = (app: Express): void => {
   app.post('/api/records', isAdminIDTokenValid, fetchRecordsTimePeriod);
   app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
   app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
-  app.post('/api/data', isAdminIDTokenValid, fetchGraphData);
+  // app.post('/api/data', isAdminIDTokenValid, fetchGraphData);
 };
 
 export const initServer = (): Express => {

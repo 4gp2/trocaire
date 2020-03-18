@@ -76,7 +76,7 @@
                       <span data-feather="map"></span> Map View </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link"role="tab" data-toggle="tab" href="#listview">
                       <span data-feather="bar-chart-2"></span> List View </a>
                   </li>
                 </ul>
@@ -131,7 +131,6 @@
                       </div>
                     </div>
                   </div>
-                  <div id="my_dataviz"></div>
               </div>
               <div role="tabpanel" class="tab-pane active " id="breakdown">
                 <div
@@ -196,9 +195,9 @@
                     </div>
                   </div>
                 </div>
-                <div id="my_dataviz"></div>
+
             </div>
-                <div role="tabpanel" class="tab-pane " id="Mapview">
+                <div role="tabpanel" class="tab-pane " id="mapview">
                   <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">Map View</h1>
@@ -236,19 +235,52 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-
-
                           <div class="my-4" id="map"></div>
-
-
                     </div>
                   </div>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="listview">
+                  <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">List View</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                      <!-- <div class="btn-group mr-2">
+                    <button class="btn btn-sm btn-outline-secondary">Share</button>
+                    <button class="btn btn-sm btn-outline-secondary">Export</button>
+                  </div> -->
+                  <div class="dropdown" id="ListDiseaseDropdown">
+                    <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
+                      id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CHOLERA</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">CHOLERA</a>
+                      <a class="dropdown-item" href="#">POLIO</a>
+                      <a class="dropdown-item" href="#">MEASLES</a>
+                      <a class="dropdown-item" href="#">MALARIA</a>
+                      <a class="dropdown-item" href="#">ALL</a>
+                    </div>
+                  </div>
+                  <div class="dropdown"  id="ListpDateDropdown">
+                    <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
+                      id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS WEEK</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">THIS WEEK</a>
+                      <a class="dropdown-item" href="#">THIS MONTH</a>
+                      <a class="dropdown-item" href="#">THIS YEAR</a>
+                      <a class="dropdown-item" href="#">ALL TIME</a>
+                    </div>
+                  </div>
+                      <!-- <button class="btn btn-lg btn-outline-secondary dropdown-toggle">
+                    <span data-feather="Droplet"></span>
+                    CHOLERA
+                  </button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
             </main>
           </div>
-
-          </div>
         </div>
+      </div>
 
 
 
