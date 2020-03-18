@@ -1,5 +1,3 @@
-import { Disease } from '../diagnosis/types';
-
 export class NewUserDetails {
   uid: string;
   email: string;

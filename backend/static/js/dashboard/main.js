@@ -1,4 +1,5 @@
 let dbRes;
+const map = L.map('map').setView([0, 0], 2);
 
 const disableCreateAccountButton = disable => {
   document.getElementById('create-admin').disabled = disable;
@@ -104,59 +105,61 @@ const bootstrapElements = () => {
   document
     .getElementById('create-worker')
     .addEventListener('click', async _e => await createNewUser(false));
+
+  document
+    .getElementById('mapview-a')
+    .addEventListener('click', _e => setTimeout(() => map.invalidateSize(), 0));
 };
 
 //Data api
 ////Dropdown JS
-var dateReq;
-var diseaseReq;
-var villageReq;
+let dateReq;
+let diseaseReq;
+let villageReq;
 
-$('.dropdown-menu a').click(function(){
-  $(this).parents(".dropdown").find('.btn').html($(this).text());
-  var dashPage = $(this).parents(".dropdown").attr('id').match(/[A-Z][a-z]+/g)[0];
+$('.dropdown-menu a').click(function() {
+  $(this)
+    .parents('.dropdown')
+    .find('.btn')
+    .html($(this).text());
+  const dashPage = $(this)
+    .parents('.dropdown')
+    .attr('id')
+    .match(/[A-Z][a-z]+/g)[0];
 
-  dateReq = $("#"+dashPage+"DateDropdown").find('.btn').text();
-  diseaseReq = $("#"+dashPage+"DiseaseDropdown").find('.btn').text();
-  if(dashPage === "Breakdown"){
-    villageReq = $("#"+dashPage+"VillageDropdown").find('.btn').text();
-    GraohRequest(dashPage, dateReq, diseaseReq, villageReq)
+  dateReq = $(`#${dashPage}DateDropdown`)
+    .find('.btn')
+    .text();
+  diseaseReq = $(`#${dashPage}DiseaseDropdown`)
+    .find('.btn')
+    .text();
+  if (dashPage === 'Breakdown') {
+    villageReq = $(`#${dashPage}VillageDropdown`)
+      .find('.btn')
+      .text();
+    graphRequest(dashPage, dateReq, diseaseReq, villageReq);
+  } else {
+    graphRequest(dashPage, dateReq, diseaseReq, null);
   }
-  else {
-    GraohRequest(dashPage, dateReq, diseaseReq, null)
-  }
-
-  // Data requests for graphs
-
-
 });
 
-function GraohRequest(page, date, disease, village) {
-    console.log(page);
-    console.log(date);
-    console.log(disease);
-    async e => {
-    const dataReqRes = await axios.post('/api/data', {
-      disease,
-      date,
-      village,
-    });
-    // Draw graphs
-    if(page ==="Overview"){
-
-    }
-    else if (page === "Breakdown") {
-
-    }
-    else if (page === "Map") {
-
-    }
-      console.log("Finished Request");
+const graphRequest = async (page, date, disease, village) => {
+  console.log(page);
+  console.log(date);
+  console.log(disease);
+  const dataReqRes = await axios.post('/api/data', {
+    disease,
+    date,
+    village,
+  });
+  // Draw graphs
+  if (page === 'Overview') {
+  } else if (page === 'Breakdown') {
+  } else if (page === 'Map') {
   }
-  console.log("Finished Function");
-
-}
-
+  console.log('Finished Request');
+  console.log('Finished Function');
+};
 
 //data request api
 // const dataReqRes = await axios.post('/api/data', {
@@ -169,19 +172,12 @@ const bootstrapGraphs = () => {
   new Chart(document.getElementById('chart1'), {
     type: 'bar',
     data: {
-      labels: [
-        '<18',
-        '18-30',
-        '30-50',
-        '50-65',
-        '65+',
-
-      ],
+      labels: ['<18', '18-30', '30-50', '50-65', '65+'],
       datasets: [
         {
           data: [100, 340, 645, 432, 320],
           lineTension: 0,
-          backgroundColor:  ["red", "blue", "green","orange", "black"],
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
           borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -207,18 +203,13 @@ const bootstrapGraphs = () => {
   new Chart(document.getElementById('chart2'), {
     type: 'bar',
     data: {
-      labels: [
-        'Village A',
-        'Village B',
-        'Village C',
-        'Village D',
-      ],
+      labels: ['Village A', 'Village B', 'Village C', 'Village D'],
       datasets: [
         {
           data: [15339, 21345, 18483, 24003],
           lineTension: 0,
-          backgroundColor:["red", "blue", "green","orange", "black"],
-          borderColor:  'transparent',
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
+          borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
         },
@@ -240,19 +231,15 @@ const bootstrapGraphs = () => {
     },
   });
 
-
   new Chart(document.getElementById('chart3'), {
     type: 'pie',
     data: {
-      labels: [
-        'Male',
-        'Female',
-      ],
+      labels: ['Male', 'Female'],
       datasets: [
         {
           data: [38, 62],
           lineTension: 0,
-          backgroundColor: [ "blue", "orange"],
+          backgroundColor: ['blue', 'orange'],
           borderColor: 'Transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -274,27 +261,25 @@ const bootstrapGraphs = () => {
       },
     },
   });
-
 };
 
 const bootstrapMap = () => {
+  // add the OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+  }).addTo(map);
+  //
+  // // show the scale bar on the lower left corner
+  L.control.scale().addTo(map);
 
-  // initialize Leaflet
-      var map = L.map('map').setView({lon: 0, lat: 0}, 2);
+  // // show a marker on the map
+  L.marker([0, 0])
+    .bindPopup('The center of the world')
+    .addTo(map);
 
-      // add the OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-      }).addTo(map);
-      //
-      // // show the scale bar on the lower left corner
-      L.control.scale().addTo(map);
-
-      // // show a marker on the map
-      L.marker({lon: 0, lat: 0}).bindPopup('The center of the world').addTo(map);
-
-      map.invalidateSize();
+  map.invalidateSize();
 };
 
 bootstrapElements();

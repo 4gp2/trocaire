@@ -13,7 +13,8 @@ import {
 import {
   NewUserResponse,
   GetPatientResponse,
-  RecordsTimePeriodResponse,
+  GraphDataResponse,
+  GraphDataBreakdown,
 } from './types';
 import { UserClaims, DiagnosisUpload } from '../firebase/types';
 import {
@@ -27,6 +28,7 @@ import {
   getPatientRecord,
   getRecordsAtTimePeriod,
 } from '../firebase/firebase';
+import { StoredPatient } from '../firebase/types';
 
 const dashboard = (_req: Request, res: Response): void =>
   res.render('admin_main', { layout: false });
@@ -72,7 +74,7 @@ const clearSession = async (req: Request, res: Response): Promise<void> => {
 
 const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data = req.body as DiagnosisUpload;
+    const data: DiagnosisUpload = req.body;
     data.patients.forEach(p => {
       p.dob = new Date(p.dob);
     });
@@ -103,15 +105,41 @@ const fetchPatient = async (req: Request, res: Response): Promise<void> => {
   res.json({ error: true } as GetPatientResponse);
 };
 
-const fetchRecordsTimePeriod =
-  async (req: Request, res: Response): Promise<void> => {
-    res.send({
-      error: false,
-      numRecords: await getRecordsAtTimePeriod(req.body.start, req.body.end),
-    } as RecordsTimePeriodResponse);
-  };
-
-// Add fetch to get disease data
+const fetchGraphData = async (req: Request, res: Response): Promise<void> => {
+  const start = new Date(req.body.start);
+  const end = new Date(req.body.end);
+  const records = await getRecordsAtTimePeriod(start, end);
+  const bd: GraphDataBreakdown = { byVillage: req.body.village };
+  if (req.body.village) {
+    const patients = records.filter(p => p.village === req.body.village);
+    bd.villagePatients = patients.reduce((pAcc, pCur) => {
+      pCur.diagnoses = pCur.diagnoses
+        .filter(d => d.possibleDiseases.includes(req.body.disease));
+      if (pCur.diagnoses.length > 1) {
+        pAcc.push(pCur);
+      }
+      return pAcc;
+    }, [] as StoredPatient[]);
+  } else {
+    records.forEach(p => {
+      p.diagnoses = p.diagnoses
+        .filter(d => d.possibleDiseases.includes(req.body.disease));
+      if (p.diagnoses.length > 1) {
+        bd.allPatients[p.village] = bd.allPatients[p.village]
+          ? bd.allPatients[p.village].concat([p])
+          : [p];
+      }
+    });
+  }
+  if (!bd.allPatients || bd.villagePatients) {
+    res.json({ error: true, msg: 'No patients matched' });
+    return;
+  }
+  res.json({
+    error: false,
+    ...bd,
+  } as GraphDataResponse);
+};
 
 const isAdminIDTokenValid =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -161,10 +189,9 @@ const initRoutes = (app: Express): void => {
 
   app.post('/api/session', newSession);
   app.post('/api/upload', uploadDiagnosis);
-  app.post('/api/records', isAdminIDTokenValid, fetchRecordsTimePeriod);
+  app.post('/api/graph', isAdminIDTokenValid, fetchGraphData);
   app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
   app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
-  // app.post('/api/data', isAdminIDTokenValid, fetchGraphData);
 };
 
 export const initServer = (): Express => {

@@ -1,19 +1,21 @@
 import { NewUserDetails, StoredPatient } from '../firebase/types';
 
-export interface NewUserResponse {
+interface StandardResponse {
   error: boolean;
   msg?: string;
-  details?: NewUserDetails;
 }
 
-export interface GetPatientResponse {
-  error: boolean;
-  msg?: string;
-  patient?: StoredPatient;
+export type NewUserResponse = StandardResponse & {
+  details: NewUserDetails,
+};
+export type GetPatientResponse = StandardResponse & {
+  patient: StoredPatient,
+};
+
+export interface GraphDataBreakdown {
+  byVillage: boolean;
+  villagePatients?: StoredPatient[];
+  allPatients?: { [key: string]: StoredPatient[] };
 }
 
-export interface RecordsTimePeriodResponse {
-  error: boolean;
-  msg?: string;
-  numRecords?: number;
-}
+export type GraphDataResponse = StandardResponse & GraphDataBreakdown;

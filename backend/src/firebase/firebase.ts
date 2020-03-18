@@ -157,14 +157,15 @@ export const getPatientRecord =
   };
 
 export const getRecordsAtTimePeriod =
-  async (a: number, b: number): Promise<number> => {
-    const aDate = new Date(a);
-    const bDate = new Date(b);
-    let rec = 0;
+  async (a: Date, b: Date): Promise<StoredPatient[]> => {
+    const records: StoredPatient[] = [];
     const snapshot = await firestore().collection('patients').get();
     snapshot.forEach((doc => {
       const p = doc.data() as StoredPatient;
-      rec += p.diagnoses.filter(v => aDate <= v.date && v.date <= bDate).length;
+      const d = p.diagnoses.filter(v => a <= v.date && v.date <= b);
+      if (d.length > 0) {
+        records.push({ ...p, diagnoses: d });
+      }
     }));
-    return rec;
+    return records;
   };
