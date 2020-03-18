@@ -112,17 +112,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Male"
+            android:text="@string/male"
             android:textColor="#ffffff"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
         <RadioButton
             android:id="@+id/radioFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female"
+            android:text="@string/female"
             android:textColor="#ffffff"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
     </RadioGroup>
 
@@ -130,9 +130,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sex:"
+        android:text="@string/sex"
         android:textColor="#ffffff"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_submit_patient_details"
         app:layout_constraintEnd_toStartOf="@+id/radioSex"
         app:layout_constraintHorizontal_bias="0.5"

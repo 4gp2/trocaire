@@ -2,6 +2,59 @@
 
     <string name="app_name">Trocaire DOM</string>
     <string name="action_settings">Language Settings</string>
+    <string name="button_next">Next</string>
+    <string name="button_submit">Submit</string>
+
+    <!--    Add Patient Fragment    -->
+    <string name="add_patient_fragment">Add Patient Details</string>
+
+    <!--    Save Patient Fragment    -->
+    <string name="save_patient_fragment">Save Patient Records</string>
+
+    <!--    Update Patient Fragment    -->
+    <string name="update_patient_fragment">Update Patient Records</string>
+
+    <!--    Any other info page   -->
+    <string name="other_info">Insert other Symptoms here</string>
+
+
+    <!--   Patient Details page   -->
+    <string name="patient_details">Patient Details</string>
+    <string name="full_name">Full Name</string>
+    <string name="village">Village</string>
+    <string name="dob">DOB</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="sex">Sex</string>
+
+
+
+    <!--   Patient Rash ID  page   -->
+    <string name="small_red_spots">Small Red Spots</string>
+    <string name="large_patches">Large Patches</string>
+    <string name="small_scaley">Small Scaley</string>
+    <string name="clustered_Red_spots">Clustered Red Spots</string>
+    <string name="single_scaley">Single Scaley</string>
+    <string name="mixture">Mixture</string>
+
+
+
+    <!--   Row Layout page   -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+
+
+    <!--   Thermometer Layout page   -->
+    <string name="default_temp">35</string>
+
+
+    <!--   Sign in  page   -->
+    <string name="sign_in_title">Disease Outbreak Manager</string>
+    <string name="user_id">User ID</string>
+    <string name="password">Password</string>
+    <string name="button_login">Login</string>
+
+
 
     <!--    Symptoms    -->
     <string name="chk_nausea">Nausea/Vomiting</string>

@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Small red spots"
+                android:text="@string/small_red_spots"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 />
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="Large patches"
+                android:text="@string/large_patches"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:padding="15dp" />
@@ -65,7 +65,7 @@
                 android:id="@+id/SmallScaley"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Small Scaley"
+                android:text="@string/large_patches"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:padding="15dp"/>
@@ -86,7 +86,7 @@
                 android:id="@+id/chkClustered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Clustered red spots"
+                android:text="@string/clustered_Red_spots"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:padding="15dp"/>
@@ -107,7 +107,7 @@
                 android:id="@+id/chkSingleScaley"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Single Scaley"
+                android:text="@string/single_scaley"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:padding="15dp" />
@@ -128,7 +128,7 @@
                 android:id="@+id/chkMixture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mixture"
+                android:text="@string/mixture"
                 android:layout_marginLeft="20dp"
                 android:textSize="20sp"
                 android:padding="15dp"/>
@@ -150,7 +150,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp"
             android:padding="15dp"
-            android:text="Next"
+            android:text="@string/button_next"
             android:textColor="#ffffff"
             android:textSize="25sp" />
     </LinearLayout>

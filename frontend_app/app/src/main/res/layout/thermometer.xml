@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         style="@style/rounded_edittext_style"
-        android:text="35"
+        android:text="@string/default_temp"
         android:textAlignment="center"
-        android:textSize="50dp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +26,7 @@
         android:layout_width="294dp"
         android:layout_height="47dp"
         android:layout_marginBottom="60dp"
-        android:text="Next"
+        android:text="@string/button_next"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,6 @@
         app:layout_constraintBottom_toTopOf="@+id/textview1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/thermometer" />

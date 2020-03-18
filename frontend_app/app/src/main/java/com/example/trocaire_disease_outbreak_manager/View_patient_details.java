@@ -70,8 +70,6 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     send_data(data.toString());
-                    Toast.makeText(getApplication(), "Submitted!",
-                            Toast.LENGTH_LONG).show();
                     Intent con = new Intent(getApplicationContext(), Fragment_main.class);
                     getApplicationContext().startActivity(con);
                 }
