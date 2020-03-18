@@ -162,7 +162,10 @@ export const getRecordsAtTimePeriod =
     const snapshot = await firestore().collection('patients').get();
     snapshot.forEach((doc => {
       const p = doc.data() as StoredPatient;
-      const d = p.diagnoses.filter(v => a <= v.date && v.date <= b);
+      const d = p.diagnoses.filter(v => {
+        const date = new Date(v.date);
+        return a <= date && date <= b;
+      });
       if (d.length > 0) {
         records.push({ ...p, diagnoses: d });
       }

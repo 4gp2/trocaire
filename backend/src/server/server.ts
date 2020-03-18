@@ -109,36 +109,36 @@ const fetchGraphData = async (req: Request, res: Response): Promise<void> => {
   const start = new Date(req.body.start);
   const end = new Date(req.body.end);
   const records = await getRecordsAtTimePeriod(start, end);
-  const bd: GraphDataBreakdown = { byVillage: req.body.village };
+  const bd: GraphDataBreakdown = { byVillage: req.body.village !== '' };
+
   if (req.body.village) {
     const patients = records.filter(p => p.village === req.body.village);
     bd.villagePatients = patients.reduce((pAcc, pCur) => {
       pCur.diagnoses = pCur.diagnoses
         .filter(d => d.possibleDiseases.includes(req.body.disease));
-      if (pCur.diagnoses.length > 1) {
+      if (pCur.diagnoses.length > 0) {
         pAcc.push(pCur);
       }
       return pAcc;
     }, [] as StoredPatient[]);
   } else {
+    bd.allPatients = {};
     records.forEach(p => {
       p.diagnoses = p.diagnoses
         .filter(d => d.possibleDiseases.includes(req.body.disease));
-      if (p.diagnoses.length > 1) {
+      if (p.diagnoses.length > 0) {
         bd.allPatients[p.village] = bd.allPatients[p.village]
           ? bd.allPatients[p.village].concat([p])
           : [p];
       }
     });
   }
-  if (!bd.allPatients || bd.villagePatients) {
-    res.json({ error: true, msg: 'No patients matched' });
+
+  if (!bd.allPatients && !bd.villagePatients) {
+    res.json({ error: true, msg: 'No patients matched' } as GraphDataResponse);
     return;
   }
-  res.json({
-    error: false,
-    ...bd,
-  } as GraphDataResponse);
+  res.json({ error: false, ...bd } as GraphDataResponse);
 };
 
 const isAdminIDTokenValid =
