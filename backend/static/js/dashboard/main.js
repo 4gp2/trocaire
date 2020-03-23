@@ -139,21 +139,52 @@ $('.dropdown-menu a').click(function() {
       .text();
     graphRequest(dashPage, dateReq, diseaseReq, villageReq);
   } else {
-    graphRequest(dashPage, dateReq, diseaseReq, null);
+    graphRequest(dashPage, dateReq, diseaseReq, '');
   }
 });
 
 const graphRequest = async (page, date, disease, village) => {
-  console.log(page);
-  console.log(date);
-  console.log(disease);
-  const dataReqRes = await axios.post('/api/data', {
+  //console.log("Screen:" + page);
+  //console.log(date);
+  console.log("Disease: "+ disease);
+  console.log("Village: "+ village);
+
+  var startDate = "";
+  var endDate = new Date();
+  if (date ==="THIS WEEK"){
+    var d = endDate;
+    var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6:1);
+    startDate = new Date(d.setDate(diff));
+  }
+  else if (date ==="THIS MONTH") {
+    var d = endDate;
+    startDate = new Date(d.getFullYear(), d.getMonth(), 1);
+  }
+  else if (date ==="THIS YEAR") {
+    var d = endDate;
+    startDate = new Date(d.getFullYear(), 0, 1);
+  }
+  else if (date ==="ALL TIME") {
+    startDate = new Date("Mar 01 2020 00:00:00 GMT")
+    endDate = new Date("Mar 31 2020 00:00:00 GMT");
+  }
+
+  console.log("Start date: "+ startDate)
+  console.log("End date: "+ endDate)
+  
+  const token = await firebase.auth().currentUser.getIdToken(true);
+  const dataReqRes = await axios.post('/api/graph', {
+    token,
     disease,
-    date,
     village,
+    startDate,
+    endDate,
   });
   // Draw graphs
   if (page === 'Overview') {
+    console.log(dataReqRes)
+    console.log(dataReqRes.data.allPatients)
+
   } else if (page === 'Breakdown') {
   } else if (page === 'Map') {
   }
@@ -164,8 +195,9 @@ const graphRequest = async (page, date, disease, village) => {
 //data request api
 // const dataReqRes = await axios.post('/api/data', {
 //   disease,
-//   camp,
-//   timePeriod,
+//   village,
+//   start,
+//   end
 // });
 
 const bootstrapGraphs = () => {
