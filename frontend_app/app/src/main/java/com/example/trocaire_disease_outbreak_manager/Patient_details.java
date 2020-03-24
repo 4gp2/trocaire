@@ -44,7 +44,11 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
         ActionBar bar = getSupportActionBar();
         assert bar != null;
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        bar.setTitle(Html.fromHtml("<font color='#0B85C8'>Patient Details</font>"));
+
+        String page_title = getString(R.string.patient_details);
+        String html_title = "<font color='#0B85C8'>" + page_title + "</font>";
+        bar.setTitle(Html.fromHtml(html_title));
+
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
@@ -130,14 +134,14 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
         String fullName_string = fullName.getText().toString();
 
         if (village_string.isEmpty()) {
-            village.setError("Enter Valid Village Name");
+            village.setError(getText(R.string.valid_village_name));
             village.setBackgroundResource(R.drawable.rounded_edittext_error);
         } else {
             village.setBackgroundResource(R.drawable.rounded_edittext_box);
         }
 
         if (fullName_string.isEmpty()) {
-            fullName.setError("Enter Valid Name");
+            fullName.setError(getText(R.string.valid_name));
             fullName.setBackgroundResource(R.drawable.rounded_edittext_error);
         } else {
             fullName.setBackgroundResource(R.drawable.rounded_edittext_box);
@@ -145,7 +149,7 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
 
         if (time_difference < 0){
             Toast.makeText(getApplication(),
-                    "Enter date before todays date", Toast.LENGTH_SHORT).show();
+                    getText(R.string.valid_date), Toast.LENGTH_SHORT).show();
         }
 
         else if (!fullName_string.isEmpty() && !village_string.isEmpty()) {

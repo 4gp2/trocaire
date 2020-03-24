@@ -34,7 +34,11 @@ public class Rash_locator_front extends AppCompatActivity implements View.OnClic
         ActionBar bar = getSupportActionBar();
         assert bar != null;
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        bar.setTitle(Html.fromHtml("<font color='#0B85C8'>Rash Locator (front)</font>"));
+
+        String page_title = getString(R.string.rash_front);
+        String html_title = "<font color='#0B85C8'>" + page_title + "</font>";
+        bar.setTitle(Html.fromHtml(html_title));
+
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 

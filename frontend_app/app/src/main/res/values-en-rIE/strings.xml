@@ -28,6 +28,7 @@
     <string name="sex">Sex</string>
 
 
+
     <!--   Patient Rash ID  page   -->
     <string name="small_red_spots">Small Red Spots</string>
     <string name="large_patches">Large Patches</string>
@@ -35,6 +36,7 @@
     <string name="clustered_Red_spots">Clustered Red Spots</string>
     <string name="single_scaley">Single Scaley</string>
     <string name="mixture">Mixture</string>
+
 
 
     <!--   Row Layout page   -->
@@ -51,6 +53,7 @@
     <string name="user_id">User ID</string>
     <string name="password">Password</string>
     <string name="button_login">Login</string>
+
 
 
     <!--    Symptoms    -->
@@ -97,6 +100,5 @@
     <string name="valid_date">"Enter date before today's date</string>
 
     <string name="lang_selected">English Selected</string>
-
 
 </resources>

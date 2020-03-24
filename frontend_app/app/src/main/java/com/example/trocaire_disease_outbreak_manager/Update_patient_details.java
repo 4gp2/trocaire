@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.widget.Button;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.ActionBar;
@@ -77,7 +76,11 @@ public class Update_patient_details extends AppCompatActivity implements View.On
         ActionBar bar = getSupportActionBar();
         assert bar != null;
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        bar.setTitle(Html.fromHtml("<font color='#0B85C8'>Update Patient Details</font>"));
+
+        String page_title = getString(R.string.update_patient_fragment);
+        String html_title = "<font color='#0B85C8'>" + page_title + "</font>";
+        bar.setTitle(Html.fromHtml(html_title));
+
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
