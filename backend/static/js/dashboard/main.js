@@ -133,22 +133,18 @@ $('.dropdown-menu a').click(function() {
   diseaseReq = $(`#${dashPage}DiseaseDropdown`)
     .find('.btn')
     .text();
-  if (dashPage === 'Breakdown') {
+
+  if (dashPage === "Breakdown") {
     villageReq = $(`#${dashPage}VillageDropdown`)
       .find('.btn')
       .text();
     graphRequest(dashPage, dateReq, diseaseReq, villageReq);
-  } else {
+  }else {
     graphRequest(dashPage, dateReq, diseaseReq, '');
   }
 });
 
 const graphRequest = async (page, date, disease, village) => {
-  //console.log("Screen:" + page);
-  //console.log(date);
-  console.log("Disease: "+ disease);
-  console.log("Village: "+ village);
-
   var start = "";
   var end = new Date();
   if (date === "THIS WEEK"){
@@ -169,9 +165,6 @@ const graphRequest = async (page, date, disease, village) => {
     end = new Date("Mar 31 2020 00:00:00 GMT");
   }
 
-   console.log("Start date: "+ start)
-   console.log("End date: "+ end)
-
   const token = await firebase.auth().currentUser.getIdToken(true);
   const dataReqRes = await axios.post('/api/graph', {
     token,
@@ -182,20 +175,30 @@ const graphRequest = async (page, date, disease, village) => {
   });
   // Draw graphs
   if (page === 'Overview') {
-    // console.log(dataReqRes)
-    // console.log(dataReqRes.data.allPatients)
     var obj = dataReqRes.data.allPatients;
     var people = Object.values(obj);
     var locations = Object.keys(obj)
     var counts = people.map(x => x.length);
-    // console.log(map1)
     overviewGraph(locations,counts)
 
   } else if (page === 'Breakdown') {
+      var obj = dataReqRes;
+      var patientData = obj.data.villagePatients;
+
+      const countFemale = patientData.filter((o) => o.sex === "Female").length;
+      const countMale = patientData.filter((o) => o.sex === "Male").length;
+
+      let ages = patientData.map(a => Math.floor( a.dob._seconds/ 31536000));
+      const count18 = ages.filter((o) => o <= 18).length;
+      const count30 = ages.filter((o) => o <= 30).length - count18;
+      const count50 =  ages.filter((o) => o <= 50).length - count18 - count30;
+      const count65 = ages.filter((o) => o <= 65).length - count18 - count30 - count50;
+      const countAbove = ages.filter((o) => o > 65).length;
+
+      breakdownGraph([countMale,countFemale], [count18 , count30 , count50 , count65 , countAbove ]);
   } else if (page === 'Map') {
+    // todo
   }
-  console.log('Finished Request');
-  console.log('Finished Function');
 };
 
 //data request api
@@ -240,102 +243,87 @@ const graphRequest = async (page, date, disease, village) => {
      },
    });
 
-  chart.update();
+
  }
 
+ const breakdownGraph = (pieData, ageData) => {
+   $('#chart3').remove(); // this is my <canvas> element
+   $('#breakdownChartContainer').append('<canvas class="my-4" id="chart3" width="300" height="200"></canvas>')
+
+   var chart = new Chart(document.getElementById('chart3'), {
+     type: 'pie',
+     data: {
+       labels: ['Male', 'Female'],
+       datasets: [
+         {
+           data: pieData,
+           lineTension: 0,
+           backgroundColor: ['blue', 'orange'],
+           borderColor: 'Transparent',
+           borderWidth: 4,
+           pointBackgroundColor: '#007bff',
+         },
+       ],
+     },
+     options: {
+       scales: {
+         yAxes: [
+           {
+             ticks: {
+               beginAtZero: true,
+             },
+           },
+         ],
+       },
+       legend: {
+         display: false,
+       },
+     },
+   });
+   chart.update();
+
+     $('#chart1').remove(); // this is my <canvas> element
+     $('#breakdownChartContainer1').append('<canvas class="my-4" id="chart1" width="300" height="200"></canvas>')
+
+     var chart1 = new Chart(document.getElementById('chart1'), {
+       type: 'bar',
+       data: {
+         labels: ['<18', '18-30', '30-50', '50-65', '65+'],
+         datasets: [
+           {
+             data: ageData,
+             lineTension: 0,
+             backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
+             borderColor: 'transparent',
+             borderWidth: 4,
+             pointBackgroundColor: '#007bff',
+           },
+         ],
+       },
+       options: {
+         scales: {
+           yAxes: [
+             {
+               ticks: {
+                 beginAtZero: true,
+               },
+             },
+           ],
+         },
+         legend: {
+           display: false,
+         },
+       },
+     });
+     chart1.update();
+
+ }
+
+
+
 const bootstrapGraphs = () => {
-  new Chart(document.getElementById('chart1'), {
-    type: 'bar',
-    data: {
-      labels: ['<18', '18-30', '30-50', '50-65', '65+'],
-      datasets: [
-        {
-          data: [100, 340, 645, 432, 320],
-          lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
-          borderColor: 'transparent',
-          borderWidth: 4,
-          pointBackgroundColor: '#007bff',
-        },
-      ],
-    },
-    options: {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-      legend: {
-        display: false,
-      },
-    },
-  });
-
-  new Chart(document.getElementById('chart2'), {
-    type: 'bar',
-    data: {
-      labels: ['Village A', 'Village B', 'Village C', 'Village D'],
-      datasets: [
-        {
-          data: [15339, 21345, 18483, 24003],
-          lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
-          borderColor: 'transparent',
-          borderWidth: 4,
-          pointBackgroundColor: '#007bff',
-        },
-      ],
-    },
-    options: {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-      legend: {
-        display: false,
-      },
-    },
-  });
-
-  new Chart(document.getElementById('chart3'), {
-    type: 'pie',
-    data: {
-      labels: ['Male', 'Female'],
-      datasets: [
-        {
-          data: [38, 62],
-          lineTension: 0,
-          backgroundColor: ['blue', 'orange'],
-          borderColor: 'Transparent',
-          borderWidth: 4,
-          pointBackgroundColor: '#007bff',
-        },
-      ],
-    },
-    options: {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-      legend: {
-        display: false,
-      },
-    },
-  });
+    graphRequest("Overview", "THIS MONTH", "Cholera", "");
+    graphRequest("Breakdown", "THIS MONTH", "Cholera", "Dublin");
 };
 
 const bootstrapMap = () => {
@@ -358,5 +346,5 @@ const bootstrapMap = () => {
 };
 
 bootstrapElements();
-bootstrapGraphs();
+
 bootstrapMap();
