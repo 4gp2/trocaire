@@ -30,7 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+
 
 public class View_patient_details extends AppCompatActivity implements View.OnClickListener{
 
@@ -44,7 +44,10 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         ActionBar bar = getSupportActionBar();
         assert bar != null;
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        bar.setTitle(Html.fromHtml("<font color='#0B85C8'>View Patient Records</font>"));
+        String page_title = getString(R.string.view_patient_records);
+        String html_title = "<font color='#0B85C8'>" + page_title + "</font>";
+        bar.setTitle(Html.fromHtml(html_title));
+
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 

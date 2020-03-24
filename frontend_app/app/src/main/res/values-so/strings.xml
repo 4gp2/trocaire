@@ -1,0 +1,105 @@
+<resources>
+
+    <string name="app_name">Trocaire DOM</string>
+    <string name="action_settings">Dejinta Luqadda</string>
+    <string name="button_next">Xiga</string>
+    <string name="button_submit">Gudbi</string>
+
+    <!--    Add Patient Fragment    -->
+    <string name="add_patient_fragment">Ku dar faahfaahinta bukaanka</string>
+
+    <!--    Save Patient Fragment    -->
+    <string name="save_patient_fragment">Kaydi Diiwaanada Bukaanka</string>
+
+    <!--    Update Patient Fragment    -->
+    <string name="update_patient_fragment">Cusboonaysii diiwaannada bukaanka</string>
+
+    <!--    Any other info page   -->
+    <string name="other_info">Gali calaamadaha kale halkan</string>
+
+
+    <!--   Patient Details page   -->
+    <string name="patient_details">Faahfaahinta bukaanka</string>
+    <string name="full_name">Magaca buuxa</string>
+    <string name="village">Tuulo</string>
+    <string name="dob">DOB</string>
+    <string name="male">Lab</string>
+    <string name="female">Dhedig</string>
+    <string name="sex">Galmo</string>
+
+
+
+    <!--   Patient Rash ID  page   -->
+    <string name="small_red_spots">Xaashiyaha Casaanka Yar</string>
+    <string name="large_patches">Xargaha waaweyn</string>
+    <string name="small_scaley">Scaly yar</string>
+    <string name="clustered_Red_spots">Xaashiyada Casaanka ee Koofurta</string>
+    <string name="single_scaley">Single Scaley</string>
+    <string name="mixture">Isku dhafka</string>
+
+
+
+    <!--   Row Layout page   -->
+    <string name="first_name">Magaca koowaad</string>
+    <string name="last_name">Magaca Dambe</string>
+
+
+    <!--   Thermometer Layout page   -->
+    <string name="default_temp">35</string>
+
+
+    <!--   Sign in  page   -->
+    <string name="sign_in_title">Maareeyaha Cudurka Faafa</string>
+    <string name="user_id">Aqoonsiga Adeegsiga</string>
+    <string name="password">Furaha</string>
+    <string name="button_login">Soo gal</string>
+
+
+
+    <!--    Symptoms    -->
+    <string name="chk_nausea">Lalabbo / matag</string>
+    <string name="chk_diahorrea">Diahorrea</string>
+    <string name="chk_heart_rate">Heerka wadnaha oo sareeya</string>
+    <string name="chk_muscle_pain">Murqaha muruq xanuun/adkaanta</string>
+    <string name="chk_cough">Qallalan qallalan</string>
+    <string name="chk_dehydration">Fuuqbaxa</string>
+    <string name="chk_sore_throat">Cune xanuun</string>
+    <string name="chk_headache">Madax xanuun</string>
+    <string name="chk_rash">Nabar</string>
+    <string name="chk_sweating">Dhidid Profuse</string>
+    <string name="chk_white_spots">Dhibcaha cad ee afka</string>
+    <string name="chk_bloody_stools">Saxarada dhiiga</string>
+    <string name="chk_stiff_limbs">Xadka lugaha Leh/Xadhiga</string>
+
+
+    <string name="btn_submit_symptom">Gudbi</string>
+    <string name="title_activity_fragment_main">Fragment_main</string>
+    <string name="tab_text_1">Add</string>
+    <string name="tab_text_2">Kaydso</string>
+    <string name="tab_text_3">Cusboonaysii</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="symptoms">Astaamaha</string>
+
+    <string name="Language_settings_title">Dejinta Luqadda</string>
+    <string name="Any_other_info_title">Macluumaad Kale Oo Kale</string>
+    <string name="pain_level_title">Heerka Xanuunka</string>
+
+    <string name="rash_back">Goobta fallaaraha (gadaal)</string>
+    <string name="rash_front">Goobta Rash</string>
+    <string name="rash_type">Nooca Sanka ah</string>
+    <string name="Review_patient_details">Dib u eeg faahfaahinta bukaanka</string>
+    <string name="patient_symptoms_title">Calaamadaha Bukaanka</string>
+    <string name="Temperature">Heerkul</string>
+    <string name="view_patient_records">Fiiri Diiwaannada Bukaanka</string>
+
+    <string name="valid_name">Gali Magac Fudud</string>
+    <string name="valid_village_name">Gali Magac Fudud</string>
+    <string name="valid_date">Gali taariikhda kahor taariikhda maanta</string>
+    
+    <string name="lang_selected">Somalian Xul</string>
+
+    <string name="auth_email_extension">health.trocaire.org</string>
+    <string name="signin_failed">Soo galitaanka ayaa ku guuldaraystay, hubi faahfaahintaada</string>
+</resources>
