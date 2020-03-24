@@ -1,13 +1,13 @@
 package com.example.trocaire_disease_outbreak_manager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 public class Fragment_new_patient extends Fragment implements View.OnClickListener{
 
 
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_fragment_new_patient, container, false);

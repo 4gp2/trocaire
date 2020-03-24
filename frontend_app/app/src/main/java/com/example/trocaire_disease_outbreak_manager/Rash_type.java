@@ -34,7 +34,11 @@ public class Rash_type extends AppCompatActivity implements View.OnClickListener
         ActionBar bar = getSupportActionBar();
         assert bar != null;
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        bar.setTitle(Html.fromHtml("<font color='#0B85C8'>Rash Type</font>"));
+
+        String page_title = getString(R.string.rash_type);
+        String html_title = "<font color='#0B85C8'>" + page_title + "</font>";
+        bar.setTitle(Html.fromHtml(html_title));
+
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
