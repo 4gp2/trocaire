@@ -149,41 +149,47 @@ const graphRequest = async (page, date, disease, village) => {
   console.log("Disease: "+ disease);
   console.log("Village: "+ village);
 
-  var startDate = "";
-  var endDate = new Date();
-  if (date ==="THIS WEEK"){
-    var d = endDate;
+  var start = "";
+  var end = new Date();
+  if (date === "THIS WEEK"){
+    var d = end;
     var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6:1);
-    startDate = new Date(d.setDate(diff));
+    start = new Date(d.setDate(diff));
   }
-  else if (date ==="THIS MONTH") {
-    var d = endDate;
-    startDate = new Date(d.getFullYear(), d.getMonth(), 1);
+  else if (date === "THIS MONTH") {
+    var d = end;
+    start = new Date(d.getFullYear(), d.getMonth(), 1);
   }
-  else if (date ==="THIS YEAR") {
-    var d = endDate;
-    startDate = new Date(d.getFullYear(), 0, 1);
+  else if (date === "THIS YEAR") {
+    var d = end;
+    start = new Date(d.getFullYear(), 0, 1);
   }
-  else if (date ==="ALL TIME") {
-    startDate = new Date("Mar 01 2020 00:00:00 GMT")
-    endDate = new Date("Mar 31 2020 00:00:00 GMT");
+  else if (date === "ALL TIME") {
+    start = new Date("Mar 01 2020 00:00:00 GMT")
+    end = new Date("Mar 31 2020 00:00:00 GMT");
   }
 
-  console.log("Start date: "+ startDate)
-  console.log("End date: "+ endDate)
-  
+   console.log("Start date: "+ start)
+   console.log("End date: "+ end)
+
   const token = await firebase.auth().currentUser.getIdToken(true);
   const dataReqRes = await axios.post('/api/graph', {
     token,
     disease,
     village,
-    startDate,
-    endDate,
+    start,
+    end,
   });
   // Draw graphs
   if (page === 'Overview') {
-    console.log(dataReqRes)
-    console.log(dataReqRes.data.allPatients)
+    // console.log(dataReqRes)
+    // console.log(dataReqRes.data.allPatients)
+    var obj = dataReqRes.data.allPatients;
+    var people = Object.values(obj);
+    var locations = Object.keys(obj)
+    var counts = people.map(x => x.length);
+    // console.log(map1)
+    overviewGraph(locations,counts)
 
   } else if (page === 'Breakdown') {
   } else if (page === 'Map') {
@@ -199,6 +205,43 @@ const graphRequest = async (page, date, disease, village) => {
 //   start,
 //   end
 // });
+ const overviewGraph = (labels, data) =>{
+   $('#chart2').remove(); // this is my <canvas> element
+   $('#overviewChartContainer').append('<canvas class="my-4" id="chart2" width="300" height="200"></canvas>')
+
+   var chart = new Chart(document.getElementById('chart2'), {
+     type: 'bar',
+     data: {
+       labels: labels,
+       datasets: [
+         {
+           data: data,
+           lineTension: 0,
+           backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
+           borderColor: 'transparent',
+           borderWidth: 4,
+           pointBackgroundColor: '#007bff',
+         },
+       ],
+     },
+     options: {
+       scales: {
+         yAxes: [
+           {
+             ticks: {
+               beginAtZero: true,
+             },
+           },
+         ],
+       },
+       legend: {
+         display: false,
+       },
+     },
+   });
+
+  chart.update();
+ }
 
 const bootstrapGraphs = () => {
   new Chart(document.getElementById('chart1'), {
