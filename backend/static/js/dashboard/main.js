@@ -111,47 +111,53 @@ const bootstrapElements = () => {
     .addEventListener('click', _e => setTimeout(() => map.invalidateSize(), 0));
 };
 
-const admin_warning = async () => {
-  const token = await firebase.auth().currentUser.getIdToken(true);
-  const diseases = ['Cholera', 'Polio', 'Measles', 'Malaria'];
-  let highest_cases = 0;
-  let result, sum, highest_disease;
-  for (const d of diseases) {
-    result = await axios.post('/api/graph', {
-      token,
-      disease: d,
-      start: new Date('2020-03-02'),
-      end: new Date('2020-03-31'), 
-    });
-    if (result.error || result.data.error) {
-      break;
-    }
-    result.data.forEach( (element) => {
-      sum += element.length;
-    });
+const adminWarning = () =>
+  firebase.auth().onAuthStateChanged(async user => {
+    const token = await user.getIdToken(true);
+    const diseases = ['Cholera', 'Polio', 'Measles', 'Malaria'];
+    let highest_cases = 0;
+    let result, sum, highest_disease;
+    for (const d of diseases) {
+      result = await axios.post('/api/graph', {
+        token,
+        disease: d,
+        start: new Date('2020-03-02'),
+        end: new Date('2020-03-31'),
+      });
+      if (result.error || result.data.error) {
+        break;
+      }
+      result.data.forEach(element => (sum += element.length));
 
-    if (sum > highest_cases) {
-      highest_cases = sum;
-      highest_disease = d;
+      if (sum > highest_cases) {
+        highest_cases = sum;
+        highest_disease = d;
+      }
     }
-  }
-  const warning_box = document.getElementById('warning_box');
-  warning_box.innerHTML = '';
-  if (highest_cases < 80) {
-    warning_box.innerText = 'No Major Increase of Disease Cases Detected';
-    warning_box.style.backgroundColor = 'lightgreen';
-  }
-  if (highest_cases >= 80 && highest_cases < 160) {
-    warning_box.innerText = 'There is an Increase of ' + highest_disease.toUpperCase() + ' Cases Detected. Please Check Dashboard';
-    warning_box.style.backgroundColor = 'orange';
-  }
-  if (highest_cases >= 160) {
-    warning_box.innerText = 'There is High Outbreak of ' + highest_disease.toUpperCase() + ' Detected. Please Check Dashboard';
-    warning_box.style.backgroundColor = 'red';
-  }
 
-  console.log('i reached the end');
-}
+    const warning_box = document.getElementById('warning_box');
+    warning_box.innerHTML = '';
+    if (highest_cases < 80) {
+      warning_box.innerText = 'No Major Increase of Disease Cases Detected';
+      warning_box.style.backgroundColor = 'lightgreen';
+    }
+    if (highest_cases >= 80 && highest_cases < 160) {
+      warning_box.innerText =
+        'There is an Increase of ' +
+        highest_disease.toUpperCase() +
+        ' Cases Detected. Please Check Dashboard';
+      warning_box.style.backgroundColor = 'orange';
+    }
+    if (highest_cases >= 160) {
+      warning_box.innerText =
+        'There is High Outbreak of ' +
+        highest_disease.toUpperCase() +
+        ' Detected. Please Check Dashboard';
+      warning_box.style.backgroundColor = 'red';
+    }
+
+    console.log('i reached the end');
+  });
 
 //Data api
 ////Dropdown JS
@@ -176,35 +182,33 @@ $('.dropdown-menu a').click(function() {
     .find('.btn')
     .text();
 
-  if (dashPage === "Breakdown") {
+  if (dashPage === 'Breakdown') {
     villageReq = $(`#${dashPage}VillageDropdown`)
       .find('.btn')
       .text();
     graphRequest(dashPage, dateReq, diseaseReq, villageReq);
-  }else {
+  } else {
     graphRequest(dashPage, dateReq, diseaseReq, '');
   }
 });
 
 const graphRequest = async (page, date, disease, village) => {
-  var start = "";
+  var start = '';
   var end = new Date();
-  if (date === "THIS WEEK"){
+  if (date === 'THIS WEEK') {
     var d = end;
-    var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6:1);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1);
     start = new Date(d.setDate(diff));
-  }
-  else if (date === "THIS MONTH") {
+  } else if (date === 'THIS MONTH') {
     var d = end;
     start = new Date(d.getFullYear(), d.getMonth(), 1);
-  }
-  else if (date === "THIS YEAR") {
+  } else if (date === 'THIS YEAR') {
     var d = end;
     start = new Date(d.getFullYear(), 0, 1);
-  }
-  else if (date === "ALL TIME") {
-    start = new Date("Mar 01 2020 00:00:00 GMT")
-    end = new Date("Mar 31 2020 00:00:00 GMT");
+  } else if (date === 'ALL TIME') {
+    start = new Date('Mar 01 2020 00:00:00 GMT');
+    end = new Date('Mar 31 2020 00:00:00 GMT');
   }
 
   const token = await firebase.auth().currentUser.getIdToken(true);
@@ -219,25 +223,28 @@ const graphRequest = async (page, date, disease, village) => {
   if (page === 'Overview') {
     var obj = dataReqRes.data.allPatients;
     var people = Object.values(obj);
-    var locations = Object.keys(obj)
+    var locations = Object.keys(obj);
     var counts = people.map(x => x.length);
-    overviewGraph(locations,counts)
-
+    overviewGraph(locations, counts);
   } else if (page === 'Breakdown') {
-      var obj = dataReqRes;
-      var patientData = obj.data.villagePatients;
+    var obj = dataReqRes;
+    var patientData = obj.data.villagePatients;
 
-      const countFemale = patientData.filter((o) => o.sex === "Female").length;
-      const countMale = patientData.filter((o) => o.sex === "Male").length;
+    const countFemale = patientData.filter(o => o.sex === 'Female').length;
+    const countMale = patientData.filter(o => o.sex === 'Male').length;
 
-      let ages = patientData.map(a => Math.floor( a.dob._seconds/ 31536000));
-      const count18 = ages.filter((o) => o <= 18).length;
-      const count30 = ages.filter((o) => o <= 30).length - count18;
-      const count50 =  ages.filter((o) => o <= 50).length - count18 - count30;
-      const count65 = ages.filter((o) => o <= 65).length - count18 - count30 - count50;
-      const countAbove = ages.filter((o) => o > 65).length;
+    let ages = patientData.map(a => Math.floor(a.dob._seconds / 31536000));
+    const count18 = ages.filter(o => o <= 18).length;
+    const count30 = ages.filter(o => o <= 30).length - count18;
+    const count50 = ages.filter(o => o <= 50).length - count18 - count30;
+    const count65 =
+      ages.filter(o => o <= 65).length - count18 - count30 - count50;
+    const countAbove = ages.filter(o => o > 65).length;
 
-      breakdownGraph([countMale,countFemale], [count18 , count30 , count50 , count65 , countAbove ]);
+    breakdownGraph(
+      [countMale, countFemale],
+      [count18, count30, count50, count65, countAbove],
+    );
   } else if (page === 'Map') {
     // todo
   }
@@ -250,122 +257,123 @@ const graphRequest = async (page, date, disease, village) => {
 //   start,
 //   end
 // });
- const overviewGraph = (labels, data) =>{
-   $('#chart2').remove(); // this is my <canvas> element
-   $('#overviewChartContainer').append('<canvas class="my-4" id="chart2" width="300" height="200"></canvas>')
+const overviewGraph = (labels, data) => {
+  $('#chart2').remove(); // this is my <canvas> element
+  $('#overviewChartContainer').append(
+    '<canvas class="my-4" id="chart2" width="300" height="200"></canvas>',
+  );
 
-   var chart = new Chart(document.getElementById('chart2'), {
-     type: 'bar',
-     data: {
-       labels: labels,
-       datasets: [
-         {
-           data: data,
-           lineTension: 0,
-           backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
-           borderColor: 'transparent',
-           borderWidth: 4,
-           pointBackgroundColor: '#007bff',
-         },
-       ],
-     },
-     options: {
-       scales: {
-         yAxes: [
-           {
-             ticks: {
-               beginAtZero: true,
-             },
-           },
-         ],
-       },
-       legend: {
-         display: false,
-       },
-     },
-   });
+  var chart = new Chart(document.getElementById('chart2'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+          lineTension: 0,
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
+          borderColor: 'transparent',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+    },
+  });
+};
 
+const breakdownGraph = (pieData, ageData) => {
+  $('#chart3').remove(); // this is my <canvas> element
+  $('#breakdownChartContainer').append(
+    '<canvas class="my-4" id="chart3" width="300" height="200"></canvas>',
+  );
 
- }
+  var chart = new Chart(document.getElementById('chart3'), {
+    type: 'pie',
+    data: {
+      labels: ['Male', 'Female'],
+      datasets: [
+        {
+          data: pieData,
+          lineTension: 0,
+          backgroundColor: ['blue', 'orange'],
+          borderColor: 'Transparent',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+    },
+  });
+  chart.update();
 
- const breakdownGraph = (pieData, ageData) => {
-   $('#chart3').remove(); // this is my <canvas> element
-   $('#breakdownChartContainer').append('<canvas class="my-4" id="chart3" width="300" height="200"></canvas>')
+  $('#chart1').remove(); // this is my <canvas> element
+  $('#breakdownChartContainer1').append(
+    '<canvas class="my-4" id="chart1" width="300" height="200"></canvas>',
+  );
 
-   var chart = new Chart(document.getElementById('chart3'), {
-     type: 'pie',
-     data: {
-       labels: ['Male', 'Female'],
-       datasets: [
-         {
-           data: pieData,
-           lineTension: 0,
-           backgroundColor: ['blue', 'orange'],
-           borderColor: 'Transparent',
-           borderWidth: 4,
-           pointBackgroundColor: '#007bff',
-         },
-       ],
-     },
-     options: {
-       scales: {
-         yAxes: [
-           {
-             ticks: {
-               beginAtZero: true,
-             },
-           },
-         ],
-       },
-       legend: {
-         display: false,
-       },
-     },
-   });
-   chart.update();
-
-     $('#chart1').remove(); // this is my <canvas> element
-     $('#breakdownChartContainer1').append('<canvas class="my-4" id="chart1" width="300" height="200"></canvas>')
-
-     var chart1 = new Chart(document.getElementById('chart1'), {
-       type: 'bar',
-       data: {
-         labels: ['<18', '18-30', '30-50', '50-65', '65+'],
-         datasets: [
-           {
-             data: ageData,
-             lineTension: 0,
-             backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
-             borderColor: 'transparent',
-             borderWidth: 4,
-             pointBackgroundColor: '#007bff',
-           },
-         ],
-       },
-       options: {
-         scales: {
-           yAxes: [
-             {
-               ticks: {
-                 beginAtZero: true,
-               },
-             },
-           ],
-         },
-         legend: {
-           display: false,
-         },
-       },
-     });
-     chart1.update();
-
- }
-
-
+  var chart1 = new Chart(document.getElementById('chart1'), {
+    type: 'bar',
+    data: {
+      labels: ['<18', '18-30', '30-50', '50-65', '65+'],
+      datasets: [
+        {
+          data: ageData,
+          lineTension: 0,
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
+          borderColor: 'transparent',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+    },
+  });
+  chart1.update();
+};
 
 const bootstrapGraphs = () => {
-    graphRequest("Overview", "THIS MONTH", "Cholera", "");
-    graphRequest("Breakdown", "THIS MONTH", "Cholera", "Dublin");
+  graphRequest('Overview', 'THIS MONTH', 'Cholera', '');
+  graphRequest('Breakdown', 'THIS MONTH', 'Cholera', 'Dublin');
 };
 
 const bootstrapMap = () => {
@@ -388,7 +396,4 @@ const bootstrapMap = () => {
 };
 
 bootstrapElements();
-
 bootstrapMap();
-
-admin_warning();
