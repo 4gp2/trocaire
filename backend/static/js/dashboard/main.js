@@ -111,6 +111,48 @@ const bootstrapElements = () => {
     .addEventListener('click', _e => setTimeout(() => map.invalidateSize(), 0));
 };
 
+const admin_warning = async () => {
+  const token = await firebase.auth().currentUser.getIdToken(true);
+  const diseases = ['Cholera', 'Polio', 'Measles', 'Malaria'];
+  let highest_cases = 0;
+  let result, sum, highest_disease;
+  for (const d of diseases) {
+    result = await axios.post('/api/graph', {
+      token,
+      disease: d,
+      start: new Date('2020-03-02'),
+      end: new Date('2020-03-31'), 
+    });
+    if (result.error || result.data.error) {
+      break;
+    }
+    result.data.forEach( (element) => {
+      sum += element.length;
+    });
+
+    if (sum > highest_cases) {
+      highest_cases = sum;
+      highest_disease = d;
+    }
+  }
+  const warning_box = document.getElementById('warning_box');
+  warning_box.innerHTML = '';
+  if (highest_cases < 80) {
+    warning_box.innerText = 'No Major Increase of Disease Cases Detected';
+    warning_box.style.backgroundColor = 'lightgreen';
+  }
+  if (highest_cases >= 80 && highest_cases < 160) {
+    warning_box.innerText = 'There is an Increase of ' + highest_disease.toUpperCase() + ' Cases Detected. Please Check Dashboard';
+    warning_box.style.backgroundColor = 'orange';
+  }
+  if (highest_cases >= 160) {
+    warning_box.innerText = 'There is High Outbreak of ' + highest_disease.toUpperCase() + ' Detected. Please Check Dashboard';
+    warning_box.style.backgroundColor = 'red';
+  }
+
+  console.log('i reached the end');
+}
+
 //Data api
 ////Dropdown JS
 let dateReq;
@@ -348,3 +390,5 @@ const bootstrapMap = () => {
 bootstrapElements();
 
 bootstrapMap();
+
+admin_warning();
