@@ -3,6 +3,7 @@ export enum Disease {
   Cholera,
   Polio,
   Malaria,
+  'COVID-19',
 }
 
 export interface DiseaseRank {

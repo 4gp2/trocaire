@@ -20,7 +20,10 @@ export const matchDiseases = (s: Symptoms): DiseaseRank[] => {
     d[Disease.Cholera]++;
     d[Disease.Malaria]++;
   }
-  if (s.dryCough) d[Disease.Measles]++;
+  if (s.dryCough) {
+    d[Disease.Measles]++;
+    d[Disease['COVID-19']]++;
+  }
   if (s.headache) {
     d[Disease.Malaria]++;
     d[Disease.Polio]++;
@@ -50,6 +53,7 @@ export const matchDiseases = (s: Symptoms): DiseaseRank[] => {
   if (s.stiffLimbs) d[Disease.Polio]++;
   if (s.sweating) d[Disease.Malaria]++;
   if (s.temperature > 37.5) {
+    d[Disease['COVID-19']]++;
     d[Disease.Measles]++;
     d[Disease.Polio]++;
     d[Disease.Malaria]++;
