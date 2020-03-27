@@ -11,280 +11,368 @@
         android:orientation="vertical"
         android:background="#0B85C8">
 
-        <FrameLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkNausea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="@string/chk_nausea"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/nausea"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/nausea"/>
+                <CheckBox
+                    android:id="@+id/chkNausea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_nausea"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal"
-            style="@style/rounded_edittext_style"
-            android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkDiahorrea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="@string/chk_diahorrea"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/diahorrea"/>
-        </FrameLayout>
 
-        <FrameLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkHeartRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_heart_rate"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:padding="15dp"/>
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_gravity="right"
-                android:layout_height="70dp"
-                app:srcCompat="@drawable/heart_rate"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/diahorrea"/>
+                <CheckBox
+                    android:id="@+id/chkDiahorrea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_diahorrea"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkDehydration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_dehydration"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:padding="15dp"/>
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/dehydration"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/heart_rate"/>
+                <CheckBox
+                    android:id="@+id/chkHeartRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_heart_rate"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkMusclePain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_muscle_pain"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/muscle_pain"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/dehydration"/>
+                <CheckBox
+                    android:id="@+id/chkDehydration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_dehydration"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkCough"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_cough"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp"/>
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/dry_cough"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/muscle_pain"/>
+                <CheckBox
+                    android:id="@+id/chkMusclePain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_muscle_pain"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkSoreThroat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_sore_throat"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/sore_throat"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/dry_cough"/>
+                <CheckBox
+                    android:id="@+id/chkCough"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_cough"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkHeadache"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_headache"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/headache"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/sore_throat"/>
+                <CheckBox
+                    android:id="@+id/chkSoreThroat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_sore_throat"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkRash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_rash"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/rash"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/headache"/>
+                <CheckBox
+                    android:id="@+id/chkHeadache"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_headache"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkSweating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_sweating"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/sweating"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/rash"/>
+                <CheckBox
+                    android:id="@+id/chkRash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_rash"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkBloodyStools"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_bloody_stools"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/bloody_stool"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/sweating"/>
+                <CheckBox
+                    android:id="@+id/chkSweating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_sweating"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkMouthSpots"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_white_spots"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/white_spots"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/bloody_stool"/>
+                <CheckBox
+                    android:id="@+id/chkBloodyStools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_bloody_stools"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
-        <FrameLayout
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             style="@style/rounded_edittext_style"
             android:padding="10dp">
-            <CheckBox
-                android:id="@+id/chkStiffLimbs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chk_stiff_limbs"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
-                android:padding="15dp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="right"
-                app:srcCompat="@drawable/limbs"/>
-        </FrameLayout>
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/white_spots"/>
+                <CheckBox
+                    android:id="@+id/chkMouthSpots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_white_spots"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/rounded_edittext_style"
+            android:padding="10dp">
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/limbs"/>
+                <CheckBox
+                    android:id="@+id/chkStiffLimbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:text="@string/chk_stiff_limbs"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
 
         <Button
@@ -298,7 +386,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp"
             android:padding="15dp"
-            android:text="Next"
+            android:text="@string/button_next"
             android:textColor="#ffffff"
             android:textSize="25sp" />
     </LinearLayout>
