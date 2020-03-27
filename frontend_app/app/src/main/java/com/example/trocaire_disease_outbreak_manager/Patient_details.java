@@ -77,7 +77,7 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
                 int dayOfMonth = Integer.parseInt(DOB.substring(8,10));
                 int monthOfYear = getMonth(DOB.substring(4,7));
 
-                DatePicker dp =  (DatePicker)this.findViewById(R.id.dp_DOB);
+                DatePicker dp =  this.findViewById(R.id.dp_DOB);
                 dp.init(year, monthOfYear, dayOfMonth, null);
 
                 // Set gender
@@ -160,8 +160,16 @@ public class Patient_details extends AppCompatActivity implements View.OnClickLi
             int selectedId = radioSexGroup.getCheckedRadioButtonId();
             RadioButton radioSexButton = findViewById(selectedId);
 
-            String first_name = fullName_string.substring(0, fullName_string.indexOf(' '));
-            String last_name = fullName_string.substring(fullName_string.indexOf(' ') + 1);
+            String first_name;
+            String last_name;
+
+            try {
+                first_name = fullName_string.substring(0, fullName_string.indexOf(' '));
+                last_name = fullName_string.substring(fullName_string.indexOf(' ') + 1);
+            }catch (Exception e){
+                first_name = fullName_string;
+                last_name = "_";
+            }
 
             try {
                 data.put("firstName", first_name);
