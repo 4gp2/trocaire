@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,16 +32,55 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class View_patient_details extends AppCompatActivity implements View.OnClickListener{
 
     private static final String FILE_NAME = "patients.json";
 
+    ArrayList<String> firstNames = new ArrayList<>();
+    ArrayList<String> lastNames = new ArrayList<>();
+    ArrayList<String> villages = new ArrayList<>();
+    ArrayList<String> DOBs = new ArrayList<>();
+    ArrayList<String> gender = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_records);
+
+        // get the reference of RecyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        // set a LinearLayoutManager with default vertical orientation
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        try {
+            String json_String = get_json_string();
+            // get JSONObject from JSON file
+            JSONObject obj = new JSONObject(json_String);
+            // fetch JSONArray named patients
+            JSONArray userArray = obj.getJSONArray("patients");
+            // implement for loop for getting patients list data
+            for (int i = 0; i < userArray.length(); i++) {
+                // create a JSONObject for fetching single patient data
+                JSONObject userDetail = userArray.getJSONObject(i);
+                // fetch and store it in arraylist
+                firstNames.add(userDetail.getString("firstName"));
+                lastNames.add(userDetail.getString("lastName"));
+                villages.add(userDetail.getString("village"));
+                DOBs.add(userDetail.getString("dob"));
+                gender.add(userDetail.getString("sex"));
+            }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+
+        //  call the constructor of CustomAdapter to send the reference and data to Adapter
+        CustomAdapter customAdapter = new CustomAdapter(this, firstNames, lastNames, villages, DOBs, gender);
+        recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
+
 
         ActionBar bar = getSupportActionBar();
         assert bar != null;
