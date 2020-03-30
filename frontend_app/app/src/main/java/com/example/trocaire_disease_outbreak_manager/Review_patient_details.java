@@ -46,7 +46,9 @@ public class Review_patient_details extends AppCompatActivity implements View.On
     double latitude, longitude;
     private JSONObject data;
     private static final String FILE_NAME = "patients.json";
+    private boolean waiting_for_gps = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +71,15 @@ public class Review_patient_details extends AppCompatActivity implements View.On
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setup_location();
+
+
+        Location locationCurrent = getLastKnownLocation();
+        try {
+            latitude = locationCurrent.getLatitude();
+            longitude = locationCurrent.getLongitude();
+        }catch (Exception e){
+            latitude = -200;
+            longitude = -200;
         }
 
         try {
@@ -256,24 +265,6 @@ public class Review_patient_details extends AppCompatActivity implements View.On
         return card;
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void setup_location(){
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        assert locationManager != null;
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-        }else{
-            requestPermissions(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            Location locationCurrent = getLastKnownLocation();
-            latitude = locationCurrent.getLatitude();
-            longitude = locationCurrent.getLongitude();
-        }
-    }
-
-
     @Override
     public void onClick(View v) {
 
@@ -287,24 +278,6 @@ public class Review_patient_details extends AppCompatActivity implements View.On
 
         Intent con = new Intent(Review_patient_details.this, Fragment_main.class);
         Review_patient_details.this.startActivity(con);
-    }
-
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("GPS is Required for this app, do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
     }
 
 
@@ -321,6 +294,7 @@ public class Review_patient_details extends AppCompatActivity implements View.On
             }
             Location loc = mLocationManager.getLastKnownLocation(provider);
             if (loc == null) {
+                waiting_for_gps = true;
                 continue;
             }
             if (bestLocation == null || loc.getAccuracy() < bestLocation.getAccuracy()) {
@@ -355,5 +329,23 @@ public class Review_patient_details extends AppCompatActivity implements View.On
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    }
+                else {
+
+
+                }
+
+            }
+
+        }
     }
 }
