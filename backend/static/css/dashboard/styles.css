@@ -67,10 +67,6 @@ input {
   overflow-y: scroll;
 }
 
-#plist {
-  height: 40vh;
-}
-
 #pdetails {
   height: 0vh;
 }

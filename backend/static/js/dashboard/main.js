@@ -38,7 +38,7 @@ const bootstrapElements = () => {
     await logout();
   });
 
-  const patientListContainer = document.getElementById('plist');
+  // const patientListContainer = document.getElementById('plist');
   const patientTemplate = document
     .querySelector('template')
     .content.cloneNode(true);
@@ -46,7 +46,7 @@ const bootstrapElements = () => {
 
   document.getElementById('searchB').addEventListener('click', async e => {
     e.preventDefault();
-    patientListContainer.innerHTML = '';
+    // patientListContainer.innerHTML = '';
     const lastName = document.getElementById('lName').value;
     const firstName = document.getElementById('fName').value;
     const year = document.getElementById('year').value.toString();
@@ -54,9 +54,12 @@ const bootstrapElements = () => {
     const day = document.getElementById('day').value.toString();
 
     if (!lastName || !firstName || !year || !month || !day) {
+      document.getElementById('noPatients').hidden = false;
       return;
     }
-
+    console.log(lastName);
+    console.log(firstName);
+    console.log(year);
     const token = await firebase.auth().currentUser.getIdToken(true);
     dbRes = await axios.post('/api/patient', {
       token,
@@ -67,33 +70,34 @@ const bootstrapElements = () => {
       day,
     });
 
-    if (dbRes.data.error) {
-      patientListContainer.appendChild(
-        patientTemplate.getElementById('noPatientFound'),
-      );
-      console.log('no search found');
+    console.log(dbRes.data);
+
+    if (dbRes.error || dbRes.data.error) {
+      document.getElementById('noPatients').hidden = false;
     } else {
-      const nameFound = patientTemplate.getElementById('pNameFound');
-      nameFound.textContent = `${dbRes.data.firstName} ${dbRes.data.lastName}`;
-      patientListContainer.appendChild(nameFound);
+      console.log(dbRes.data);
+      document.getElementById('noPatients').hidden = true;
+      patientDetailsContainer.innerHTML = '';
+      // const nameFound = patientTemplate.getElementById('pNameFound');
+      // nameFound.textContent = `${dbRes.data.firstName} ${dbRes.data.lastName}`;
+      // patientListContainer.appendChild(nameFound);
     }
-    document.getElementById('plist-container').hidden = false;
   });
 
-  patientTemplate
-    .getElementById('pNameFound')
-    .addEventListener('click', async e => {
-      e.preventDefault();
-      patientDetailsContainer.appendChild(document.createElement('form'));
-      dbRes.data.forEach(element => {
-        const contentRow = patientTemplate.getElementById('pContentRow');
-        contentRow.querySelector('label').textContent = element.key;
-        contentRow.querySelector('input').setAttribute('value', element.value);
-        patientDetailsContainer
-          .querySelector('form')
-          .appendChild(patientTemplate.getElementById('pContentRow'));
-      });
-    });
+  // patientTemplate
+  //   .getElementById('pNameFound')
+  //   .addEventListener('click', async e => {
+  //     e.preventDefault();
+  //     patientDetailsContainer.appendChild(document.createElement('form'));
+  //     dbRes.data.forEach(element => {
+  //       const contentRow = patientTemplate.getElementById('pContentRow');
+  //       contentRow.querySelector('label').textContent = element.key;
+  //       contentRow.querySelector('input').setAttribute('value', element.value);
+  //       patientDetailsContainer
+  //         .querySelector('form')
+  //         .appendChild(patientTemplate.getElementById('pContentRow'));
+  //     });
+  //   });
 
   document.getElementById('password-ack').addEventListener('click', _e => {
     disableCreateAccountButton(false);
@@ -114,9 +118,9 @@ const bootstrapElements = () => {
 const adminWarning = () =>
   firebase.auth().onAuthStateChanged(async user => {
     const token = await user.getIdToken(true);
-    const diseases = ['Cholera', 'Polio', 'Measles', 'Malaria'];
+    const diseases = ['Cholera', 'Polio', 'Measles', 'Malaria', 'COVID-19'];
     let highest_cases = 0;
-    let result, sum, highest_disease;
+    let result, sum = 0;
     for (const d of diseases) {
       result = await axios.post('/api/graph', {
         token,
@@ -127,7 +131,10 @@ const adminWarning = () =>
       if (result.error || result.data.error) {
         break;
       }
-      result.data.forEach(element => (sum += element.length));
+
+      for (var v in result.data.allPatients) {
+        sum += result.data.allPatients[v].length;
+      }
 
       if (sum > highest_cases) {
         highest_cases = sum;
@@ -155,8 +162,6 @@ const adminWarning = () =>
         ' Detected. Please Check Dashboard';
       warning_box.style.backgroundColor = 'red';
     }
-
-    console.log('i reached the end');
   });
 
 //Data api
@@ -397,3 +402,4 @@ const bootstrapMap = () => {
 
 bootstrapElements();
 bootstrapMap();
+adminWarning();
