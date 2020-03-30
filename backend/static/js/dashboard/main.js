@@ -198,6 +198,8 @@ $('.dropdown-menu a').click(function() {
 });
 
 const graphRequest = async (page, date, disease, village) => {
+
+  console.log(page);
   var start = '';
   var end = new Date();
   if (date === 'THIS WEEK') {
@@ -243,7 +245,7 @@ const graphRequest = async (page, date, disease, village) => {
     const count30 = ages.filter(o => o <= 30).length - count18;
     const count50 = ages.filter(o => o <= 50).length - count18 - count30;
     const count65 =
-      ages.filter(o => o <= 65).length - count18 - count30 - count50;
+    ages.filter(o => o <= 65).length - count18 - count30 - count50;
     const countAbove = ages.filter(o => o > 65).length;
 
     breakdownGraph(
@@ -251,7 +253,42 @@ const graphRequest = async (page, date, disease, village) => {
       [count18, count30, count50, count65, countAbove],
     );
   } else if (page === 'Map') {
-    // todo
+      var coords = [];
+      var dates = [];
+      var obj = dataReqRes.data.allPatients;
+      var locations = Object.keys(obj);
+      for (var i = 0; i < locations.length; i++) {
+        var village = obj[locations[i]];
+        for (var j = 0; j < village.length; j++) {
+          var person = village[j]
+          var diag = person.diagnoses[0]
+          var coord = [diag.latitude,diag.longitude]
+          coords.push(coord)
+          dates.push(diag.date);
+          bootstrapMap(coords, dates)
+        }
+      }
+
+  }
+  else if (page === 'List') {
+    console.log("sadsdasd")
+    $("#mytablecontent tr").remove();
+    // var employee = new Array();
+    //         employee.push([4, "Billie Jean", "Country4"]);
+    //         employee.push([5, "Harish Kumar", "Country5"]);
+    //         employee.push([6, "Pankaj Mohan", "Country6"]);
+    //         employee.push([7, "Nitin Srivastav", "Country7"]);
+    //         employee.push([8, "Ramchandra Verma", "Country8"]);
+    //
+    //         var tablecontents = "";
+    //         for (var i = 0; i < employee.length; i++) {
+    //             tablecontents += "<tr>";
+    //             for (var j = 0; j < employee[i].length; j++) {
+    //                 tablecontents += "<td>" + employee[i][j] + "</td>";
+    //             }
+    //             tablecontents += "</tr>";
+    //         }
+    //         document.getElementById("mytablecontent").innerHTML += tablecontents;
   }
 };
 
@@ -379,9 +416,10 @@ const breakdownGraph = (pieData, ageData) => {
 const bootstrapGraphs = () => {
   graphRequest('Overview', 'THIS MONTH', 'Cholera', '');
   graphRequest('Breakdown', 'THIS MONTH', 'Cholera', 'Dublin');
+  graphRequest('Map', 'THIS MONTH', 'Cholera', '');
 };
 
-const bootstrapMap = () => {
+const bootstrapMap = (coords, label) => {
   // add the OpenStreetMap tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -393,13 +431,15 @@ const bootstrapMap = () => {
   L.control.scale().addTo(map);
 
   // // show a marker on the map
-  L.marker([0, 0])
-    .bindPopup('The center of the world')
-    .addTo(map);
+  for (var i = 0; i < coords.length; i++) {
+    L.marker(coords[i])
+      .bindPopup(label[i])
+      .addTo(map);
+  }
+
 
   map.invalidateSize();
 };
 
 bootstrapElements();
-bootstrapMap();
 adminWarning();
