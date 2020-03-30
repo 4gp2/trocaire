@@ -60,6 +60,7 @@ public class Review_patient_details extends AppCompatActivity implements View.On
             e.printStackTrace();
         }
 
+
         ActionBar bar = getSupportActionBar();
         assert bar != null;
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));

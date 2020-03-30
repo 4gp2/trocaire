@@ -35,7 +35,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class View_patient_details extends AppCompatActivity implements View.OnClickListener{
+public class View_patient_details extends AppCompatActivity{
 
     private static final String FILE_NAME = "patients.json";
 
@@ -44,11 +44,17 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
     ArrayList<String> villages = new ArrayList<>();
     ArrayList<String> DOBs = new ArrayList<>();
     ArrayList<String> gender = new ArrayList<>();
+    JSONObject obj = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_records);
+
+        final String token = getIntent().getStringExtra("token");
+        if (token != null) {
+            Log.d("patient", token);
+        }
 
         // get the reference of RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -59,7 +65,7 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         try {
             String json_String = get_json_string();
             // get JSONObject from JSON file
-            JSONObject obj = new JSONObject(json_String);
+            obj = new JSONObject(json_String);
             // fetch JSONArray named patients
             JSONArray userArray = obj.getJSONArray("patients");
             // implement for loop for getting patients list data
@@ -73,6 +79,7 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
                 DOBs.add(userDetail.getString("dob"));
                 gender.add(userDetail.getString("sex"));
             }
+            obj.put("token", token);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -92,28 +99,11 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
-        final String token = getIntent().getStringExtra("token");
-        if (token != null) {
-            Log.d("patient", token);
-        }
-
-        JSONObject patient_data = null;
-        try {
-            patient_data = view_patient_data();
-            patient_data.put("token", token);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JSONObject data = patient_data;
         Button next = findViewById(R.id.buttonsenddetails);
-        next.setOnClickListener(this);
 
         next.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    send_data(data.toString());
+                    send_data(obj.toString());
                     Intent con = new Intent(getApplicationContext(), Fragment_main.class);
                     con.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(con);
@@ -153,45 +143,6 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
     }
 
 
-    private JSONObject view_patient_data() throws IOException {
-
-        LinearLayout lv = findViewById(R.id.lv);
-        String json_String = get_json_string();
-        JSONArray patients = null;
-        JSONObject patient_obj = null;
-
-        try {
-            patient_obj = new JSONObject(json_String);
-            patients = patient_obj.getJSONArray("patients");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JSONObject patient;
-        String name = null;
-        String dob = null;
-        String village = null;
-        String sex = null;
-        assert patients != null;
-        for(int i = 0; i < patients.length(); i++)
-        {
-            try {
-                patient = patients.getJSONObject(i);
-                name = patient.getString("firstName");
-                village = patient.getString("village");
-                dob = patient.getString("dob");
-                sex = patient.getString("sex");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            CardView c = createCardViewProgrammatically(name, dob, village, sex);
-            c.setOnClickListener(this);
-            lv.addView(c);
-        }
-        return patient_obj;
-    }
-
-
     private void clear_json_file(File file) throws IOException {
 
         FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
@@ -223,43 +174,6 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
             return output.toString();
         }
         return "";
-    }
-
-
-    public CardView createCardViewProgrammatically(String name, String age, String village,
-                                                   String sex) {
-
-
-        String text = "Name: " + name + "\nAge: " + age + "\nVillage: " + village + "\nSex: " + sex;
-
-        CardView card = new CardView(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        );
-        card.setLayoutParams(params);
-
-        card.setRadius(9);
-        card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-        card.setMaxCardElevation(15);
-        card.setCardElevation(9);
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(params);
-        tv.setText(text);
-        tv.setTextSize(20);
-        tv.setTextColor(Color.parseColor("#0B85C8"));
-        card.addView(tv);
-        return card;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(this, "Submit Request Here!", Toast.LENGTH_LONG).show();
-
-        Toast.makeText(getApplication(), "CARD HIT",
-                Toast.LENGTH_LONG).show();
-
-
     }
 
     @Override
