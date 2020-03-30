@@ -59,6 +59,7 @@ public class Other_information extends AppCompatActivity implements View.OnClick
 
         Intent con = new Intent(Other_information.this, Review_patient_details.class);
         con.putExtra("data", data.toString());
+        con.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Other_information.this.startActivity(con);
     }
 
