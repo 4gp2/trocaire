@@ -115,6 +115,7 @@ public class View_patient_details extends AppCompatActivity implements View.OnCl
                 public void onClick(View v) {
                     send_data(data.toString());
                     Intent con = new Intent(getApplicationContext(), Fragment_main.class);
+                    con.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(con);
                 }
         });
