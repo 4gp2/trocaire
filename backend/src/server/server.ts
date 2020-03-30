@@ -101,6 +101,7 @@ const fetchPatient = async (req: Request, res: Response): Promise<void> => {
 
   if (record) {
     res.json({ error: false, patient: record } as GetPatientResponse);
+    return;
   }
   res.json({ error: true } as GetPatientResponse);
 };
