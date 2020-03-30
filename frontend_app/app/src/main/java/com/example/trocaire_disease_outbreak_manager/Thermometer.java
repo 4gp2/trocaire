@@ -100,12 +100,63 @@ public class Thermometer extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    boolean has_rash = false;
+                    try {
+                        JSONObject obj = symptoms.getJSONObject("rash");
+                        has_rash = obj.getBoolean("hasRash");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    Intent con = new Intent(getApplicationContext(), Rash_type.class);
-                    con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    con.putExtra("data", data.toString());
-                    con.putExtra("symptoms", symptoms.toString());
-                    getApplicationContext().startActivity(con);
+                    if (has_rash){
+                        Intent con = new Intent(getApplicationContext(), Rash_type.class);
+                        con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        con.putExtra("data", data.toString());
+                        con.putExtra("symptoms", symptoms.toString());
+                        getApplicationContext().startActivity(con);
+                    }else{
+                        JSONObject rash_data = null;
+                        try {
+                            rash_data = symptoms.getJSONObject("rash");
+                            rash_data.put("rashType", "");
+
+                            JSONObject location1 = new JSONObject();
+                            try {
+                                location1.put("head", false);
+                                location1.put("neck", false);
+                                location1.put("leftShoulder", false);
+                                location1.put("rightShoulder", false);
+                                location1.put("leftArm", false);
+                                location1.put("rightArm", false);
+                                location1.put("leftHand", false);
+                                location1.put("rightHand", false);
+                                location1.put("centerChest", false);
+                                location1.put("leftHip", false);
+                                location1.put("rightHip", false);
+                                location1.put("genitals", false);
+                                location1.put("leftKnee", false);
+                                location1.put("rightKnee", false);
+                                location1.put("leftFoot", false);
+                                location1.put("rightFoot", false);
+                                rash_data.put("rashLocationFront", location1);
+                                rash_data.put("rashLocationBack", location1);
+                                symptoms.put("rash", rash_data);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Intent con = new Intent(getApplicationContext(), Pain_level.class);
+                        con.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        con.putExtra("data", data.toString());
+                        con.putExtra("symptoms", symptoms.toString());
+                        getApplicationContext().startActivity(con);
+
+                    }
+
 
                 }else{
                     tView.setError("Temperature between 32" +
