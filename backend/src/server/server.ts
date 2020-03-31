@@ -15,6 +15,7 @@ import {
   GetPatientResponse,
   GraphDataResponse,
   GraphDataBreakdown,
+  GetVillagesResponse,
 } from './types';
 import { UserClaims, DiagnosisUpload } from '../firebase/types';
 import {
@@ -27,14 +28,13 @@ import {
   revokeCookie,
   getPatientRecord,
   getRecordsAtTimePeriod,
+  getVillages,
 } from '../firebase/firebase';
 import { StoredPatient } from '../firebase/types';
+import { broadcastNewDataEvent } from '../socket';
 
 const dashboard = (_req: Request, res: Response): void =>
   res.render('admin_main', { layout: false });
-
-const datavis = (_req: Request, res: Response): void =>
-  res.render('dash', { layout: false });
 
 const login = (_req: Request, res: Response): void =>
   res.render('login', {
@@ -75,21 +75,28 @@ const clearSession = async (req: Request, res: Response): Promise<void> => {
 const uploadDiagnosis = async (req: Request, res: Response): Promise<void> => {
   try {
     const data: DiagnosisUpload = req.body;
-    data.patients.forEach(p => {
-      p.dob = new Date(p.dob);
-    });
-
     const user = await getUserFromToken(data.token);
     if (!user) {
       res.sendStatus(401);
       return;
     }
 
-    data.patients.forEach(async p => await storePatientData(p));
+    data.patients.forEach(async p => {
+      p.dob = new Date(p.dob);
+      storePatientData(p);
+    });
+    broadcastNewDataEvent();
     res.sendStatus(201);
   } catch (e) {
     res.sendStatus(400);
   }
+};
+
+const fetchVillages = async (_req: Request, res: Response): Promise<void> => {
+  res.json({
+    error: false,
+    villages: await getVillages(),
+  } as GetVillagesResponse);
 };
 
 const fetchPatient = async (req: Request, res: Response): Promise<void> => {
@@ -184,13 +191,13 @@ const isAdminCookieLoggedIn =
 
 const initRoutes = (app: Express): void => {
   app.get('/', isAdminCookieLoggedIn, dashboard);
-  app.get('/dash', datavis);
   app.get('/login', login);
   app.get('/logout', clearSession);
 
   app.post('/api/session', newSession);
   app.post('/api/upload', uploadDiagnosis);
   app.post('/api/graph', isAdminIDTokenValid, fetchGraphData);
+  app.post('/api/villages', isAdminIDTokenValid, fetchVillages);
   app.post('/api/patient', isAdminIDTokenValid, fetchPatient);
   app.post('/api/newuser', isAdminIDTokenValid, createNewUser);
 };

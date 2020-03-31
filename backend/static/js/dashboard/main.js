@@ -1,5 +1,6 @@
 let dbRes;
 const map = L.map('map').setView([0, 0], 2);
+const socketIO = io();
 
 const disableCreateAccountButton = disable => {
   document.getElementById('create-admin').disabled = disable;
@@ -120,7 +121,8 @@ const adminWarning = () =>
     const token = await user.getIdToken(true);
     const diseases = ['Cholera', 'Polio', 'Measles', 'Malaria', 'COVID-19'];
     let highest_cases = 0;
-    let result, sum = 0;
+    let result,
+      sum = 0;
     for (const d of diseases) {
       result = await axios.post('/api/graph', {
         token,
@@ -198,7 +200,6 @@ $('.dropdown-menu a').click(function() {
 });
 
 const graphRequest = async (page, date, disease, village) => {
-
   console.log(page);
   var start = '';
   var end = new Date();
@@ -245,7 +246,7 @@ const graphRequest = async (page, date, disease, village) => {
     const count30 = ages.filter(o => o <= 30).length - count18;
     const count50 = ages.filter(o => o <= 50).length - count18 - count30;
     const count65 =
-    ages.filter(o => o <= 65).length - count18 - count30 - count50;
+      ages.filter(o => o <= 65).length - count18 - count30 - count50;
     const countAbove = ages.filter(o => o > 65).length;
 
     breakdownGraph(
@@ -253,58 +254,61 @@ const graphRequest = async (page, date, disease, village) => {
       [count18, count30, count50, count65, countAbove],
     );
   } else if (page === 'Map') {
-      var coords = [];
-      var dates = [];
-      var obj = dataReqRes.data.allPatients;
-      var locations = Object.keys(obj);
-      for (var i = 0; i < locations.length; i++) {
-        var village = obj[locations[i]];
-        for (var j = 0; j < village.length; j++) {
-          var person = village[j];
-          var diag = person.diagnoses[0];
-          var coord = [diag.latitude,diag.longitude];
-          coords.push(coord);
-          dates.push(diag.date);
-          bootstrapMap(coords, dates);
-        }
-      }
-
-  }
-  else if (page === 'List') {
-    $("#mytablecontent tr").remove();
+    var coords = [];
+    var dates = [];
     var obj = dataReqRes.data.allPatients;
     var locations = Object.keys(obj);
-    var tablecontents = "";
     for (var i = 0; i < locations.length; i++) {
       var village = obj[locations[i]];
-      tablecontents += "<tr>";
+      for (var j = 0; j < village.length; j++) {
+        var person = village[j];
+        var diag = person.diagnoses[0];
+        var coord = [diag.latitude, diag.longitude];
+        coords.push(coord);
+        dates.push(diag.date);
+        bootstrapMap(coords, dates);
+      }
+    }
+  } else if (page === 'List') {
+    $('#mytablecontent tr').remove();
+    var obj = dataReqRes.data.allPatients;
+    var locations = Object.keys(obj);
+    var tablecontents = '';
+    for (var i = 0; i < locations.length; i++) {
+      var village = obj[locations[i]];
+      tablecontents += '<tr>';
       for (var j = 0; j < village.length; j++) {
         var person = village[j];
         var sym = person.diagnoses[0].symptoms;
         var keys = Object.keys(sym);
         var filtered = keys.filter(function(key) {
-            return sym[key]
+          return sym[key];
         });
-        var symptomStr = String(filtered).replace(new RegExp(",", 'g'), ", ");
-        symptomStr= symptomStr.replace("temperature","temperature: "+sym.temperature);
-        symptomStr= symptomStr.replace("pain","painLevel: "+sym.pain.painDiscomfortLevel);
+        var symptomStr = String(filtered).replace(new RegExp(',', 'g'), ', ');
+        symptomStr = symptomStr.replace(
+          'temperature',
+          'temperature: ' + sym.temperature,
+        );
+        symptomStr = symptomStr.replace(
+          'pain',
+          'painLevel: ' + sym.pain.painDiscomfortLevel,
+        );
         if (!sym.rash.hasRash) {
-          symptomStr = symptomStr.replace("rash,","");
+          symptomStr = symptomStr.replace('rash,', '');
         }
-        tablecontents += "<td>" + person.firstName + "</td>";
-        tablecontents += "<td>" + person.lastName + "</td>";
-        tablecontents += "<td>" + Math.floor(person.dob._seconds / 31536000) + "</td>";
-        tablecontents += "<td>" + person.sex + "</td>";
-        tablecontents += "<td>" + locations[i] + "</td>";
-        tablecontents += "<td>" + symptomStr + "</td>";
-        tablecontents += "</tr>";
+        tablecontents += '<td>' + person.firstName + '</td>';
+        tablecontents += '<td>' + person.lastName + '</td>';
+        tablecontents +=
+          '<td>' + Math.floor(person.dob._seconds / 31536000) + '</td>';
+        tablecontents += '<td>' + person.sex + '</td>';
+        tablecontents += '<td>' + locations[i] + '</td>';
+        tablecontents += '<td>' + symptomStr + '</td>';
+        tablecontents += '</tr>';
       }
     }
-    document.getElementById("mytablecontent").innerHTML += tablecontents;
-
+    document.getElementById('mytablecontent').innerHTML += tablecontents;
   }
 };
-
 
 const overviewGraph = (labels, data) => {
   $('#chart2').remove();
@@ -382,7 +386,7 @@ const breakdownGraph = (pieData, ageData) => {
   });
   chart.update();
 
-  $('#chart1').remove(); 
+  $('#chart1').remove();
   $('#breakdownChartContainer1').append(
     '<canvas class="my-4" id="chart1" width="300" height="200"></canvas>',
   );
@@ -445,9 +449,12 @@ const bootstrapMap = (coords, label) => {
       .addTo(map);
   }
 
-
   map.invalidateSize();
 };
+
+socketIO.on('data', _d => {
+  // New data triggered here. _d will be empty.
+});
 
 bootstrapElements();
 adminWarning();

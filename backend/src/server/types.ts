@@ -6,10 +6,15 @@ interface StandardResponse {
 }
 
 export type NewUserResponse = StandardResponse & {
-  details: NewUserDetails,
+  details: NewUserDetails;
 };
+
 export type GetPatientResponse = StandardResponse & {
-  patient: StoredPatient,
+  patient: StoredPatient;
+};
+
+export type GetVillagesResponse = StandardResponse & {
+  villages: string[];
 };
 
 export interface GraphDataBreakdown {

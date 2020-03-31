@@ -114,32 +114,27 @@ export const storePatientData = async (p: Required<Patient>): Promise<void> => {
   const diseases = matchDiseases(p.symptoms)
     .filter((v, _i, d) => v.numSymptoms >= d[0].numSymptoms)
     .map(v => v.disease);
+  const diag: StoredDiagnosis = {
+    latitude: p.latitude,
+    longitude: p.longitude,
+    date: p.date,
+    symptoms: p.symptoms,
+    possibleDiseases: diseases,
+  };
+
   if (exists) {
-    await ref.update({
-      diagnoses: firestore.FieldValue.arrayUnion({
-        latitude: p.latitude,
-        longitude: p.longitude,
-        date: p.date,
-        symptoms: p.symptoms,
-        possibleDiseases: diseases,
-      } as StoredDiagnosis),
-    });
-  } else {
-    await ref.set({
-      firstName: p.firstName,
-      lastName: p.lastName,
-      dob: p.dob,
-      village: p.village,
-      sex: p.sex,
-      diagnoses: [{
-        latitude: p.latitude,
-        longitude: p.longitude,
-        date: p.date,
-        symptoms: p.symptoms,
-        possibleDiseases: diseases,
-      }],
-    } as StoredPatient);
+    await ref.update({ diagnoses: firestore.FieldValue.arrayUnion(diag) });
+    return;
   }
+  await ref.set({
+    firstName: p.firstName,
+    lastName: p.lastName,
+    dob: p.dob,
+    village: p.village,
+    sex: p.sex,
+    diagnoses: [diag],
+  } as StoredPatient);
+
 };
 
 export const getPatientRecord =
@@ -160,7 +155,7 @@ export const getRecordsAtTimePeriod =
   async (a: Date, b: Date): Promise<StoredPatient[]> => {
     const records: StoredPatient[] = [];
     const snapshot = await firestore().collection('patients').get();
-    snapshot.forEach((doc => {
+    snapshot.forEach(doc => {
       const p = doc.data() as StoredPatient;
       const d = p.diagnoses.filter(v => {
         const date = new Date(v.date);
@@ -169,6 +164,20 @@ export const getRecordsAtTimePeriod =
       if (d.length > 0) {
         records.push({ ...p, diagnoses: d });
       }
-    }));
+    });
     return records;
   };
+
+export const getVillages = async (): Promise<string[]> => {
+  const villages: string[] = [];
+  const seen = {};
+  const snapshot = await firestore().collection('patients').get();
+  snapshot.forEach(doc => {
+    const p = doc.data() as StoredPatient;
+    if (!seen[p.village]) {
+      villages.push(p.village);
+      seen[p.village] = true;
+    }
+  });
+  return villages;
+};
