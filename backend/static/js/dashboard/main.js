@@ -301,34 +301,13 @@ const graphRequest = async (page, date, disease, village) => {
       }
     }
     document.getElementById("mytablecontent").innerHTML += tablecontents;
-    // var employee = new Array();
-    //         employee.push([4, "Billie Jean", "Country4"]);
-    //         employee.push([5, "Harish Kumar", "Country5"]);
-    //         employee.push([6, "Pankaj Mohan", "Country6"]);
-    //         employee.push([7, "Nitin Srivastav", "Country7"]);
-    //         employee.push([8, "Ramchandra Verma", "Country8"]);
-    //
-    //         var tablecontents = "";
-    //         for (var i = 0; i < employee.length; i++) {
-    //             tablecontents += "<tr>";
-    //             for (var j = 0; j < employee[i].length; j++) {
-    //                 tablecontents += "<td>" + employee[i][j] + "</td>";
-    //             }
-    //             tablecontents += "</tr>";
-    //         }
-    //         document.getElementById("mytablecontent").innerHTML += tablecontents;
+
   }
 };
 
-//data request api
-// const dataReqRes = await axios.post('/api/data', {
-//   disease,
-//   village,
-//   start,
-//   end
-// });
+
 const overviewGraph = (labels, data) => {
-  $('#chart2').remove(); // this is my <canvas> element
+  $('#chart2').remove();
   $('#overviewChartContainer').append(
     '<canvas class="my-4" id="chart2" width="300" height="200"></canvas>',
   );
@@ -366,7 +345,7 @@ const overviewGraph = (labels, data) => {
 };
 
 const breakdownGraph = (pieData, ageData) => {
-  $('#chart3').remove(); // this is my <canvas> element
+  $('#chart3').remove();
   $('#breakdownChartContainer').append(
     '<canvas class="my-4" id="chart3" width="300" height="200"></canvas>',
   );
@@ -403,7 +382,7 @@ const breakdownGraph = (pieData, ageData) => {
   });
   chart.update();
 
-  $('#chart1').remove(); // this is my <canvas> element
+  $('#chart1').remove(); 
   $('#breakdownChartContainer1').append(
     '<canvas class="my-4" id="chart1" width="300" height="200"></canvas>',
   );
