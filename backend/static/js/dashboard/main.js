@@ -260,19 +260,47 @@ const graphRequest = async (page, date, disease, village) => {
       for (var i = 0; i < locations.length; i++) {
         var village = obj[locations[i]];
         for (var j = 0; j < village.length; j++) {
-          var person = village[j]
-          var diag = person.diagnoses[0]
-          var coord = [diag.latitude,diag.longitude]
-          coords.push(coord)
+          var person = village[j];
+          var diag = person.diagnoses[0];
+          var coord = [diag.latitude,diag.longitude];
+          coords.push(coord);
           dates.push(diag.date);
-          bootstrapMap(coords, dates)
+          bootstrapMap(coords, dates);
         }
       }
 
   }
   else if (page === 'List') {
-    console.log("sadsdasd")
     $("#mytablecontent tr").remove();
+    var obj = dataReqRes.data.allPatients;
+    var locations = Object.keys(obj);
+    var tablecontents = "";
+    for (var i = 0; i < locations.length; i++) {
+      var village = obj[locations[i]];
+      tablecontents += "<tr>";
+      for (var j = 0; j < village.length; j++) {
+        var person = village[j];
+        var sym = person.diagnoses[0].symptoms;
+        var keys = Object.keys(sym);
+        var filtered = keys.filter(function(key) {
+            return sym[key]
+        });
+        var symptomStr = String(filtered).replace(new RegExp(",", 'g'), ", ");
+        symptomStr= symptomStr.replace("temperature","temperature: "+sym.temperature);
+        symptomStr= symptomStr.replace("pain","painLevel: "+sym.pain.painDiscomfortLevel);
+        if (!sym.rash.hasRash) {
+          symptomStr = symptomStr.replace("rash,","");
+        }
+        tablecontents += "<td>" + person.firstName + "</td>";
+        tablecontents += "<td>" + person.lastName + "</td>";
+        tablecontents += "<td>" + Math.floor(person.dob._seconds / 31536000) + "</td>";
+        tablecontents += "<td>" + person.sex + "</td>";
+        tablecontents += "<td>" + locations[i] + "</td>";
+        tablecontents += "<td>" + symptomStr + "</td>";
+        tablecontents += "</tr>";
+      }
+    }
+    document.getElementById("mytablecontent").innerHTML += tablecontents;
     // var employee = new Array();
     //         employee.push([4, "Billie Jean", "Country4"]);
     //         employee.push([5, "Harish Kumar", "Country5"]);
@@ -415,8 +443,9 @@ const breakdownGraph = (pieData, ageData) => {
 
 const bootstrapGraphs = () => {
   graphRequest('Overview', 'THIS MONTH', 'Cholera', '');
-  graphRequest('Breakdown', 'THIS MONTH', 'Cholera', 'Dublin');
+  graphRequest('Breakdown', 'THIS MONTH', 'Cholera', '1234');
   graphRequest('Map', 'THIS MONTH', 'Cholera', '');
+  graphRequest('List', 'THIS MONTH', 'Cholera', '');
 };
 
 const bootstrapMap = (coords, label) => {
