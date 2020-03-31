@@ -208,16 +208,20 @@ const graphRequest = async (page, date, disease, village) => {
     var day = d.getDay(),
       diff = d.getDate() - day + (day == 0 ? -6 : 1);
     start = new Date(d.setDate(diff));
+    end = new Date();
   } else if (date === 'THIS MONTH') {
     var d = end;
     start = new Date(d.getFullYear(), d.getMonth(), 1);
+    end = new Date();
   } else if (date === 'THIS YEAR') {
     var d = end;
     start = new Date(d.getFullYear(), 0, 1);
+    end = new Date();
   } else if (date === 'ALL TIME') {
-    start = new Date('Mar 01 2020 00:00:00 GMT');
-    end = new Date('Mar 31 2020 00:00:00 GMT');
+    start = new Date('Mar 01 2017 00:00:00 GMT');
   }
+  console.log(start)
+  console.log(end)
 
   const token = await firebase.auth().currentUser.getIdToken(true);
   const dataReqRes = await axios.post('/api/graph', {
