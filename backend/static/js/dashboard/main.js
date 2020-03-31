@@ -230,6 +230,7 @@ const graphRequest = async (page, date, disease, village) => {
   // Draw graphs
   if (page === 'Overview') {
     var obj = dataReqRes.data.allPatients;
+    console.log(obj)
     var people = Object.values(obj);
     var locations = Object.keys(obj);
     var counts = people.map(x => x.length);
@@ -425,10 +426,10 @@ const breakdownGraph = (pieData, ageData) => {
 };
 
 const bootstrapGraphs = () => {
-  graphRequest('Overview', 'THIS MONTH', 'Cholera', '');
-  graphRequest('Breakdown', 'THIS MONTH', 'Cholera', '1234');
-  graphRequest('Map', 'THIS MONTH', 'Cholera', '');
-  graphRequest('List', 'THIS MONTH', 'Cholera', '');
+  graphRequest('Overview', $(`#OverviewDateDropdown`).find('.btn').text(), $(`#OverviewDiseaseDropdown`).find('.btn').text(), '');
+  graphRequest('Breakdown', $(`#BreakdownDateDropdown`).find('.btn').text(), $(`#BreakdownDiseaseDropdown`).find('.btn').text(), $(`#BreakdownVillageDropdown`).find('.btn').text());
+  graphRequest('Map', $(`#MapDateDropdown`).find('.btn').text(), $(`#MapDiseaseDropdown`).find('.btn').text(), '');
+  graphRequest('List', $(`#ListDateDropdown`).find('.btn').text(), $(`#ListDiseaseDropdown`).find('.btn').text(), '');
 };
 
 const bootstrapMap = (coords, label) => {
@@ -454,6 +455,7 @@ const bootstrapMap = (coords, label) => {
 
 socketIO.on('data', _d => {
   // New data triggered here. _d will be empty.
+  bootstrapGraphs();
 });
 
 bootstrapElements();
