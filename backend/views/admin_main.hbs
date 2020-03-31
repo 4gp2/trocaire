@@ -39,6 +39,7 @@
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         document.getElementById('main-container').hidden = false;
+        buildVillageDropdown();
         bootstrapGraphs();
       } else {
         logout();
@@ -145,8 +146,8 @@
                       <div class="dropdown" id="BreakdownVillageDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
                           id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                          aria-expanded="false">1234</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          aria-expanded="false">village</button>
+                        <div class="dropdown-menu" id="villageDropdownOptions" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">Dublin </a>
                           <a class="dropdown-item" href="#">Wexford </a>
                           <a class="dropdown-item" href="#">Galway</a>

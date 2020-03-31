@@ -29,6 +29,7 @@ const createNewUser = async admin => {
   disableCreateAccountButton(true);
 };
 
+
 const bootstrapElements = () => {
   document
     .getElementById('year')
@@ -167,40 +168,63 @@ const adminWarning = () =>
   });
 
 //Data api
-////Dropdown JS
-let dateReq;
-let diseaseReq;
-let villageReq;
+const buildVillageDropdown = async e =>{
+  //build village dropdown
+  const token = await firebase.auth().currentUser.getIdToken(true);
+  const villageReqRes = await axios.post('/api/villages', {
+    token,
+  });
 
-$('.dropdown-menu a').click(function() {
-  $(this)
-    .parents('.dropdown')
-    .find('.btn')
-    .html($(this).text());
-  const dashPage = $(this)
-    .parents('.dropdown')
-    .attr('id')
-    .match(/[A-Z][a-z]+/g)[0];
+    var dropContent = "";
+    //$('#dialog_title_span').text("new dialog title");
+    var locations = villageReqRes.data.villages
+    for (var i = 0; i < locations.length; i++) {
+      if (i==0) {
+        $(`#BreakdownVillageDropdown`).find('.btn').text(locations[i]);
+        dropContent += '<a class="dropdown-item" href="#">' + locations[i] + '</a>';
+      } else {
+        dropContent += '<a class="dropdown-item" href="#">' + locations[i] + '</a>';
+      }
 
-  dateReq = $(`#${dashPage}DateDropdown`)
-    .find('.btn')
-    .text();
-  diseaseReq = $(`#${dashPage}DiseaseDropdown`)
-    .find('.btn')
-    .text();
+    }
+  document.getElementById('villageDropdownOptions').innerHTML = dropContent;
 
-  if (dashPage === 'Breakdown') {
-    villageReq = $(`#${dashPage}VillageDropdown`)
+  ////Dropdown JS
+  let dateReq;
+  let diseaseReq;
+  let villageReq;
+
+  $('.dropdown-menu a').click(function() {
+    $(this)
+      .parents('.dropdown')
+      .find('.btn')
+      .html($(this).text());
+    const dashPage = $(this)
+      .parents('.dropdown')
+      .attr('id')
+      .match(/[A-Z][a-z]+/g)[0];
+
+    dateReq = $(`#${dashPage}DateDropdown`)
       .find('.btn')
       .text();
-    graphRequest(dashPage, dateReq, diseaseReq, villageReq);
-  } else {
-    graphRequest(dashPage, dateReq, diseaseReq, '');
-  }
-});
+    diseaseReq = $(`#${dashPage}DiseaseDropdown`)
+      .find('.btn')
+      .text();
+
+    if (dashPage === 'Breakdown') {
+      villageReq = $(`#${dashPage}VillageDropdown`)
+        .find('.btn')
+        .text();
+      graphRequest(dashPage, dateReq, diseaseReq, villageReq);
+    } else {
+      graphRequest(dashPage, dateReq, diseaseReq, '');
+    }
+  });
+
+graphRequest('Breakdown', $(`#BreakdownDateDropdown`).find('.btn').text(), $(`#BreakdownDiseaseDropdown`).find('.btn').text(), $(`#BreakdownVillageDropdown`).find('.btn').text());
+}
 
 const graphRequest = async (page, date, disease, village) => {
-  console.log(page);
   var start = '';
   var end = new Date();
   if (date === 'THIS WEEK') {
@@ -220,8 +244,6 @@ const graphRequest = async (page, date, disease, village) => {
   } else if (date === 'ALL TIME') {
     start = new Date('Mar 01 2017 00:00:00 GMT');
   }
-  console.log(start)
-  console.log(end)
 
   const token = await firebase.auth().currentUser.getIdToken(true);
   const dataReqRes = await axios.post('/api/graph', {
@@ -231,10 +253,11 @@ const graphRequest = async (page, date, disease, village) => {
     start,
     end,
   });
+
   // Draw graphs
   if (page === 'Overview') {
     var obj = dataReqRes.data.allPatients;
-    console.log(obj)
+
     var people = Object.values(obj);
     var locations = Object.keys(obj);
     var counts = people.map(x => x.length);
@@ -329,7 +352,7 @@ const overviewGraph = (labels, data) => {
         {
           data: data,
           lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black'],
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange'],
           borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -436,7 +459,7 @@ const bootstrapGraphs = () => {
   graphRequest('List', $(`#ListDateDropdown`).find('.btn').text(), $(`#ListDiseaseDropdown`).find('.btn').text(), '');
 };
 
-const bootstrapMap = (coords, label) => {
+const bootstrapMapInit = () => {
   // add the OpenStreetMap tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -446,7 +469,10 @@ const bootstrapMap = (coords, label) => {
   //
   // // show the scale bar on the lower left corner
   L.control.scale().addTo(map);
+}
 
+
+const bootstrapMap = (coords, label) => {
   // // show a marker on the map
   for (var i = 0; i < coords.length; i++) {
     L.marker(coords[i])
@@ -463,4 +489,5 @@ socketIO.on('data', _d => {
 });
 
 bootstrapElements();
+bootstrapMapInit()
 adminWarning();
