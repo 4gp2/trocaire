@@ -46,14 +46,15 @@ nav {
 form {
   padding-top: 20px;
   padding-bottom: 20px;
+  font-size: large;
 }
 
 input {
   margin-bottom: 20px;
 }
 
-.row {
-  min-height: 100vh;
+.pcpane {
+  min-height: 90vh;
 }
 
 .col-3 {
