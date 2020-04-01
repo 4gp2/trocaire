@@ -264,7 +264,29 @@ const graphRequest = async (page, date, disease, village) => {
     overviewGraph(locations, counts);
   } else if (page === 'Breakdown') {
     var obj = dataReqRes;
+
+
     var patientData = obj.data.villagePatients;
+    console.log(patientData)
+    var symKeys = [];
+    var symCounts = [];
+    if(patientData.length>0){
+      symKeys = Object.keys(patientData[0].diagnoses[0].symptoms);
+      symKeys.splice(symKeys.indexOf('rash'), 1);
+      symKeys.splice(symKeys.indexOf('pain'), 1);
+      symKeys.splice(symKeys.indexOf('temperature'), 1);
+      console.log(symKeys)
+      patiensSymptoms =[]
+      for (var i = 0; i < patientData.length; i++) {
+       patiensSymptoms.push(patientData[i].diagnoses[0].symptoms)
+      }
+      for (var i = 0; i < symKeys.length; i++) {
+        const count = patiensSymptoms.filter((obj) => obj[symKeys[i]] === true).length;
+        symCounts.push(count)
+      }
+      console.log(symCounts)
+  }
+
 
     const countFemale = patientData.filter(o => o.sex === 'Female').length;
     const countMale = patientData.filter(o => o.sex === 'Male').length;
@@ -277,9 +299,12 @@ const graphRequest = async (page, date, disease, village) => {
       ages.filter(o => o <= 65).length - count18 - count30 - count50;
     const countAbove = ages.filter(o => o > 65).length;
 
+
+
     breakdownGraph(
       [countMale, countFemale],
       [count18, count30, count50, count65, countAbove],
+      symKeys,symCounts,
     );
   } else if (page === 'Map') {
     var coords = [];
@@ -376,7 +401,7 @@ const overviewGraph = (labels, data) => {
   });
 };
 
-const breakdownGraph = (pieData, ageData) => {
+const breakdownGraph = (pieData, ageData, symLabels, symData) => {
   $('#chart3').remove();
   $('#breakdownChartContainer').append(
     '<canvas class="my-4" id="chart3" width="300" height="200"></canvas>',
@@ -450,6 +475,43 @@ const breakdownGraph = (pieData, ageData) => {
     },
   });
   chart1.update();
+
+  $('#chart5').remove();
+  $('#breakdownChartContainer5').append(
+    '<canvas class="my-4" id="chart5" width="300" height="200"></canvas>',
+  );
+
+  var chart5 = new Chart(document.getElementById('chart5'), {
+    type: 'bar',
+    data: {
+      labels: symLabels,
+      datasets: [
+        {
+          data: symData,
+          lineTension: 0,
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange', 'violet', 'yellow', 'lime', 'teal'],
+          borderColor: 'transparent',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+    },
+  });
+  chart5.update();
 };
 
 const bootstrapGraphs = () => {
