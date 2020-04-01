@@ -40,15 +40,12 @@ const bootstrapElements = () => {
     await logout();
   });
 
-  // const patientListContainer = document.getElementById('plist');
-  const patientTemplate = document
-    .querySelector('template')
-    .content.cloneNode(true);
+  const patientTemplate = document.querySelector('template');
   const patientDetailsContainer = document.getElementById('pdetails');
+  const noPatientsWarning = document.getElementById('noPatients');
 
   document.getElementById('searchB').addEventListener('click', async e => {
     e.preventDefault();
-    // patientListContainer.innerHTML = '';
     const lastName = document.getElementById('lName').value;
     const firstName = document.getElementById('fName').value;
     const year = document.getElementById('year').value.toString();
@@ -56,12 +53,10 @@ const bootstrapElements = () => {
     const day = document.getElementById('day').value.toString();
 
     if (!lastName || !firstName || !year || !month || !day) {
-      document.getElementById('noPatients').hidden = false;
+      noPatientsWarning.hidden = false;
       return;
     }
-    console.log(lastName);
-    console.log(firstName);
-    console.log(year);
+    
     const token = await firebase.auth().currentUser.getIdToken(true);
     dbRes = await axios.post('/api/patient', {
       token,
@@ -72,34 +67,33 @@ const bootstrapElements = () => {
       day,
     });
 
-    console.log(dbRes.data);
-
     if (dbRes.error || dbRes.data.error) {
-      document.getElementById('noPatients').hidden = false;
-    } else {
-      console.log(dbRes.data);
-      document.getElementById('noPatients').hidden = true;
-      patientDetailsContainer.innerHTML = '';
-      // const nameFound = patientTemplate.getElementById('pNameFound');
-      // nameFound.textContent = `${dbRes.data.firstName} ${dbRes.data.lastName}`;
-      // patientListContainer.appendChild(nameFound);
+      noPatientsWarning.hidden = false;
+      return;
+    }
+
+    noPatientsWarning.hidden = true;
+    patientDetailsContainer.querySelector('img').hidden = true;
+    console.log(dbRes.data.patient);
+    var content;
+    for (var k in dbRes.data.patient) {
+      content = dbRes.data.patient[k];
+      if (k === 'dob') {
+        var dob = new Date(content._seconds);
+        content = dob.getDate() + '/' + (dob.getMonth()+1) + '/' + dob.getFullYear();
+      }
+      if (k === 'diagnoses') {
+        var s = '';
+        for (var i in dbRes.data.patient.diagnoses[0].symptoms) {
+          if (dbRes.data.patient.diagnoses[0].symptoms[i]) {
+            s += i + ', ';
+          }
+        }
+        content = s;
+      }
+      patientDetailsContainer.querySelector('#' + k).setAttribute('value', content);
     }
   });
-
-  // patientTemplate
-  //   .getElementById('pNameFound')
-  //   .addEventListener('click', async e => {
-  //     e.preventDefault();
-  //     patientDetailsContainer.appendChild(document.createElement('form'));
-  //     dbRes.data.forEach(element => {
-  //       const contentRow = patientTemplate.getElementById('pContentRow');
-  //       contentRow.querySelector('label').textContent = element.key;
-  //       contentRow.querySelector('input').setAttribute('value', element.value);
-  //       patientDetailsContainer
-  //         .querySelector('form')
-  //         .appendChild(patientTemplate.getElementById('pContentRow'));
-  //     });
-  //   });
 
   document.getElementById('password-ack').addEventListener('click', _e => {
     disableCreateAccountButton(false);
