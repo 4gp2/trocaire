@@ -264,33 +264,51 @@ const graphRequest = async (page, date, disease, village) => {
     overviewGraph(locations, counts);
   } else if (page === 'Breakdown') {
     var obj = dataReqRes;
-
-
     var patientData = obj.data.villagePatients;
-    console.log(patientData)
+
+    //Disease cooccurence
+    var diseases = ["Measles", "Cholera", "Polio", "Malaria", "COVID-19"];
+    diseases.splice(diseases.indexOf(disease), 1);
+    var diseaseCounts = [];
+    if(patientData.length>0){
+      var diseaseKeys = Object.values(patientData[0].diagnoses[0].possibleDiseases);
+      var patiensDiseases = [];
+      for (var i = 0; i < patientData.length; i++) {
+       var countableDisease = Object.values(patientData[i].diagnoses[0].possibleDiseases);
+       for (var j = 0; j < countableDisease.length; j++) {
+         patiensDiseases.push(countableDisease[j])
+       }
+      }
+      for (var k = 0; k < diseases.length; k++) {
+        var count = patiensDiseases.filter(function(x){ return x === diseases[k]; }).length;
+        diseaseCounts.push(count);
+      }
+    }
+
+    //symptom graph
     var symKeys = [];
     var symCounts = [];
+
     if(patientData.length>0){
       symKeys = Object.keys(patientData[0].diagnoses[0].symptoms);
       symKeys.splice(symKeys.indexOf('rash'), 1);
       symKeys.splice(symKeys.indexOf('pain'), 1);
       symKeys.splice(symKeys.indexOf('temperature'), 1);
-      console.log(symKeys)
-      patiensSymptoms =[]
+      var patiensSymptoms =[]
       for (var i = 0; i < patientData.length; i++) {
        patiensSymptoms.push(patientData[i].diagnoses[0].symptoms)
       }
       for (var i = 0; i < symKeys.length; i++) {
-        const count = patiensSymptoms.filter((obj) => obj[symKeys[i]] === true).length;
+        var count = patiensSymptoms.filter((obj) => obj[symKeys[i]] === true).length;
         symCounts.push(count)
       }
-      console.log(symCounts)
-  }
+    }
 
-
+    //gender graph
     const countFemale = patientData.filter(o => o.sex === 'Female').length;
     const countMale = patientData.filter(o => o.sex === 'Male').length;
 
+    //age graph
     let ages = patientData.map(a => Math.floor(a.dob._seconds / 31536000));
     const count18 = ages.filter(o => o <= 18).length;
     const count30 = ages.filter(o => o <= 30).length - count18;
@@ -299,12 +317,10 @@ const graphRequest = async (page, date, disease, village) => {
       ages.filter(o => o <= 65).length - count18 - count30 - count50;
     const countAbove = ages.filter(o => o > 65).length;
 
-
-
     breakdownGraph(
       [countMale, countFemale],
       [count18, count30, count50, count65, countAbove],
-      symKeys,symCounts,
+      symKeys,symCounts,diseases,diseaseCounts,
     );
   } else if (page === 'Map') {
     var coords = [];
@@ -377,7 +393,7 @@ const overviewGraph = (labels, data) => {
         {
           data: data,
           lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange'],
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange', 'violet', 'yellow', 'lime', 'teal'],
           borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -397,11 +413,15 @@ const overviewGraph = (labels, data) => {
       legend: {
         display: false,
       },
+      title: {
+            display: true,
+            text: 'Disease Count per Location'
+        },
     },
   });
 };
 
-const breakdownGraph = (pieData, ageData, symLabels, symData) => {
+const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, diseaseData) => {
   $('#chart3').remove();
   $('#breakdownChartContainer').append(
     '<canvas class="my-4" id="chart3" width="300" height="200"></canvas>',
@@ -435,6 +455,10 @@ const breakdownGraph = (pieData, ageData, symLabels, symData) => {
       legend: {
         display: false,
       },
+      title: {
+            display: true,
+            text: 'Sex Distribution'
+        },
     },
   });
   chart.update();
@@ -472,6 +496,10 @@ const breakdownGraph = (pieData, ageData, symLabels, symData) => {
       legend: {
         display: false,
       },
+      title: {
+            display: true,
+            text: 'Age Range Counts'
+        },
     },
   });
   chart1.update();
@@ -509,9 +537,55 @@ const breakdownGraph = (pieData, ageData, symLabels, symData) => {
       legend: {
         display: false,
       },
+      title: {
+            display: true,
+            text: 'Symptom Counts'
+        },
     },
   });
   chart5.update();
+
+
+  $('#chart6').remove();
+  $('#breakdownChartContainer6').append(
+    '<canvas class="my-4" id="chart6" width="300" height="200"></canvas>',
+  );
+
+  var chart6 = new Chart(document.getElementById('chart6'), {
+    type: 'bar',
+    data: {
+      labels: diseaseLabel,
+      datasets: [
+        {
+          data: diseaseData,
+          lineTension: 0,
+          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange', 'violet', 'yellow', 'lime', 'teal'],
+          borderColor: 'transparent',
+          borderWidth: 4,
+          pointBackgroundColor: '#007bff',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+      title: {
+            display: true,
+            text: 'Disease cooccurence'
+        },
+    },
+  });
+  chart6.update();
 };
 
 const bootstrapGraphs = () => {
