@@ -29,7 +29,6 @@ const createNewUser = async admin => {
   disableCreateAccountButton(true);
 };
 
-
 const bootstrapElements = () => {
   document
     .getElementById('year')
@@ -56,7 +55,7 @@ const bootstrapElements = () => {
       noPatientsWarning.hidden = false;
       return;
     }
-    
+
     const token = await firebase.auth().currentUser.getIdToken(true);
     dbRes = await axios.post('/api/patient', {
       token,
@@ -80,7 +79,8 @@ const bootstrapElements = () => {
       content = dbRes.data.patient[k];
       if (k === 'dob') {
         var dob = new Date(content._seconds);
-        content = dob.getDate() + '/' + (dob.getMonth()+1) + '/' + dob.getFullYear();
+        content =
+          dob.getDate() + '/' + (dob.getMonth() + 1) + '/' + dob.getFullYear();
       }
       if (k === 'diagnoses') {
         var s = '';
@@ -91,7 +91,9 @@ const bootstrapElements = () => {
         }
         content = s;
       }
-      patientDetailsContainer.querySelector('#' + k).setAttribute('value', content);
+      patientDetailsContainer
+        .querySelector('#' + k)
+        .setAttribute('value', content);
     }
   });
 
@@ -162,25 +164,28 @@ const adminWarning = () =>
   });
 
 //Data api
-const buildVillageDropdown = async e =>{
+const buildVillageDropdown = async e => {
   //build village dropdown
   const token = await firebase.auth().currentUser.getIdToken(true);
   const villageReqRes = await axios.post('/api/villages', {
     token,
   });
 
-    var dropContent = "";
-    //$('#dialog_title_span').text("new dialog title");
-    var locations = villageReqRes.data.villages
-    for (var i = 0; i < locations.length; i++) {
-      if (i==0) {
-        $(`#BreakdownVillageDropdown`).find('.btn').text(locations[i]);
-        dropContent += '<a class="dropdown-item" href="#">' + locations[i] + '</a>';
-      } else {
-        dropContent += '<a class="dropdown-item" href="#">' + locations[i] + '</a>';
-      }
-
+  var dropContent = '';
+  //$('#dialog_title_span').text("new dialog title");
+  var locations = villageReqRes.data.villages;
+  for (var i = 0; i < locations.length; i++) {
+    if (i == 0) {
+      $(`#BreakdownVillageDropdown`)
+        .find('.btn')
+        .text(locations[i]);
+      dropContent +=
+        '<a class="dropdown-item" href="#">' + locations[i] + '</a>';
+    } else {
+      dropContent +=
+        '<a class="dropdown-item" href="#">' + locations[i] + '</a>';
     }
+  }
   document.getElementById('villageDropdownOptions').innerHTML = dropContent;
 
   ////Dropdown JS
@@ -215,8 +220,19 @@ const buildVillageDropdown = async e =>{
     }
   });
 
-graphRequest('Breakdown', $(`#BreakdownDateDropdown`).find('.btn').text(), $(`#BreakdownDiseaseDropdown`).find('.btn').text(), $(`#BreakdownVillageDropdown`).find('.btn').text());
-}
+  graphRequest(
+    'Breakdown',
+    $(`#BreakdownDateDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#BreakdownDiseaseDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#BreakdownVillageDropdown`)
+      .find('.btn')
+      .text(),
+  );
+};
 
 const graphRequest = async (page, date, disease, village) => {
   var start = '';
@@ -261,20 +277,26 @@ const graphRequest = async (page, date, disease, village) => {
     var patientData = obj.data.villagePatients;
 
     //Disease cooccurence
-    var diseases = ["Measles", "Cholera", "Polio", "Malaria", "COVID-19"];
+    var diseases = ['Measles', 'Cholera', 'Polio', 'Malaria', 'COVID-19'];
     diseases.splice(diseases.indexOf(disease), 1);
     var diseaseCounts = [];
-    if(patientData.length>0){
-      var diseaseKeys = Object.values(patientData[0].diagnoses[0].possibleDiseases);
+    if (patientData.length > 0) {
+      var diseaseKeys = Object.values(
+        patientData[0].diagnoses[0].possibleDiseases,
+      );
       var patiensDiseases = [];
       for (var i = 0; i < patientData.length; i++) {
-       var countableDisease = Object.values(patientData[i].diagnoses[0].possibleDiseases);
-       for (var j = 0; j < countableDisease.length; j++) {
-         patiensDiseases.push(countableDisease[j])
-       }
+        var countableDisease = Object.values(
+          patientData[i].diagnoses[0].possibleDiseases,
+        );
+        for (var j = 0; j < countableDisease.length; j++) {
+          patiensDiseases.push(countableDisease[j]);
+        }
       }
       for (var k = 0; k < diseases.length; k++) {
-        var count = patiensDiseases.filter(function(x){ return x === diseases[k]; }).length;
+        var count = patiensDiseases.filter(function(x) {
+          return x === diseases[k];
+        }).length;
         diseaseCounts.push(count);
       }
     }
@@ -283,18 +305,19 @@ const graphRequest = async (page, date, disease, village) => {
     var symKeys = [];
     var symCounts = [];
 
-    if(patientData.length>0){
+    if (patientData.length > 0) {
       symKeys = Object.keys(patientData[0].diagnoses[0].symptoms);
       symKeys.splice(symKeys.indexOf('rash'), 1);
       symKeys.splice(symKeys.indexOf('pain'), 1);
       symKeys.splice(symKeys.indexOf('temperature'), 1);
-      var patiensSymptoms =[]
+      var patiensSymptoms = [];
       for (var i = 0; i < patientData.length; i++) {
-       patiensSymptoms.push(patientData[i].diagnoses[0].symptoms)
+        patiensSymptoms.push(patientData[i].diagnoses[0].symptoms);
       }
       for (var i = 0; i < symKeys.length; i++) {
-        var count = patiensSymptoms.filter((obj) => obj[symKeys[i]] === true).length;
-        symCounts.push(count)
+        var count = patiensSymptoms.filter(obj => obj[symKeys[i]] === true)
+          .length;
+        symCounts.push(count);
       }
     }
 
@@ -314,7 +337,10 @@ const graphRequest = async (page, date, disease, village) => {
     breakdownGraph(
       [countMale, countFemale],
       [count18, count30, count50, count65, countAbove],
-      symKeys,symCounts,diseases,diseaseCounts,
+      symKeys,
+      symCounts,
+      diseases,
+      diseaseCounts,
     );
   } else if (page === 'Map') {
     var coords = [];
@@ -387,7 +413,21 @@ const overviewGraph = (labels, data) => {
         {
           data: data,
           lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange', 'violet', 'yellow', 'lime', 'teal'],
+          backgroundColor: [
+            'red',
+            'blue',
+            'green',
+            'orange',
+            'black',
+            'coral',
+            'cyan',
+            'DarkGray',
+            'DarkOrange',
+            'violet',
+            'yellow',
+            'lime',
+            'teal',
+          ],
           borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -408,14 +448,21 @@ const overviewGraph = (labels, data) => {
         display: false,
       },
       title: {
-            display: true,
-            text: 'Disease Count per Location'
-        },
+        display: true,
+        text: 'Disease Count per Location',
+      },
     },
   });
 };
 
-const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, diseaseData) => {
+const breakdownGraph = (
+  pieData,
+  ageData,
+  symLabels,
+  symData,
+  diseaseLabel,
+  diseaseData,
+) => {
   $('#chart3').remove();
   $('#breakdownChartContainer').append(
     '<canvas class="my-4" id="chart3" width="300" height="200"></canvas>',
@@ -450,9 +497,9 @@ const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, dise
         display: false,
       },
       title: {
-            display: true,
-            text: 'Sex Distribution'
-        },
+        display: true,
+        text: 'Sex Distribution',
+      },
     },
   });
   chart.update();
@@ -491,9 +538,9 @@ const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, dise
         display: false,
       },
       title: {
-            display: true,
-            text: 'Age Range Counts'
-        },
+        display: true,
+        text: 'Age Range Counts',
+      },
     },
   });
   chart1.update();
@@ -511,7 +558,21 @@ const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, dise
         {
           data: symData,
           lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange', 'violet', 'yellow', 'lime', 'teal'],
+          backgroundColor: [
+            'red',
+            'blue',
+            'green',
+            'orange',
+            'black',
+            'coral',
+            'cyan',
+            'DarkGray',
+            'DarkOrange',
+            'violet',
+            'yellow',
+            'lime',
+            'teal',
+          ],
           borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -532,13 +593,12 @@ const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, dise
         display: false,
       },
       title: {
-            display: true,
-            text: 'Symptom Counts'
-        },
+        display: true,
+        text: 'Symptom Counts',
+      },
     },
   });
   chart5.update();
-
 
   $('#chart6').remove();
   $('#breakdownChartContainer6').append(
@@ -553,7 +613,21 @@ const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, dise
         {
           data: diseaseData,
           lineTension: 0,
-          backgroundColor: ['red', 'blue', 'green', 'orange', 'black', 'coral', 'cyan', 'DarkGray', 'DarkOrange', 'violet', 'yellow', 'lime', 'teal'],
+          backgroundColor: [
+            'red',
+            'blue',
+            'green',
+            'orange',
+            'black',
+            'coral',
+            'cyan',
+            'DarkGray',
+            'DarkOrange',
+            'violet',
+            'yellow',
+            'lime',
+            'teal',
+          ],
           borderColor: 'transparent',
           borderWidth: 4,
           pointBackgroundColor: '#007bff',
@@ -574,19 +648,57 @@ const breakdownGraph = (pieData, ageData, symLabels, symData, diseaseLabel, dise
         display: false,
       },
       title: {
-            display: true,
-            text: 'Disease cooccurence'
-        },
+        display: true,
+        text: 'Disease cooccurence',
+      },
     },
   });
   chart6.update();
 };
 
 const bootstrapGraphs = () => {
-  graphRequest('Overview', $(`#OverviewDateDropdown`).find('.btn').text(), $(`#OverviewDiseaseDropdown`).find('.btn').text(), '');
-  graphRequest('Breakdown', $(`#BreakdownDateDropdown`).find('.btn').text(), $(`#BreakdownDiseaseDropdown`).find('.btn').text(), $(`#BreakdownVillageDropdown`).find('.btn').text());
-  graphRequest('Map', $(`#MapDateDropdown`).find('.btn').text(), $(`#MapDiseaseDropdown`).find('.btn').text(), '');
-  graphRequest('List', $(`#ListDateDropdown`).find('.btn').text(), $(`#ListDiseaseDropdown`).find('.btn').text(), '');
+  graphRequest(
+    'Overview',
+    $(`#OverviewDateDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#OverviewDiseaseDropdown`)
+      .find('.btn')
+      .text(),
+    '',
+  );
+  graphRequest(
+    'Breakdown',
+    $(`#BreakdownDateDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#BreakdownDiseaseDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#BreakdownVillageDropdown`)
+      .find('.btn')
+      .text(),
+  );
+  graphRequest(
+    'Map',
+    $(`#MapDateDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#MapDiseaseDropdown`)
+      .find('.btn')
+      .text(),
+    '',
+  );
+  graphRequest(
+    'List',
+    $(`#ListDateDropdown`)
+      .find('.btn')
+      .text(),
+    $(`#ListDiseaseDropdown`)
+      .find('.btn')
+      .text(),
+    '',
+  );
 };
 
 const bootstrapMapInit = () => {
@@ -599,8 +711,7 @@ const bootstrapMapInit = () => {
   //
   // // show the scale bar on the lower left corner
   L.control.scale().addTo(map);
-}
-
+};
 
 const bootstrapMap = (coords, label) => {
   // // show a marker on the map
@@ -619,5 +730,5 @@ socketIO.on('data', _d => {
 });
 
 bootstrapElements();
-bootstrapMapInit()
+bootstrapMapInit();
 adminWarning();

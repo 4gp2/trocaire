@@ -26,6 +26,7 @@
       window.location.href = window.location.origin;
     };
 
+    // -----------------HANDOFF BEGIN-----------------
     firebase.initializeApp({
       apiKey: 'AIzaSyCizCQ2QIyUZ6ONcHwmyGmHPyB6jwQji2c',
       authDomain: 'trocaire-4gp2.firebaseapp.com',
@@ -35,6 +36,8 @@
       messagingSenderId: '772364666256',
       appId: '1:772364666256:web:87b0169305869cd4195f15',
     });
+    // ------------------HANDOFF END------------------
+
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -109,8 +112,8 @@
                       </div>
                       <div class="dropdown" id="OverviewDateDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">THIS WEEK</button>
+                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS
+                          WEEK</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">THIS WEEK</a>
                           <a class="dropdown-item" href="#">THIS MONTH</a>
@@ -168,8 +171,8 @@
                       </div>
                       <div class="dropdown" id="BreakdownDateDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">THIS WEEK</button>
+                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS
+                          WEEK</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">THIS WEEK</a>
                           <a class="dropdown-item" href="#">THIS MONTH</a>
@@ -237,8 +240,8 @@
                       </div>
                       <div class="dropdown" id="MapDateDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                          aria-expanded="false">THIS WEEK</button>
+                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS
+                          WEEK</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">THIS WEEK</a>
                           <a class="dropdown-item" href="#">THIS MONTH</a>
@@ -281,8 +284,8 @@
                       </div>
                       <div class="dropdown" id="ListDateDropdown">
                         <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button"
-                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">THIS WEEK</button>
+                          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">THIS
+                          WEEK</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">THIS WEEK</a>
                           <a class="dropdown-item" href="#">THIS MONTH</a>

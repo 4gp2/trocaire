@@ -22,6 +22,7 @@ import {
   createNewCookie,
   verifyCookie,
   getUser,
+  addUser,
   addNewUser,
   getUserFromToken,
   storePatientData,
@@ -149,6 +150,18 @@ const fetchGraphData = async (req: Request, res: Response): Promise<void> => {
   res.json({ error: false, ...bd } as GraphDataResponse);
 };
 
+const initialSetup = async (req: Request, res: Response): Promise<void> => {
+  if (!process.env.SETUP_KEY || req.params.key !== process.env.SETUP_KEY) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const user = `0${new Date().getTime().toString().slice(5)}`;
+  const pass = new Date().getTime().toString().slice(5);
+  while (!await addUser(user, pass, true));
+  res.set('Content-Type', 'text/plain').send([user, pass].join('\n'));
+};
+
 const isAdminIDTokenValid =
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const user = await getUserFromToken(req.body.token);
@@ -190,6 +203,8 @@ const isAdminCookieLoggedIn =
   };
 
 const initRoutes = (app: Express): void => {
+  app.get('/setup/new/:key', initialSetup);
+
   app.get('/', isAdminCookieLoggedIn, dashboard);
   app.get('/login', login);
   app.get('/logout', clearSession);

@@ -53,7 +53,7 @@ export const addNewUser =
     return null;
   };
 
-const addUser =
+export const addUser =
   async (uid: string, password: string, isAdmin: boolean): Promise<boolean> => {
     try {
       await auth().createUser({ uid, password, email: userEmail(uid) });

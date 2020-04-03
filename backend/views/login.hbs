@@ -34,6 +34,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 <script>
+  // -----------------HANDOFF BEGIN-----------------
   firebase.initializeApp({
     apiKey: 'AIzaSyCizCQ2QIyUZ6ONcHwmyGmHPyB6jwQji2c',
     authDomain: 'trocaire-4gp2.firebaseapp.com',
@@ -43,6 +44,8 @@
     messagingSenderId: '772364666256',
     appId: '1:772364666256:web:87b0169305869cd4195f15',
   });
+  // ------------------HANDOFF END------------------
+
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
   const toggleTooltip = (jqObj, millisec) => {
